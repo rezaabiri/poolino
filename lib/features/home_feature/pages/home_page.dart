@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("مشاهده همه", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.blue)),
+                Text("مشاهده همه (${states.length})", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.blue)),
                 Text("تراکنش های اخیر", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.black))
               ],
             ),
@@ -66,26 +66,14 @@ class HomePage extends StatelessWidget {
             ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: 4,
+                itemCount: 3,
                 itemBuilder: (context, index){
-                  if(index < 3){
-                    return TransactionWidget(
-                      price: prices[index],
-                      title: titles[index],
-                      date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
-                      state: states[index],
-                    );
-                  }else {
-                    return Container(
-                      height: 50,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade300,
-                        borderRadius: BorderRadius.circular(14)
-                      ),
-                      child: Center(child: Text("نمایش همه")),
-                    );
-                  }
+                  return TransactionWidget(
+                    price: prices[index],
+                    title: titles[index],
+                    date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
+                    state: states[index],
+                  );
 
                 })
 
