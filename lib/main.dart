@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/date_picker.dart';
+import 'package:poolino/features/home_feature/pages/home_page.dart';
+import 'package:poolino/features/home_feature/widgets/toolbar_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,18 +12,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(),
-        body: DatePicker(state: _scaffoldKey,)
+        key: scaffoldKey,
+        appBar: ToolbarWidget(onTap: (){},),
+        body: SafeArea(child: Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: HomePage(),
+        ))
       )
     );
   }
-
-
 }
