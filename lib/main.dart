@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:poolino/date_picker.dart';
 import 'package:poolino/features/home_feature/pages/home_page.dart';
 import 'package:poolino/features/home_feature/widgets/toolbar_widget.dart';
@@ -12,6 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark
+    ));
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return MaterialApp(
@@ -19,10 +24,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: scaffoldKey,
-        appBar: ToolbarWidget(onTap: (){},),
-        body: SafeArea(child: Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: HomePage(),
+        body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: HomePage()
         ))
       )
     );

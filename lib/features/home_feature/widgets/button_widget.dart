@@ -17,12 +17,12 @@ class ButtonWidget extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           child: SizedBox(
-            height: 112,
+            height: 105,
             width: MediaQuery.of(context).size.width /3.8,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset('assets/icon/$icon.svg'),
+                SvgPicture.asset('assets/images/$icon.svg'),
                 const SizedBox(height: 14,),
                 Text(name, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.black))
               ],

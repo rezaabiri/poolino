@@ -45,7 +45,7 @@ class TransactionWidget extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(12),
-              child: state==1 ? SvgPicture.asset('assets/icon/kharj.svg', width: 35, height: 35) : SvgPicture.asset('assets/icon/daramad.svg', width: 35, height: 35),
+              child: state==1 ? SvgPicture.asset('assets/images/kharj.svg', width: 35, height: 35) : SvgPicture.asset('assets/images/daramad.svg', width: 35, height: 35),
             ),
           )
         ],
