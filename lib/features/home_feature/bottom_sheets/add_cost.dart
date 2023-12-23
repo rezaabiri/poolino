@@ -4,7 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AddCost {
   Future<void> showModal(context, {required Function() onTapChoose, required Function() onTapCustom}) async {
     showModalBottomSheet<void>(
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.only(topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(20),
+              topLeft: Radius.circular(20)),
+      ),
       context: context,
       builder: (BuildContext context) {
         return SizedBox(
@@ -12,7 +17,7 @@ class AddCost {
           child: Padding(
             padding: const EdgeInsets.only(left: 24, right: 24),
             child: Column(
-              children: <Widget>[
+              children: [
                 const SizedBox(height: 16,),
                 Container(
                   height: 5,
