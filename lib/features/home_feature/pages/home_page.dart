@@ -22,62 +22,64 @@ class HomePage extends StatelessWidget {
     List<String> titles = ["خرید طلای آبشده", "پروژه برنامه نویسی", "هارد لپ تاپ", "مانیتور 27 سامسونگ", "لپ تاپ استوک", "رم 16 گیگ پی سی"];
     List<int> states = [1, 2, 1, 1,2, 2];
 
-    return Padding(
-      padding: EdgeInsets.only(left: 24, right: 24),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ToolbarWidget(onTap: (){},),
-            const SizedBox(height: 18,),
-            CardMoney(cost: "15,000,330", income: "23,000,000", total: "120,000,000",),
-            const SizedBox(height: 24,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ButtonWidget(name: "گزارش حساب", icon: "report_blue", onTap: (){
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.only(left: 24, right: 24, top: 36),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ToolbarWidget(onTap: (){},),
+              const SizedBox(height: 18,),
+              CardMoney(cost: "15,000,330", income: "23,000,000", total: "120,000,000",),
+              const SizedBox(height: 24,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ButtonWidget(name: "گزارش حساب", icon: "report_blue", onTap: (){
 
-                }),
-                ButtonWidget(name: "ثبت درآمد", icon: "income_blue", onTap: (){
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت درآمد")));
+                  }),
+                  ButtonWidget(name: "ثبت درآمد", icon: "income_blue", onTap: (){
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت درآمد")));
 
-                }),
-                ButtonWidget(name: "ثبت هزینه", icon: "cost_blue", onTap: (){
-                  AddCost add = AddCost();
-                  add.showModal(context, onTapChoose: (){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت هزینه انتخابی")));
-                    Navigator.pop(context);
-                  }, onTapCustom: () {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت هزینه دستی")));
-                    Navigator.pop(context);
-                  });
+                  }),
+                  ButtonWidget(name: "ثبت هزینه", icon: "cost_blue", onTap: (){
+                    AddCost add = AddCost();
+                    add.showModal(context, onTapChoose: (){
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت هزینه انتخابی")));
+                      Navigator.pop(context);
+                    }, onTapCustom: () {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("ثبت هزینه دستی")));
+                      Navigator.pop(context);
+                    });
 
-                }),
-              ],
-            ),
-            const SizedBox(height: 24,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("مشاهده همه (${states.length})", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.blue)),
-                Text("تراکنش های اخیر", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.black))
-              ],
-            ),
-            const SizedBox(height: 18,),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (context, index){
-                  return TransactionWidget(
-                    price: prices[index],
-                    title: titles[index],
-                    date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
-                    state: states[index],
-                  );
+                  }),
+                ],
+              ),
+              const SizedBox(height: 24,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("مشاهده همه (${states.length})", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.blue)),
+                  Text("تراکنش های اخیر", style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.black))
+                ],
+              ),
+              const SizedBox(height: 18,),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 3,
+                  itemBuilder: (context, index){
+                    return TransactionWidget(
+                      price: prices[index],
+                      title: titles[index],
+                      date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
+                      state: states[index],
+                    );
 
-                })
+                  })
 
-          ],
+            ],
+          ),
         ),
       ),
     );
