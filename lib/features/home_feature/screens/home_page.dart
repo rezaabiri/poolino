@@ -1,18 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/features/home_feature/bottom_sheets/add_cost.dart';
+import 'package:poolino/constants.dart';
 import 'package:poolino/features/home_feature/widgets/button_widget.dart';
 import 'package:poolino/features/home_feature/widgets/transaction_widget.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 
+import '../widgets/bottom_sheets/add_cost.dart';
 import '../widgets/card_money.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/toolbar_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int hexToInteger(String hex) => int.parse(hex, radix: 16);
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,43 +134,70 @@ class HomePage extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 18,),
+              const SizedBox(
+                height: 18,
+              ),
               DefaultTabController(
                 length: 3,
-                child: ButtonsTabBar(
-                  backgroundColor: Colors.blue,
-                  unselectedBackgroundColor: Colors.grey[300],
-                  unselectedLabelStyle: TextStyle(color: Colors.black),
-                  tabs: [
-                    Tab(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
-                          color: Colors.blue,),
-                      ),
+                child: TabBar(
+                    controller: _tabController,
+                    unselectedLabelStyle: const TextStyle(
+                      fontFamily: "yekan_regular",
                     ),
-                    Tab(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
-                          ),
-                      ),
+                    unselectedLabelColor: Colors.black,
+                    overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
+                    splashBorderRadius: BorderRadius.circular(10),
+                    labelStyle: TextStyle(fontFamily: "yekan_regular"),
+                    indicator: BoxDecoration(
+                      color: hexToColor(Constants.baseColor),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    Tab(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
-                          ),
+
+                    onTap: (int index){
+                      
+                    },
+
+                    tabs: const [
+                      Tab(
+                        text: "درآمد",
                       ),
+                      Tab(
+                        text: "هزینه",
+                      ),
+                      Tab(
+                        text: "نامشخص",
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 3,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return TransactionWidget(
+                          price: prices[index],
+                          title: titles[index],
+                          date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
+                          state: states[index],
+                        );
+                      },
+                    ),
+                    Center(
+                      child: Text("It's rainy here"),
+                    ),
+                    Center(
+                      child: Text("It's sunny here"),
                     ),
                   ],
                 ),
               ),
 
-              ListView.builder(
+              /*ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: 3,
@@ -162,7 +209,7 @@ class HomePage extends StatelessWidget {
                     state: states[index],
                   );
                 },
-              ),
+              ),*/
             ],
           ),
         ),
