@@ -3,6 +3,10 @@ import 'package:poolino/constants.dart';
 import 'package:poolino/features/home_feature/widgets/button_widget.dart';
 import 'package:poolino/features/home_feature/widgets/transaction_widget.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
+
+
 
 import '../widgets/bottom_sheets/add_cost.dart';
 import '../widgets/card_money.dart';
@@ -20,6 +24,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int hexToInteger(String hex) => int.parse(hex, radix: 16);
   late final TabController _tabController;
+  final SmsQuery _query = SmsQuery();
+  List<SmsMessage> _messages = [];
+  String extracted = "";
+
 
   @override
   void initState() {
@@ -27,6 +35,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
   }
+
 
   @override
   void dispose() {
@@ -56,7 +65,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(left: 24, right: 24, top: 36),
+        padding: EdgeInsets.only(left: 16, right: 16, top: 36),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -86,8 +95,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     name: "ثبت درآمد",
                     icon: "income_blue",
                     onTap: () {
+                      requestPermission();
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("ثبت درآمد")));
+                          .showSnackBar(SnackBar(content: Text("ثبت درآمد"),),
+                      );
                     },
                   ),
                   ButtonWidget(
@@ -102,10 +113,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                               SnackBar(content: Text("ثبت هزینه انتخابی")));
                           Navigator.pop(context);
                         },
-                        onTapCustom: () {
+                        onTapCustom: () async {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("ثبت هزینه دستی")));
                           Navigator.pop(context);
+
+                          var permission = await Permission.sms.status;
+                          if(permission.isGranted){
+                            final messages = await _query.querySms(
+                              kinds: [
+                                SmsQueryKind.inbox,
+                                SmsQueryKind.sent,
+                              ],
+                              address: '9830009417',
+                              count: _messages.length,
+                            );
+
+                            setState(() => _messages = messages);
+                          }
                         },
                       );
                     },
@@ -137,37 +162,43 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(
                 height: 18,
               ),
-              DefaultTabController(
-                length: 3,
-                child: TabBar(
-                    controller: _tabController,
-                    unselectedLabelStyle: const TextStyle(
-                      fontFamily: "yekan_regular",
-                    ),
-                    unselectedLabelColor: Colors.black,
-                    overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
-                    splashBorderRadius: BorderRadius.circular(10),
-                    labelStyle: TextStyle(fontFamily: "yekan_regular"),
-                    indicator: BoxDecoration(
-                      color: hexToColor(Constants.baseColor),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(12 )
+                ),
+                child: DefaultTabController(
+                  length: 3,
+                  child: TabBar(
+                      controller: _tabController,
+                      unselectedLabelStyle: const TextStyle(
+                        fontFamily: "yekan_regular",
+                      ),
+                      unselectedLabelColor: Colors.black,
+                      overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
+                      splashBorderRadius: BorderRadius.circular(12),
+                      labelStyle: TextStyle(fontFamily: "yekan_regular"),
+                      indicator: BoxDecoration(
+                        color: hexToColor(Constants.baseColor),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
 
-                    onTap: (int index){
-                      
-                    },
+                      onTap: (int index){
 
-                    tabs: const [
-                      Tab(
-                        text: "درآمد",
-                      ),
-                      Tab(
-                        text: "هزینه",
-                      ),
-                      Tab(
-                        text: "نامشخص",
-                      ),
-                    ]),
+                      },
+
+                      tabs: const [
+                        Tab(
+                          text: "درآمد",
+                        ),
+                        Tab(
+                          text: "هزینه",
+                        ),
+                        Tab(
+                          text: "نامشخص",
+                        ),
+                      ]),
+                ),
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width,
@@ -177,13 +208,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   children: <Widget>[
                     ListView.builder(
                       shrinkWrap: true,
-                      itemCount: 6,
+                      itemCount: _messages.length,
                       itemBuilder: (context, index) {
+
                         return TransactionWidget(
-                          price: prices[index],
-                          title: titles[index],
-                          date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
-                          state: states[index],
+                          price: getPrice(_messages[index].body.toString()),
+                          title: _messages[index].address.toString(),
+                          date: _messages[index].date.toString(),
+                          state: _messages[index].body.toString().contains("برداشت") ? 1 : 0,
+
                         );
                       },
                     ),
@@ -218,6 +251,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   }
 }
 
+String getPrice(String smsBody) {
+  print(smsBody);
+
+  RegExp regex = RegExp(r'(برداشت|انتقال|انتقالی|انتقالي|خريداينترنتي):([-+]?\d{1,15}(?:,\d{3})*(?:\.\d{2})?)');
+
+  // یافتن اولین تطابق با الگو
+  Match? match = regex.firstMatch(smsBody);
+
+  // چک کردن برای وجود match
+  if (match != null) {
+    return match.group(2)!;
+  } else {
+    // اگر هیچ تطابقی پیدا نشد، می‌توانید یک مقدار پیش‌فرض یا پیام خطا بازگردانید
+    return 'تطابق پیدا نشد.';
+  }
+}
+
+
+Future<void> requestPermission() async {
+  const permission = Permission.sms;
+
+  if (await permission.isDenied) {
+    await permission.request();
+  }
+}
+
 Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
