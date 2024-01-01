@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/constants.dart';
+import 'package:poolino/features/home_feature/screens/income_page.dart';
 import 'package:poolino/features/home_feature/widgets/button_widget.dart';
 import 'package:poolino/features/home_feature/widgets/transaction_widget.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 
@@ -209,22 +211,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 3,
                 child: TabBarView(
                   controller: _tabController,
-                  children: <Widget>[
+                  children:[
                     ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _messages.length,
+                      shrinkWrap: false,
+                      itemCount: 6,
                       itemBuilder: (context, index) {
 
-                        return TransactionWidget(
-                          price: getPrice(_messages[index].body.toString()),
-                          title: _messages[index].address.toString(),
-                          date: _messages[index].date.toString(),
-                          state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
+                        // return TransactionWidget(
+                        //   price: getPrice(_messages[index].body.toString()),
+                        //   title: _messages[index].address.toString(),
+                        //   date: _messages[index].date.toString(),
+                        //   state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
 
+                        return Expanded(
+                          child: TransactionWidget(
+                            price: prices[index],
+                            title: titles[index],
+                            date: "1402/10/11",
+                            state: states[index].toInt(),
+                            onTap: (){
+                              Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: IncomePage()));
+                            },
+
+                          ),
                         );
                       },
                     ),

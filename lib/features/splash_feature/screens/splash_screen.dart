@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), ()=> Navigator.push(context, PageTransition(type: PageTransitionType.rightToLeft, child: HomePage())));
+    Timer(Duration(seconds: 3), ()=> Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft, child: HomePage())));
 
     super.initState();
   }
