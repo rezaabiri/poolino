@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 total: "120,000,000",
               ),
               const SizedBox(
-                height: 24,
+                height: 18,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,8 +125,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                                 SmsQueryKind.inbox,
                                 SmsQueryKind.sent,
                               ],
-                              address: '9830009417',
-                              count: _messages.length,
+                              address: '9830008528',
+                              count: 10,
                             );
 
                             setState(() => _messages = messages);
@@ -175,9 +175,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         fontFamily: "yekan_regular",
                       ),
                       unselectedLabelColor: Colors.black,
+
                       overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
                       splashBorderRadius: BorderRadius.circular(12),
                       labelStyle: TextStyle(fontFamily: "yekan_regular"),
+                      tabAlignment: TabAlignment.fill,
+                      automaticIndicatorColorAdjustment: false,
+                      indicatorColor: Colors.transparent,
+                      labelColor: Colors.white,
+                      dividerColor: Colors.transparent,
+                      indicatorWeight: 1,
+                      indicatorSize: TabBarIndicatorSize.tab,
                       indicator: BoxDecoration(
                         color: hexToColor(Constants.baseColor),
                         borderRadius: BorderRadius.circular(12),
@@ -215,15 +223,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                           price: getPrice(_messages[index].body.toString()),
                           title: _messages[index].address.toString(),
                           date: _messages[index].date.toString(),
-                          state: _messages[index].body.toString().contains("برداشت") ? 1 : 0,
+                          state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
 
                         );
                       },
                     ),
-                    Center(
+                    const Center(
                       child: Text("It's rainy here"),
                     ),
-                    Center(
+                    const Center(
                       child: Text("It's sunny here"),
                     ),
                   ],
@@ -250,23 +258,33 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
-
 String getPrice(String smsBody) {
   print(smsBody);
+  List<String> amounts = [];
 
-  RegExp regex = RegExp(r'(برداشت|انتقال|انتقالی|انتقالي|خريداينترنتي):([-+]?\d{1,15}(?:,\d{3})*(?:\.\d{2})?)');
-
-  // یافتن اولین تطابق با الگو
-  Match? match = regex.firstMatch(smsBody);
+  RegExp regex = RegExp(r'(برداشت|واریز|مبلغ|خرید)[:\s]*([-+]?\d{1,15}(?:,\d{3})*(?:\.\d{2})?)');
+  Iterable<Match> matches = regex.allMatches(smsBody);
 
   // چک کردن برای وجود match
-  if (match != null) {
-    return match.group(2)!;
+  if (matches != null) {
+    for (Match match in matches) {
+      String word = match.group(1)!;
+      String amount = match.group(2)!;
+      amounts.add(amount);
+    }
   } else {
     // اگر هیچ تطابقی پیدا نشد، می‌توانید یک مقدار پیش‌فرض یا پیام خطا بازگردانید
     return 'تطابق پیدا نشد.';
   }
+
+  // اگر مقداری پیدا شده، لیست مقادیر را بازگردانید
+  if (amounts.isNotEmpty) {
+    return amounts.join(', '); // یا هر روش دیگری که برای نمایش لیست مناسب است
+  } else {
+    return 'تطابق پیدا نشد.';
+  }
 }
+
 
 
 Future<void> requestPermission() async {

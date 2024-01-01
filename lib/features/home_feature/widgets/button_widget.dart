@@ -18,7 +18,7 @@ class ButtonWidget extends StatelessWidget {
           onTap: onTap,
           child: SizedBox(
             height: 105,
-            width: MediaQuery.of(context).size.width /3.8,
+            width: MediaQuery.of(context).size.width /3.5,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
