@@ -31,7 +31,7 @@ class AddCost {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Material(
-                    color: Colors.grey.shade100,
+                    color: Colors.grey.shade200,
                     child: InkWell(
                       onTap: onTapChoose,
                       child: SizedBox(
@@ -63,7 +63,7 @@ class AddCost {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Material(
-                    color: Colors.grey.shade100,
+                    color: Colors.grey.shade200,
                     child: InkWell(
                       onTap: onTapCustom,
                       child: SizedBox(

@@ -13,7 +13,6 @@ class TransactionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: hexToColor('#F2F6FF'),
       child: InkWell(
         onTap: onTap,
         child: Padding(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:poolino/common/widgets/poolino_tabbar.dart';
 import 'package:poolino/constants.dart';
 import 'package:poolino/features/home_feature/screens/income_page.dart';
 import 'package:poolino/features/home_feature/widgets/button_widget.dart';
@@ -164,51 +165,21 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(
                 height: 18,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(12 )
-                ),
-                child: DefaultTabController(
-                  length: 3,
-                  child: TabBar(
-                      controller: _tabController,
-                      unselectedLabelStyle: const TextStyle(
-                        fontFamily: "yekan_regular",
-                      ),
-                      unselectedLabelColor: Colors.black,
+              PoolinoTabBar(
+                  tabController: _tabController,
+                  tabs: const [
+                    Tab(
+                      text: "درآمد",
+                    ),
+                    Tab(
+                      text: "هزینه",
+                    ),
+                    Tab(
+                      text: "نامشخص",
+                    ),
 
-                      overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
-                      splashBorderRadius: BorderRadius.circular(12),
-                      labelStyle: TextStyle(fontFamily: "yekan_regular"),
-                      tabAlignment: TabAlignment.fill,
-                      automaticIndicatorColorAdjustment: false,
-                      indicatorColor: Colors.transparent,
-                      labelColor: Colors.white,
-                      dividerColor: Colors.transparent,
-                      indicatorWeight: 1,
-                      indicatorSize: TabBarIndicatorSize.tab,
-                      indicator: BoxDecoration(
-                        color: hexToColor(Constants.baseColor),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
 
-                      onTap: (int index){
-
-                      },
-
-                      tabs: const [
-                        Tab(
-                          text: "درآمد",
-                        ),
-                        Tab(
-                          text: "هزینه",
-                        ),
-                        Tab(
-                          text: "نامشخص",
-                        ),
-                      ]),
-                ),
+                  ]
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
@@ -217,26 +188,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   children:[
                     ListView.builder(
                       shrinkWrap: false,
-                      itemCount: 6,
+                      itemCount: _messages.length,
                       itemBuilder: (context, index) {
 
-                        // return TransactionWidget(
-                        //   price: getPrice(_messages[index].body.toString()),
-                        //   title: _messages[index].address.toString(),
-                        //   date: _messages[index].date.toString(),
-                        //   state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
+                        return TransactionWidget(
+                          price: getPrice(_messages[index].body.toString()),
+                          title: _messages[index].address.toString(),
+                          date: _messages[index].date.toString(),
+                          state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
 
-                        return Expanded(
+                       /* return Expanded(
                           child: TransactionWidget(
                             price: prices[index],
                             title: titles[index],
                             date: "1402/10/11",
-                            state: states[index].toInt(),
+                            state: states[index].toInt(),*/
                             onTap: (){
                               Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: IncomePage()));
                             },
-
-                          ),
                         );
                       },
                     ),
@@ -249,20 +218,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
-
-              /*ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return TransactionWidget(
-                    price: prices[index],
-                    title: titles[index],
-                    date: "یکشنبه ۱۲ آذر ۱۴۰۲ ۱۹۲۰",
-                    state: states[index],
-                  );
-                },
-              ),*/
             ],
           ),
         ),
@@ -285,11 +240,9 @@ String getPrice(String smsBody) {
       amounts.add(amount);
     }
   } else {
-    // اگر هیچ تطابقی پیدا نشد، می‌توانید یک مقدار پیش‌فرض یا پیام خطا بازگردانید
     return 'تطابق پیدا نشد.';
   }
 
-  // اگر مقداری پیدا شده، لیست مقادیر را بازگردانید
   if (amounts.isNotEmpty) {
     return amounts.join(', '); // یا هر روش دیگری که برای نمایش لیست مناسب است
   } else {
