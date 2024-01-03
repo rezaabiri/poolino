@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/common/widgets/poolino_tabbar.dart';
-import 'package:poolino/constants.dart';
+import 'package:poolino/common/constants.dart';
 import 'package:poolino/features/home_feature/screens/income_page.dart';
 import 'package:poolino/features/home_feature/widgets/button_widget.dart';
 import 'package:poolino/features/home_feature/widgets/transaction_widget.dart';
@@ -260,6 +260,3 @@ Future<void> requestPermission() async {
   }
 }
 
-Color hexToColor(String code) {
-  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-}

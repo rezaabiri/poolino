@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:poolino/common/poolino_colors.dart';
+import 'package:poolino/common/utils.dart';
 import '../../home_feature/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         height: MediaQuery.of(context).size.height,
-        color: hexToColor("#2969FF"),
+        color: Utils.hexToColor(PoolinoColors.baseColor),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -37,8 +39,4 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
-}
-
-Color hexToColor(String code) {
-  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

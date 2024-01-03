@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../common/utils.dart';
+
 
 class TransactionWidget extends StatelessWidget {
   String price;
@@ -25,7 +27,7 @@ class TransactionWidget extends StatelessWidget {
                   children: [
                     Text(price, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 20, color: Colors.black)),
                     SizedBox(height: 6,),
-                    Text("تومان", style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: hexToColor("#676767")))
+                    Text("تومان", style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Utils.hexToColor("#676767")))
                   ],
                 ),
               ),
@@ -36,7 +38,7 @@ class TransactionWidget extends StatelessWidget {
                   children: [
                     Text(title, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.black)),
                     SizedBox(height: 10,),
-                    Text(date, style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: hexToColor("#676767")))
+                    Text(date, style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Utils.hexToColor("#676767")))
                   ],
                 ),
               ),
@@ -45,7 +47,7 @@ class TransactionWidget extends StatelessWidget {
                 width: 55,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: state == 1 ? hexToColor("#FFF8F8") : hexToColor("#F5FCF6")
+                  color: state == 1 ? Utils.hexToColor("#FFF8F8") : Utils.hexToColor("#F5FCF6")
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(12),
@@ -58,7 +60,4 @@ class TransactionWidget extends StatelessWidget {
       ),
     );
   }
-}
-Color hexToColor(String code) {
-  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

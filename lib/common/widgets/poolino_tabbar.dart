@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:poolino/common/poolino_colors.dart';
 
-import '../../constants.dart';
+import '../constants.dart';
 import '../../features/home_feature/screens/income_page.dart';
 import '../../features/home_feature/widgets/transaction_widget.dart';
+import '../utils.dart';
 
 class PoolinoTabBar<T> extends StatelessWidget {
   TabController tabController;
@@ -41,7 +43,7 @@ class PoolinoTabBar<T> extends StatelessWidget {
             indicatorWeight: 1,
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: BoxDecoration(
-              color: hexToColor(Constants.baseColor),
+              color: Utils.hexToColor(PoolinoColors.baseColor),
               borderRadius: BorderRadius.circular(12),
             ),
             onTap: (int index) {},
@@ -49,8 +51,4 @@ class PoolinoTabBar<T> extends StatelessWidget {
       ),
     );
   }
-}
-
-Color hexToColor(String code) {
-  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

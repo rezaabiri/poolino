@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../common/utils.dart';
+
 
 class ButtonWidget extends StatelessWidget {
   String name;
@@ -13,7 +15,7 @@ class ButtonWidget extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
       child: Material(
-        color: hexToColor('#F2F6FF'),
+        color: Utils.hexToColor('#F2F6FF'),
         child: InkWell(
           onTap: onTap,
           child: SizedBox(
@@ -32,7 +34,4 @@ class ButtonWidget extends StatelessWidget {
       ),
     );
   }
-}
-Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

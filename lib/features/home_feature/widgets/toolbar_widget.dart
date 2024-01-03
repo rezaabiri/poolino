@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/utils.dart';
+
 class ToolbarWidget extends StatelessWidget  {
   Function() onTap;
   ToolbarWidget({super.key, required this.onTap});
@@ -14,7 +16,7 @@ class ToolbarWidget extends StatelessWidget  {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: Material(
-                color: hexToColor("#F7F7F7"),
+                color: Utils.hexToColor("#F7F7F7"),
                 child: InkWell(
                   onTap: onTap,
                   child: const SizedBox(
@@ -39,8 +41,4 @@ class ToolbarWidget extends StatelessWidget  {
       ],
     );
   }
-}
-
-Color hexToColor(String code) {
-  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }

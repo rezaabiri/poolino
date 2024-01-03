@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:poolino/date_picker.dart';
 import 'package:poolino/features/home_feature/screens/home_page.dart';
 import 'package:poolino/features/home_feature/widgets/toolbar_widget.dart';
+import 'package:poolino/features/login_feature/screens/phone_page.dart';
+import 'package:poolino/features/login_feature/screens/verify_code_page.dart';
 import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
 void main() {
@@ -36,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         key: scaffoldKey,
-        body: SplashScreen()
+        body: PhonePage()
       )
     );
   }

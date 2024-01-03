@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../common/utils.dart';
+
 
 class CardMoney extends StatelessWidget {
   String cost;
@@ -45,7 +47,7 @@ class CardMoney extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 105,
               decoration: BoxDecoration(
-                  color: hexToColor('#F2F6FF'),
+                  color: Utils.hexToColor('#F2F6FF'),
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(24),
                       bottomRight: Radius.circular(24)
@@ -123,7 +125,4 @@ class CardMoney extends StatelessWidget {
       ],
     );
   }
-}
-Color hexToColor(String code) {
-  return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
