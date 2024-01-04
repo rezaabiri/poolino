@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/utils.dart';
+import 'package:poolino/common/utils/utils.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/login_feature/widgets/poolino_keyboard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -98,7 +98,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                      TextButton(
                        onPressed: (){}, 
                        child: Text("ویرایش شماره", 
-                         style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Utils.hexToColor(PoolinoColors.baseColor),),
+                         style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: PoolinoColors.baseColor,),
                        ),
                      ),
                      

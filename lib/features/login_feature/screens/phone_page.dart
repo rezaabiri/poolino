@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/utils.dart';
+import 'package:poolino/common/utils/utils.dart';
+import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
+import 'package:poolino/common/widgets/poolino_text_field.dart';
 import 'package:poolino/features/login_feature/widgets/poolino_keyboard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
 
 import '../../../common/constants.dart';
+import '../../../common/theme/ThemeSwitcher.dart';
 
 class PhonePage extends StatefulWidget {
   const PhonePage({super.key});
@@ -54,10 +56,16 @@ class _LoginPageState extends State<PhonePage> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: const [
+          ThemeSwitcher()
+        ],),
           body: SingleChildScrollView(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -67,10 +75,10 @@ class _LoginPageState extends State<PhonePage> {
               const SizedBox(
                 height: 24,
               ),
-              const Center(
+              Center(
                 child: Text(
                   "جهت ورود به برنامه شماره موبایل خود را وارد نمایید.",
-                  style: TextStyle(fontFamily: "yekan_bold", fontSize: 16),
+                  style: theme.textTheme.titleMedium,
                   textDirection: TextDirection.rtl,
                   textAlign: TextAlign.center,
                 ),
@@ -78,41 +86,14 @@ class _LoginPageState extends State<PhonePage> {
               const SizedBox(
                 height: 24,
               ),
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: TextFormField(
-                  controller: phoneController,
-                  keyboardType: TextInputType.phone,
-                  maxLength: 11,
-                  maxLines: 1,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  cursorRadius: const Radius.circular(20),
-                  textAlign: TextAlign.center,
-                  cursorColor: Utils.hexToColor(PoolinoColors.baseColor),
-                  textAlignVertical: TextAlignVertical.center,
-                  style: const TextStyle(fontSize: 18, fontFamily: "yekan_bold"),
-                  decoration: InputDecoration(
-                    hintTextDirection: TextDirection.rtl,
-                    counterStyle: TextStyle(fontFamily: "yekan_regular", fontSize: 12),
-                    labelStyle: const TextStyle(
-                        fontFamily: "yekan_regular",
-                        fontSize: 16,
-                        color: Colors.black),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                        width: 2,
-                        color: Utils.hexToColor(PoolinoColors.baseColor),
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                            width: 1,
-                            color: Utils.hexToColor(PoolinoColors.baseColor))),
-                    labelText: 'شماره موبایل',
-                  ),
-                ),
+              PoolinoTextField(
+                  text: "شماره موبایل", controller: phoneController),
+              const SizedBox(
+                height: 40,
+              ),
+              ButtonPrimary(
+                text: "تایید شماره موبایل",
+                onPressed: () {},
               ),
             ],
           ),

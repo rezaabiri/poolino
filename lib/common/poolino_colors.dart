@@ -1,6 +1,10 @@
 
+import 'dart:ui';
+
+import 'package:poolino/common/utils/utils.dart';
+
 class PoolinoColors {
-  static const baseColor = "#2969FF";
-  static const f7Color = "#ECECEC";
-  static const e4Color = "#E4E4E4";
+  static Color baseColor = Utils.hexToColor("#2969FF");
+  static Color f7Color = Utils.hexToColor("#ECECEC");
+  static Color e4Color = Utils.hexToColor("#E4E4E4");
 }

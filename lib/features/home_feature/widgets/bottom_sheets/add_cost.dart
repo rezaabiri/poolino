@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/poolino_colors.dart';
 
-import '../../../../common/utils.dart';
+import '../../../../common/utils/utils.dart';
 
 class AddCost {
   Future<void> showModal(context, {required Function() onTapChoose, required Function() onTapCustom}) async {
@@ -50,7 +50,7 @@ class AddCost {
                                 children: [
                                   const Text("انتخاب از پیامک های بانکی", style: TextStyle(fontSize: 16, fontFamily: "yekan_regular"),),
                                   const SizedBox(width: 14,),
-                                  Container(height: 40, width: 2, color: Utils.hexToColor(PoolinoColors.e4Color),),
+                                  Container(height: 40, width: 2, color: PoolinoColors.e4Color,),
                                   const SizedBox(width: 14,),
                                   SvgPicture.asset("assets/images/choose_sms.svg"),
                                 ],
@@ -82,7 +82,7 @@ class AddCost {
                                 children: [
                                   const Text("ثبت هزینه به صورت دستی", style: TextStyle(fontSize: 16, fontFamily: "yekan_regular"),),
                                   const SizedBox(width: 14,),
-                                  Container(height: 40, width: 2, color: Utils.hexToColor(PoolinoColors.e4Color),),
+                                  Container(height: 40, width: 2, color: PoolinoColors.e4Color,),
                                   const SizedBox(width: 14,),
                                   SvgPicture.asset("assets/images/add_cost_icon.svg"),
                                 ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/common/utils.dart';
+import 'package:poolino/common/utils/utils.dart';
 import '../../../common/poolino_colors.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -21,7 +21,7 @@ class PoolinoKeyboard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(18),
         child: Material(
-          color: type=="number" ? Utils.hexToColor(PoolinoColors.f7Color) : ( type == "icon" ? Utils.hexToColor(PoolinoColors.f7Color) : Utils.hexToColor(PoolinoColors.baseColor)),
+          color: type=="number" ? PoolinoColors.f7Color : ( type == "icon" ? PoolinoColors.f7Color : PoolinoColors.baseColor),
           borderRadius: BorderRadius.circular(18),
           child: InkWell(
             onTap: () {
