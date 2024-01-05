@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/utils/utils.dart';
+
 import '../../home_feature/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {

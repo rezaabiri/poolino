@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/poolino_colors.dart';
 
-import '../../../../common/utils/utils.dart';
-
 class AddCost {
   Future<void> showModal(context, {required Function() onTapChoose, required Function() onTapCustom}) async {
     showModalBottomSheet<void>(

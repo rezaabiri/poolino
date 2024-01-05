@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../poolino_colors.dart';
-import '../utils/utils.dart';
 
 class PoolinoTextField extends StatelessWidget {
   TextEditingController controller;

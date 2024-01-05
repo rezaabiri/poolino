@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/common/constants.dart';
 import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/utils/utils.dart';
 
 class ButtonPrimary extends StatelessWidget {
   String text;

@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/utils/utils.dart';
-import 'package:poolino/common/widgets/buttons/button_primary.dart';
-import 'package:poolino/common/widgets/poolino_snackbar.dart';
-import 'package:poolino/common/widgets/poolino_text_field.dart';
-import 'package:poolino/features/login_feature/widgets/poolino_keyboard.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
+import 'package:poolino/common/widgets/buttons/button_primary.dart';
+import 'package:poolino/common/widgets/poolino_text_field.dart';
 
-import '../../../common/constants.dart';
-import '../../../common/theme/ThemeSwitcher.dart';
+import '../../../../common/theme/ThemeSwitcher.dart';
+
 
 class PhonePage extends StatefulWidget {
   const PhonePage({super.key});
