@@ -3,13 +3,13 @@ import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:poolino/common/widgets/poolino_tabbar.dart';
-import 'package:poolino/features/home_feature/screens/income_page.dart';
-import 'package:poolino/features/home_feature/widgets/button_widget.dart';
-import 'package:poolino/features/home_feature/widgets/transaction_widget.dart';
 
 import '../widgets/bottom_sheets/add_cost.dart';
+import '../widgets/button_widget.dart';
 import '../widgets/card_money.dart';
 import '../widgets/toolbar_widget.dart';
+import '../widgets/transaction_widget.dart';
+import 'income_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -198,7 +198,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             date: "1402/10/11",
                             state: states[index].toInt(),*/
                             onTap: (){
-                              Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: IncomePage()));
+                              Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: const IncomePage()));
                             },
                         );
                       },

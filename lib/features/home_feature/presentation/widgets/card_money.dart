@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../common/utils/utils.dart';
+import '../../../../common/utils/utils.dart';
 
 
 class CardMoney extends StatelessWidget {

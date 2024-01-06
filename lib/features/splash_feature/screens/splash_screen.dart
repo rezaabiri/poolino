@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:poolino/common/poolino_colors.dart';
 
-import '../../home_feature/screens/home_page.dart';
+import '../../home_feature/presentation/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

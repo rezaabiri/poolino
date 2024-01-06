@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/screens/phone_page.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
@@ -10,14 +11,15 @@ import 'locator.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initLocator();
+  await setup();
 
   final ThemeCubit themeCubit = ThemeCubit();
   await themeCubit.loadTheme();
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => ThemeCubit()),
-    BlocProvider.value(value: themeCubit)
+    BlocProvider.value(value: themeCubit),
+    BlocProvider(create: (_) => locator<LoginBloc>())
   ], child: const MyApp(),),
   );
 }
