@@ -105,7 +105,6 @@ class _LoginPageState extends State<PhonePage> {
                           ///example
                           LoginComplete loginComplete = state.loginStatus as LoginComplete;
                           LoginEntity loginEntity = loginComplete.loginEntity;
-                          prefsOperator.setSharedData("accessToken", loginEntity.result?.accessToken);
 
                         }
 
@@ -124,8 +123,9 @@ class _LoginPageState extends State<PhonePage> {
                       },
                       listener: (context, state){
                         //LoginStatus login = state.loginStatus;
-                        //LoginComplete loginen = login as LoginComplete;
-                        //LoginEntity entity = loginen.loginEntity;
+                        LoginComplete loginen = state.loginStatus as LoginComplete;
+                        LoginEntity entity = loginen.loginEntity;
+                        prefsOperator.setSharedData("accessToken", entity.result?.accessToken);
 
                         PoolinoSnackBar(icon: Icons.check, type: Constants.SUCCESS)
                             .show(context, "دیتاها دریافت شد");
@@ -138,26 +138,6 @@ class _LoginPageState extends State<PhonePage> {
               ),
             ),
           )
-        /*BlocBuilder<LoginBloc, LoginState>(
-          builder: (BuildContext context, LoginState state) {
-            if(state.loginStatus is LoginLoading){
-              return const Center(child: Text("loading"),);
-            }
-            if(state.loginStatus is LoginComplete){
-              final LoginComplete loginComplete = state.loginStatus as LoginComplete;
-              final LoginEntity loginEntity = loginComplete.loginEntity;
-
-              return Center(child: Text(loginEntity.result!.accessToken.toString()),);
-            }
-            if(state.loginStatus is LoginError){
-              final LoginError loginError = state.loginStatus as LoginError;
-              print(loginError.message.toString());
-              return Center(child: Text(loginError.message.toString()),);
-            }
-
-            return Container();
-
-        },)*/
 
       ),
     );

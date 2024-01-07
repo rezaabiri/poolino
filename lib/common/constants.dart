@@ -4,4 +4,8 @@ class Constants {
   static const int ERROR = 0;
   static const int SUCCESS = 1;
   static const int WARNING = 2;
+
+  static const baseUrl = "https://poolinoapp.offerja.ir/poolino_ftp/public/api/";
+  static const login = "auth/login";
+  static const refresh = "auth/refresh";
 }

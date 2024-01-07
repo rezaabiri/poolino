@@ -35,3 +35,7 @@ class FetchDataException extends AppException {
 class UnauthorisedException extends AppException {
   UnauthorisedException({String? message}) : super(message: message ?? "token has been expired.");
 }
+
+class TokenNotFoundException extends AppException {
+  TokenNotFoundException({String? message}) : super(message: message ?? "token not found.");
+}

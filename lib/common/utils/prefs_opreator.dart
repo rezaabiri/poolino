@@ -12,9 +12,8 @@ class PrefsOperator {
   setSharedData(key, value) async {
     sharedPreferences.setString(key, value);
   }
-  getSharedData(key) async {
-    final String? data = sharedPreferences.getString(key);
-    return data;
+  Future getSharedData(key) async {
+     return sharedPreferences.getString(key);
   }
 
   changeIntroState() async {
