@@ -22,18 +22,19 @@ class MyThemes {
       labelSmall: TextStyle(color:Colors.white, fontFamily: "medium", fontSize: 11),
     ),
     primaryColor: PoolinoColors.baseColor,
+    canvasColor: Colors.white,
     colorScheme: ColorScheme(
         brightness: Brightness.dark,
         primary: PoolinoColors.baseColor,
         onPrimary: Colors.red,
-        secondary: Colors.green,
+        secondary: Colors.blue,
         onSecondary: Colors.blue,
         error: Colors.orange,
         onError: Colors.pink,
         background: Colors.black,
-        onBackground: Colors.amber,
+        onBackground: Colors.grey,
         surface: Colors.cyanAccent,
-        onSurface: Colors.purple)
+        onSurface: Colors.grey)
   );
 
   static ThemeData get lightTheme => ThemeData.light().copyWith(
@@ -55,18 +56,19 @@ class MyThemes {
       labelSmall: TextStyle(color:Colors.black, fontFamily: "medium", fontSize: 11),
     ),
       primaryColor: PoolinoColors.baseColor,
+      canvasColor: Colors.black,
       colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: PoolinoColors.baseColor,
-          onPrimary: Colors.lightGreenAccent,
-          secondary: Colors.green,
+          onPrimary: PoolinoColors.baseColor,
+          secondary: Colors.blue,
           onSecondary: Colors.blue,
           error: Colors.red,
           onError: Colors.pink,
           background: Colors.red,
           onBackground: Colors.grey,
-          surface: Colors.cyanAccent,
-          onSurface: Colors.purple,
+          surface: PoolinoColors.baseColor,
+          onSurface: Colors.grey,
       )
 
   );

@@ -16,29 +16,36 @@ class PoolinoTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var colorScheme = Theme.of(context).colorScheme;
+    FocusNode myFocusNode = FocusNode();
 
     return Directionality(
       textDirection: TextDirection.rtl,
       child: TextFormField(
         controller: controller,
+        focusNode: myFocusNode,
         keyboardType: TextInputType.phone,
         maxLength: maxLength,
         maxLines: maxLines,
         minLines: minLines,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         cursorRadius: const Radius.circular(20),
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.end,
         cursorColor: PoolinoColors.baseColor,
         textAlignVertical: TextAlignVertical.center,
-        style: theme.textTheme.titleLarge,
         decoration: InputDecoration(
           hintTextDirection: TextDirection.rtl,
           counterText: "",
-          labelStyle: TextStyle(color: colorScheme.onPrimary),
+          suffixIcon: IconButton(
+            icon: Icon(Icons.clear, color: theme.canvasColor, size: 20,),
+            highlightColor: Colors.blue.withOpacity(0.05),
+            onPressed: () {
+              controller.clear();
+          },),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide(
-              width: 2,
+              width: 1,
               color: PoolinoColors.baseColor,
             ),
           ),

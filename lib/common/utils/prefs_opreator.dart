@@ -9,16 +9,12 @@ class PrefsOperator {
     sharedPreferences = locator<SharedPreferences>();
   }
 
-  saveUserData(token, userName, email) async {
-    sharedPreferences.setString("user_token", token);
-    sharedPreferences.setString("user_name", userName);
-    sharedPreferences.setString("user_email", email);
-    sharedPreferences.setBool("loggedIn", true);
+  setSharedData(key, value) async {
+    sharedPreferences.setString(key, value);
   }
-
-  getUserToken() async {
-    final String? userToken = sharedPreferences.getString("user_token");
-    return userToken;
+  getSharedData(key) async {
+    final String? data = sharedPreferences.getString(key);
+    return data;
   }
 
   changeIntroState() async {
@@ -31,6 +27,10 @@ class PrefsOperator {
 
   Future<bool> getLoggedIn() async {
     return sharedPreferences.getBool("loggedIn") ?? false;
+  }
+
+  setLoggedIn() async {
+    return sharedPreferences.setBool("loggedIn", true);
   }
 
   Future<void> logout() async {

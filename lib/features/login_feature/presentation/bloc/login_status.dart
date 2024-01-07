@@ -3,6 +3,7 @@
 import '../../domain/entities/login_entity.dart';
 
 abstract class LoginStatus{}
+class LoadingInitial extends LoginStatus{}
 class LoginLoading extends LoginStatus{}
 class LoginComplete extends LoginStatus{
   final LoginEntity loginEntity;

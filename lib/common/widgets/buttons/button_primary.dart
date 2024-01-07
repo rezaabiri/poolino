@@ -12,16 +12,16 @@ class ButtonPrimary extends StatelessWidget {
 
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      height: 65,
+      height: 40,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: PoolinoColors.baseColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(10),
           )
         ),
           onPressed: onPressed,
-          child: Text(text, style: theme.textTheme.titleMedium,),
+          child: Text(text, style: const TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.white),),
       ),
     );
   }

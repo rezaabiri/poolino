@@ -14,7 +14,7 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCase loginUseCase;
 
-  LoginBloc(this.loginUseCase) : super(LoginState(loginStatus: LoginLoading())){
+  LoginBloc(this.loginUseCase) : super(LoginState(loginStatus: LoadingInitial())){
     on<LoadLoginEvent>((event, emit) async {
       emit(state.copyWith(newLoginStatus: LoginLoading()));
       DataState dataState = await loginUseCase(event.loginParams);

@@ -16,10 +16,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), ()=> Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.rightToLeft, child: HomePage())));
+    Timer(
+        Duration(seconds: 3),
+        () => Navigator.pushReplacement(
+            context,
+            PageTransition(type: PageTransitionType.rightToLeft, child: HomePage())));
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,8 +36,18 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(".پولینو", style: TextStyle(fontFamily: "yekan_bold", color: Colors.white, fontSize: 36),),
-              Text(" :) حساب هیچی از دستت در نمی ره", style: TextStyle(fontFamily: "yekan_regular", color: Colors.white, fontSize: 16)),
+              Text(
+                ".پولینو",
+                style: TextStyle(
+                    fontFamily: "yekan_bold",
+                    color: Colors.white,
+                    fontSize: 36),
+              ),
+              Text(" :) حساب هیچی از دستت در نمی ره",
+                  style: TextStyle(
+                      fontFamily: "yekan_regular",
+                      color: Colors.white,
+                      fontSize: 16)),
             ],
           ),
         ),

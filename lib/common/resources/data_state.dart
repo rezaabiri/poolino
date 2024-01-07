@@ -11,5 +11,5 @@ class DataSuccess<T> extends DataState<T>{
 }
 
 class DataFailed<T> extends DataState<T>{
-  const DataFailed(String error) : super(null, error);
+  const DataFailed(String? error) : super(null, error);
 }

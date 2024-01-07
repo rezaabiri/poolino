@@ -33,12 +33,14 @@ class CheckExceptions {
         return DataFailed(appException.message);
     /// get refresh token and call api again
       case UnauthorisedException:
-        if (refreshAttempts < 2) {
+        return DataFailed(appException.message);
+
+    /*if (refreshAttempts < 2) {
           await refreshToken();
           return await repeatRequestWithNewToken();
         } else {
           return DataFailed(appException.message);
-        }
+        }*/
 
     /// server error
       case ServerException:

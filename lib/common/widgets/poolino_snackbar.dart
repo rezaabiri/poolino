@@ -10,7 +10,7 @@ class PoolinoSnackBar {
 
   PoolinoSnackBar({required this.icon, required this.type});
 
-  void showPoolinoSnackBar(BuildContext context, String message) {
+  void show(BuildContext context, String message) {
     final snackbar = AnimatedSnackBar(
       mobileSnackBarPosition: MobileSnackBarPosition.bottom,
       duration: const Duration(seconds: 5),
@@ -23,7 +23,7 @@ class PoolinoSnackBar {
           builder: (context) {
             return Container(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              height: 72,
+              height: 55,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(14),
@@ -34,7 +34,7 @@ class PoolinoSnackBar {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Icon(icon, color: Colors.white),
-                  Text(message, style: const TextStyle(fontSize: 16, fontFamily: "yekan_semibold", color: Colors.white),),
+                  Expanded(child: Text(message, style: const TextStyle(fontSize: 14, fontFamily: "regular", color: Colors.white), textDirection: TextDirection.rtl,)),
                 ],
               )
             );

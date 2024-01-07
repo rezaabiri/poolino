@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:poolino/common/error_handler/check_exception.dart';
 import 'package:poolino/common/params/login_params.dart';
 import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/features/login_feature/models/login_model.dart';
@@ -17,19 +18,23 @@ class LoginRepositoryImpl extends LoginRepository {
 
   @override
   Future<DataState<LoginEntity>> fetchLogin(LoginParams loginParams) async {
+    Response response;
+
+    response = await apiProvider.login(
+        loginParams.email,
+        loginParams.password);
+    if(response.statusCode == 200){
+      LoginEntity loginEntity = LoginModel.fromJson(response.data);
+      return DataSuccess(loginEntity);
+    }else {
+      return const DataFailed("خطاهای کسشر خورده");
+    }
 
     try {
-      Response response = await apiProvider.login(loginParams.email, loginParams.password);
-      if(response.statusCode == 200){
-        LoginEntity loginEntity = LoginModel.fromJson(response.data);
-        return DataSuccess(loginEntity);
-      }else {
-        return const DataFailed("خطاهای کسشر خورده");
-      }
 
-    }catch (e){
-      print(e.toString());
-      return const DataFailed("خراب");
+    }on Exception catch (stackTrace, error){
+      print(stackTrace.toString());
+      return DataFailed("stackTrace.toString()");
     }
   }
 }
