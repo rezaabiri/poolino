@@ -1,5 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:poolino/common/poolino_colors.dart';
 
 import '../constants.dart';
 
@@ -22,12 +23,12 @@ class PoolinoSnackBar {
         return Builder(
           builder: (context) {
             return Container(
-              padding: const EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 16, right: 16),
               height: 55,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                color: type == Constants.ERROR ? Colors.red : (type==Constants.WARNING ? Colors.orangeAccent : Colors.green)  ,
+                borderRadius: BorderRadius.circular(10),
+                color: type == Constants.ERROR ? PoolinoColors.error : (type==Constants.WARNING ? PoolinoColors.warning : PoolinoColors.success)  ,
 
               ),
               child: Row(

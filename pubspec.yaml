@@ -63,6 +63,8 @@ dev_dependencies:
   shared_preferences: ^2.2.2
   equatable: ^2.0.3
   pinput: ^3.0.1
+  delayed_display: ^2.0.0
+
 
 
 

@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -55,7 +56,7 @@ class _LoginPageState extends State<VerifyCodePage> {
        body: SingleChildScrollView(
          clipBehavior: Clip.antiAliasWithSaveLayer,
          child: Padding(
-           padding: const EdgeInsets.all(20),
+           padding: const EdgeInsets.all(16),
            child: Column(
              mainAxisAlignment: MainAxisAlignment.center,
              children: [
@@ -67,9 +68,16 @@ class _LoginPageState extends State<VerifyCodePage> {
                  ),
                ),
                const SizedBox(height: 24,),
-               PinPut(formKey: formKey, pinController: pinController, correctPin: "2002", onComplete: (pin){
+               PinPut(formKey: formKey, pinController: pinController, correctPin: "2002",
+                 onChange: (pin){
+                   BlocProvider.of<VerifyButton>(context).changeState(false);
+                 },
+                 onComplete: (pin){
                  if(pin == "2002"){
                    BlocProvider.of<VerifyButton>(context).changeState(true);
+                 }else {
+                   BlocProvider.of<VerifyButton>(context).changeState(false);
+                   PoolinoSnackBar(icon: CupertinoIcons.clear, type: Constants.ERROR).show(context, "کد تایید صحیح نیست");
                  }
                },),
                const SizedBox(height: 24,),

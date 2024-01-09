@@ -6,7 +6,8 @@ class PinPut extends StatelessWidget {
   final TextEditingController pinController;
   final String correctPin;
   final Function(String) onComplete;
-  PinPut({super.key, required this.formKey, required this.pinController, required this.correctPin, required this.onComplete});
+  final Function(String) onChange;
+  PinPut({super.key, required this.formKey, required this.pinController, required this.correctPin, required this.onChange,required this.onComplete});
   final focusNode = FocusNode();
   final defaultPinTheme = PinTheme(
     width: 50,
@@ -46,7 +47,7 @@ class PinPut extends StatelessWidget {
                 onComplete(pin);
               },
               onChanged: (value) {
-                debugPrint('onChanged: $value');
+                onChange(value);
               },
               cursor: Column(
                 mainAxisAlignment: MainAxisAlignment.end,

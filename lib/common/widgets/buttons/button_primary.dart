@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/common/poolino_colors.dart';
+import 'package:delayed_widget/delayed_widget.dart';
+import 'package:delayed_display/delayed_display.dart';
+
+
 
 class ButtonPrimary extends StatelessWidget {
   String text;
@@ -14,22 +18,26 @@ class ButtonPrimary extends StatelessWidget {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
         height: 40,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              backgroundColor: PoolinoColors.baseColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              )
+        child: DelayedDisplay(
+          fadingDuration: Duration(milliseconds: 300),
+          slidingBeginOffset: Offset(0, 0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: PoolinoColors.baseColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                )
+            ),
+            onPressed: onPressed,
+            child: Text(text, style: const TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.white),),
           ),
-          onPressed: onPressed,
-          child: Text(text, style: const TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.white),),
         ),
       );
     }
     return Container(
       height: 40,
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: PoolinoColors.disableButtonColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(
