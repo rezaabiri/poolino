@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
-import 'package:poolino/features/login_feature/screens/phone_page.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
 import 'common/theme/my_theme.dart';
@@ -18,6 +19,7 @@ void main() async {
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(create: (_) => ThemeCubit()),
+    BlocProvider(create: (_) => VerifyButton()),
     BlocProvider.value(value: themeCubit),
     BlocProvider(create: (_) => locator<LoginBloc>())
   ], child: const MyApp(),),

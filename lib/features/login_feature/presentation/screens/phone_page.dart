@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -14,13 +15,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/login_feature/domain/entities/login_entity.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_status.dart';
-import 'package:poolino/features/login_feature/screens/verify_code_page.dart';
-
-import '../../../../common/theme/ThemeSwitcher.dart';
-import '../../../common/params/login_params.dart';
-import '../../../common/utils/prefs_opreator.dart';
-import '../../../locator.dart';
-import '../../home_feature/presentation/screens/home_page.dart';
+import 'package:poolino/features/login_feature/presentation/screens/verify_code_page.dart';
+import '../../../../../common/theme/ThemeSwitcher.dart';
+import '../../../../common/params/login_params.dart';
+import '../../../../common/utils/prefs_opreator.dart';
+import '../../../../locator.dart';
+import '../../../home_feature/presentation/screens/home_page.dart';
 import 'package:page_transition/page_transition.dart';
 
 
@@ -95,14 +95,14 @@ class _LoginPageState extends State<PhonePage> {
                       if(current.loginStatus is LoginComplete){
                         return true;
                       }
-                      return false;},
+                      return false;
+                      },
 
                       builder: (context, state){
                         if(state.loginStatus is LoginLoading){
                           return const Loading();
                         }
                         if(state.loginStatus is LoginComplete){
-                          ///example
                           LoginComplete loginComplete = state.loginStatus as LoginComplete;
                           LoginEntity loginEntity = loginComplete.loginEntity;
 
@@ -110,15 +110,16 @@ class _LoginPageState extends State<PhonePage> {
 
                         return ButtonPrimary(
                           text: "تایید شماره موبایل",
+                          isEnabled: true,
                           onPressed: () {
                             LoginParams loginParams = LoginParams(
-                                "reza@gmail.com", "123456789");
+                                "reza@gmail.com", "123456");
                             BlocProvider.of<LoginBloc>(context).add(
                                 LoadLoginEvent(loginParams));
-                            return CircularProgressIndicator();
 
                           },
                         );
+
 
                       },
                       listener: (context, state){
@@ -127,8 +128,10 @@ class _LoginPageState extends State<PhonePage> {
                         LoginEntity entity = loginen.loginEntity;
                         prefsOperator.setSharedData("accessToken", entity.result?.accessToken);
 
-                        PoolinoSnackBar(icon: Icons.check, type: Constants.SUCCESS)
-                            .show(context, "دیتاها دریافت شد");
+                        PoolinoSnackBar(
+                            icon: CupertinoIcons.checkmark_shield,
+                            type: Constants.SUCCESS
+                        ).show(context, "دیتاها دریافت شد");
 
                         Navigator.pushReplacement(
                             context,

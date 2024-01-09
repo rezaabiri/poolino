@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../common/poolino_colors.dart';
+import '../../../common/poolino_colors.dart';
 
 
 typedef CallBack = void Function(String value);
