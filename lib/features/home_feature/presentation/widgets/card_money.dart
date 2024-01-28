@@ -12,6 +12,8 @@ class CardMoney extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -25,13 +27,13 @@ class CardMoney extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("مانده حساب", style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.white),),
+                    const Text("مانده حساب", style: TextStyle(fontFamily: "regular", fontSize: 16, color: Colors.white),),
                     Row(
                       children: [
-                        Text(total, style: TextStyle(fontFamily: "yekan_bold", fontSize: 35, color: Colors.white)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text("تومان", style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.white)),
+                        Text(total, style: const TextStyle(fontFamily: "regular", fontSize: 32, color: Colors.white)),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
+                          child: Text("تومان", style: TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.white)),
                         )
                       ],
                     )
@@ -70,7 +72,7 @@ class CardMoney extends StatelessWidget {
                             SvgPicture.asset('assets/images/kharj.svg'),
                             const Padding(
                               padding: EdgeInsets.only(left: 8.0),
-                              child: Text("هزینه ها", style: TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.red),),
+                              child: Text("هزینه ها", style: TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.red),),
                             ),
                           ],
                         ),
@@ -78,10 +80,10 @@ class CardMoney extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Row(
                             children: [
-                              const Text("تومان", style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Colors.black)),
+                              const Text("تومان", style: TextStyle(fontFamily: "medium", fontSize: 12, color: Colors.black)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4.0),
-                                child: Text(cost, style: const TextStyle(fontFamily: "yekan_regular", fontSize: 18, color: Colors.black)),
+                                child: Text(cost, style: const TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.black)),
                               ),
 
                             ],
@@ -98,7 +100,7 @@ class CardMoney extends StatelessWidget {
                             SvgPicture.asset('assets/images/daramad.svg'),
                             const Padding(
                               padding: EdgeInsets.only(left: 8.0),
-                              child: Text("درآمد ها", style: TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.green),),
+                              child: Text("درآمد ها", style: TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.green),),
                             ),
                           ],
                         ),
@@ -106,10 +108,10 @@ class CardMoney extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Row(
                             children: [
-                              const Text("تومان", style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Colors.black)),
+                              const Text("تومان", style: TextStyle(fontFamily: "medium", fontSize: 12, color: Colors.black)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4.0),
-                                child: Text(income, style: const TextStyle(fontFamily: "yekan_regular", fontSize: 18, color: Colors.black)),
+                                child: Text(income, style: const TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.black)),
                               ),
 
                             ],

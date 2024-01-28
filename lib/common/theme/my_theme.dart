@@ -23,7 +23,8 @@ class MyThemes {
     ),
     primaryColor: PoolinoColors.baseColor,
     canvasColor: Colors.white,
-    colorScheme: ColorScheme(
+      cardColor: PoolinoColors.baseColor,
+      colorScheme: ColorScheme(
         brightness: Brightness.dark,
         primary: PoolinoColors.baseColor,
         onPrimary: Colors.red,
@@ -57,6 +58,7 @@ class MyThemes {
     ),
       primaryColor: PoolinoColors.baseColor,
       canvasColor: Colors.black,
+      cardColor: PoolinoColors.f7Color,
       colorScheme: ColorScheme(
           brightness: Brightness.light,
           primary: PoolinoColors.baseColor,
