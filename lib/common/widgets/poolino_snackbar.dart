@@ -1,9 +1,8 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:poolino/common/poolino_colors.dart';
-
+import 'package:figma_squircle/figma_squircle.dart';
 import '../constants.dart';
-
 
 class PoolinoSnackBar {
   late IconData icon;
@@ -26,10 +25,14 @@ class PoolinoSnackBar {
               padding: const EdgeInsets.only(left: 16, right: 16),
               height: 55,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: type == Constants.ERROR ? PoolinoColors.error : (type==Constants.WARNING ? PoolinoColors.warning : PoolinoColors.success)  ,
-
+              decoration: ShapeDecoration(
+                color: type == Constants.ERROR ? PoolinoColors.error : (type==Constants.WARNING ? PoolinoColors.warning : PoolinoColors.success),
+                shape: SmoothRectangleBorder(
+                  borderRadius: SmoothBorderRadius(
+                    cornerRadius: 14,
+                    cornerSmoothing: 1,
+                  ),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

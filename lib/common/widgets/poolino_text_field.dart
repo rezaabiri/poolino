@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:figma_squircle/figma_squircle.dart';
+
 
 import '../poolino_colors.dart';
 
@@ -56,7 +58,10 @@ class PoolinoTextField extends StatelessWidget {
             },),
 
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: SmoothBorderRadius(
+                cornerRadius: 14,
+                cornerSmoothing: 1,
+              ),
               borderSide: BorderSide(
                 width: 1,
                 color: PoolinoColors.baseColor,
@@ -70,7 +75,10 @@ class PoolinoTextField extends StatelessWidget {
               )
             ),
             border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: SmoothBorderRadius(
+                  cornerRadius: 14,
+                  cornerSmoothing: 1,
+                ),
                 borderSide: BorderSide(
                     width: 3,
                     color: PoolinoColors.baseColor)

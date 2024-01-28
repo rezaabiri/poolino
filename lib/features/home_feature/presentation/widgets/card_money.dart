@@ -25,12 +25,12 @@ class CardMoney extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("مانده حساب", style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.white),),
+                    const Text("مانده حساب", style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.white),),
                     Row(
                       children: [
-                        Text(total, style: TextStyle(fontFamily: "yekan_bold", fontSize: 35, color: Colors.white)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                        Text(total, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 35, color: Colors.white)),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 8.0),
                           child: Text("تومان", style: TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.white)),
                         )
                       ],

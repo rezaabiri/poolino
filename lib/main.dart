@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
@@ -59,7 +60,7 @@ class _MyAppState extends State<MyApp> {
             darkTheme: MyThemes.darkTheme,
             home: Scaffold(
                 key: scaffoldKey,
-                body: PhonePage()
+                body: HomePage()
             )
         );
       },

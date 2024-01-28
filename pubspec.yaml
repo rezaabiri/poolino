@@ -64,6 +64,8 @@ dev_dependencies:
   equatable: ^2.0.3
   pinput: ^3.0.1
   delayed_display: ^2.0.0
+  figma_squircle: ^0.5.3
+
 
 
 
