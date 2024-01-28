@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     onTap: () {
                       requestPermission();
                       ScaffoldMessenger.of(context)
-                          .showSnackBar(SnackBar(content: Text("ثبت درآمد"),),
+                          .showSnackBar(const SnackBar(content: Text("ثبت درآمد"),),
                       );
                     },
                   ),
@@ -107,12 +107,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         context,
                         onTapChoose: () {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("ثبت هزینه انتخابی")));
+                              const SnackBar(content: Text("ثبت هزینه انتخابی")));
                           Navigator.pop(context);
                         },
                         onTapCustom: () async {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("ثبت هزینه دستی")));
+                              const SnackBar(content: Text("ثبت هزینه دستی")));
                           Navigator.pop(context);
 
                           var permission = await Permission.sms.status;
