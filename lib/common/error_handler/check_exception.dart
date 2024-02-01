@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:poolino/locator.dart';
+import '../../features/login_feature/domain/entities/verify_entity.dart';
 import '../constants.dart';
 import '../resources/data_state.dart';
 import '../utils/prefs_opreator.dart';
@@ -26,9 +27,12 @@ class CheckExceptions {
       case 402:
         throw TokenNotFoundException(message: "token peyda nashod");
       case 404:
+        return const DataFailed("khata");
         throw NotFoundException();
       case 500:
         throw ServerException();
+      case 406:
+        throw Error406Exception(message: response.statusMessage);
       default:
         throw FetchDataException(message: "${response.statusCode}fetch exception");
     }
@@ -36,29 +40,27 @@ class CheckExceptions {
 
   static dynamic getError(AppException appException) async {
     switch (appException.runtimeType) {
-    /// return error came from server
       case BadRequestException:
         return DataFailed(appException.message);
 
       case NotFoundException:
         return DataFailed(appException.message);
-    /// get refresh token and call api again
       case UnauthorisedException:
-        //return DataFailed(appException.message);
-
         if (refreshAttempts < 2) {
           await refreshToken();
-          //return await repeatRequestWithNewToken();
         } else {
           return DataFailed(appException.message);
         }
 
-    /// server error
       case ServerException:
         return DataFailed(appException.message);
 
-    /// dio or timeout and etc error
       case FetchDataException:
+        return DataFailed(appException.message);
+
+      case Error406Exception:
+        return DataFailed(appException.message);
+      default:
         return DataFailed(appException.message);
     }
   }

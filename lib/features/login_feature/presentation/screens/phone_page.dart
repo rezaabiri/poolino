@@ -104,11 +104,6 @@ class _LoginPageState extends State<PhonePage> {
                     height: 40,
                   ),
                   BlocConsumer<LoginBloc, LoginState>(
-                    /*     buildWhen: (previous, current){
-                      if(current.loginStatus is LoginComplete) {
-                        return true;
-                      }
-                      return false;},*/
 
                       listenWhen: (previous, current) {
                         if (current.loginStatus is LoginComplete) {
@@ -116,7 +111,6 @@ class _LoginPageState extends State<PhonePage> {
                         }
                         return false;
                       },
-
                       builder: (context, state) {
                         if (state.loginStatus is LoginLoading) {
                           return const Loading();
@@ -134,7 +128,7 @@ class _LoginPageState extends State<PhonePage> {
                               isEnabled: state.isCorrect,
                               onPressed: () {
                                 LoginParams loginParams = LoginParams(
-                                    "reza@gmail.com", "123456");
+                                    phoneController.value.text, "123456");
                                 BlocProvider.of<LoginBloc>(context).add(
                                     LoadLoginEvent(loginParams));
                               },
@@ -143,13 +137,6 @@ class _LoginPageState extends State<PhonePage> {
                         );
                       },
                       listener: (context, state) {
-                        //LoginStatus login = state.loginStatus;
-                        LoginComplete loginen = state
-                            .loginStatus as LoginComplete;
-                        LoginEntity entity = loginen.loginEntity;
-                        prefsOperator.setSharedData(
-                            "accessToken", entity.result?.accessToken);
-
                         PoolinoSnackBar(
                             icon: CupertinoIcons.checkmark_shield,
                             type: Constants.SUCCESS
@@ -158,7 +145,7 @@ class _LoginPageState extends State<PhonePage> {
                         Navigator.pushReplacement(
                             context,
                             PageTransition(type: PageTransitionType.rightToLeft,
-                                child: VerifyCodePage()));
+                                child: const VerifyCodePage()));
                       })
                 ],
               ),

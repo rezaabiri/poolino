@@ -1,22 +1,27 @@
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
-import 'package:otp_text_field/style.dart';
-import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/common/widgets/buttons/button_primary.dart';
-
 import 'package:pinput/pinput.dart';
+import 'package:poolino/common/base_model.dart';
+import 'package:poolino/common/resources/data_state.dart';
+import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
+import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_status.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
 
 import '../../../../common/constants.dart';
+import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
+import '../../../../common/widgets/loading.dart';
+import 'package:page_transition/page_transition.dart';
 
 
 class VerifyCodePage extends StatefulWidget {
@@ -44,72 +49,128 @@ class _LoginPageState extends State<VerifyCodePage> {
       border: Border.all(color: Colors.grey),
     ),
   );
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        actions: const [ThemeSwitcher()],
-      ),
-       body: SingleChildScrollView(
-         clipBehavior: Clip.antiAliasWithSaveLayer,
-         child: Padding(
-           padding: const EdgeInsets.all(16),
-           child: Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-               SvgPicture.asset("assets/images/login_vector.svg"),
-               const SizedBox(height: 24,),
-               Center(
-                 child: Text(".کد تایید به شماره (09150575854) ارسال شد",
-                     style: theme.textTheme.labelLarge
-                 ),
-               ),
-               const SizedBox(height: 24,),
-               PinPut(formKey: formKey, pinController: pinController, correctPin: "2002",
-                 onChange: (pin){
-                   BlocProvider.of<VerifyButton>(context).changeState(false);
-                 },
-                 onComplete: (pin){
-                 if(pin == "2002"){
-                   BlocProvider.of<VerifyButton>(context).changeState(true);
-                 }else {
-                   BlocProvider.of<VerifyButton>(context).changeState(false);
-                   PoolinoSnackBar(icon: CupertinoIcons.clear, type: Constants.ERROR).show(context, "کد تایید صحیح نیست");
-                 }
-               },),
-               const SizedBox(height: 24,),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                 children: [
-                   Text("ویرایش شماره",
-                     style: TextStyle(fontFamily: 'medium', fontSize: 12, color: theme.primaryColor),
-                   ),
-                   Text("ارسال مجدد کد تایید: 01:30", style: theme.textTheme.labelMedium,)
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          actions: const [ThemeSwitcher()],
+        ),
+        body: SingleChildScrollView(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset("assets/images/login_vector.svg"),
+                const SizedBox(
+                  height: 24,
+                ),
+                Center(
+                  child: Text(".کد تایید به شماره (09150575854) ارسال شد",
+                      style: theme.textTheme.labelLarge),
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                BlocConsumer<VerifyBloc, VerifyState>(
+                  listenWhen: (previous, current) {
+                    if (current.verifyStatus is VerifyComplete) {
+                      return true;
+                    }
+                    if (current.verifyStatus is VerifyError) {
+                      return true;
+                    }
+                    return false;
+                  },
 
-                 ],
-               ),
-               const SizedBox(height: 16,),
-               BlocBuilder<VerifyButton, VerifyButtonState>(
-                 builder: (context, state) {
+                  listener: (context, state) {
+                    if (state.verifyStatus is VerifyComplete) {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(type: PageTransitionType.rightToLeft,
+                              child: HomePage()));
+                      BlocProvider.of<VerifyButton>(context).changeState(true);
+                    }
+
+                    if(state.verifyStatus is VerifyError){
+                      BlocProvider.of<VerifyButton>(context).changeState(false);
+                      PoolinoSnackBar(
+                          icon: CupertinoIcons.clear,
+                          type: Constants.ERROR)
+                          .show(context, "کد تایید صحیح نیست");
+                    }
+
+                  },
+                  builder: (context, state) {
+                    if (state.verifyStatus is VerifyLoading) {
+                      return const Loading();
+                    }
+                    if (state.verifyStatus is VerifyComplete) {
+                      VerifyComplete verifyComplete = state.verifyStatus as VerifyComplete;
+
+                      BlocProvider.of<VerifyButton>(context).changeState(true);
+                    }
+
+                    return PinPut(
+                      formKey: formKey,
+                      pinController: pinController,
+                      isValid: '000',
+                      onChange: (pin) {
+                        BlocProvider.of<VerifyButton>(context).changeState(false);
+                      },
+                      onComplete: (pin) {
+                        final VerifyParams verifyParams = VerifyParams("09150575854", pin);
+                        BlocProvider.of<VerifyBloc>(context).add(
+                            LoadVerifyEvent(verifyParams));
+
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "ویرایش شماره",
+                      style: TextStyle(
+                          fontFamily: 'medium',
+                          fontSize: 12,
+                          color: theme.primaryColor),
+                    ),
+                    Text(
+                      "ارسال مجدد کد تایید: 01:30",
+                      style: theme.textTheme.labelMedium,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                BlocBuilder<VerifyButton, VerifyButtonState>(
+                  builder: (context, state) {
                     return ButtonPrimary(
                         text: "تایید",
                         isEnabled: state.isCorrect,
-                        onPressed: (){
-                          pinController.text = "1234";
+                        onPressed: () {
+
                         });
-                   },
-               ),
-             ],
-           ),
-         ),
-       )
-    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
-  /*Form form(){
+/*Form form(){
     var theme = Theme.of(context);
 
     return Form(
@@ -222,11 +283,11 @@ class _LoginPageState extends State<VerifyCodePage> {
                   border: Border.all(color: Colors.blue, width: 2),
                 ),
               ),
-              *//*focusedPinTheme: defaultPinTheme.copyWith(
+              */ /*focusedPinTheme: defaultPinTheme.copyWith(
                 decoration: defaultPinTheme.decoration!.copyWith(
                   border: Border.all(color: Colors.blue, width: 2),
                 ),
-              ),*//*
+              ),*/ /*
               submittedPinTheme:  PinTheme(
                 width: MediaQuery.of(context).size.width/4,
                 height: 60,
@@ -245,13 +306,13 @@ class _LoginPageState extends State<VerifyCodePage> {
               ),
             ),
           ),
-          *//*TextButton(
+          */ /*TextButton(
             onPressed: () {
               focusNode.unfocus();
               formKey.currentState!.validate();
             },
             child: const Text('Validate'),
-          ),*//*
+          ),*/ /*
         ],
       ),
     );

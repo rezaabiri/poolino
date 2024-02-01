@@ -1,5 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:poolino/features/login_feature/domain/repository/verify_repository.dart';
+import 'package:poolino/features/login_feature/domain/use_cases/verify_usecase.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
+import 'package:poolino/features/login_feature/repository/verify_repository_impl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/utils/prefs_opreator.dart';
@@ -24,6 +28,13 @@ setup() async {
   locator.registerSingleton<LoginRepository>(LoginRepositoryImpl(locator()));
   locator.registerSingleton<LoginUseCase>(LoginUseCase(locator()));
   locator.registerSingleton<LoginBloc>(LoginBloc(locator()));
+
+  //locator.registerSingleton<ApiProvider>(ApiProvider());
+  locator.registerSingleton<VerifyRepository>(VerifyRepositoryImpl(locator()));
+  locator.registerSingleton<VerifyUseCase>(VerifyUseCase(locator()));
+  locator.registerSingleton<VerifyBloc>(VerifyBloc(locator()));
+
+
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
 
   //locator.registerSingleton<ProductApiProvider>(ProductApiProvider(locator()));

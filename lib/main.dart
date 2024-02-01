@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
 
@@ -25,6 +26,7 @@ void main() async {
     BlocProvider(create: (_) => locator<LoginBloc>()),
     BlocProvider(create: (_) => VerifyButton()),
     BlocProvider(create: (_) => LoginButtonCubit()),
+    BlocProvider(create: (_) => locator<VerifyBloc>()),
   ], child: const MyApp(),),
   );
 }
@@ -60,7 +62,7 @@ class _MyAppState extends State<MyApp> {
             darkTheme: MyThemes.darkTheme,
             home: Scaffold(
                 key: scaffoldKey,
-                body: HomePage()
+                body: PhonePage()
             )
         );
       },
