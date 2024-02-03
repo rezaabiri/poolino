@@ -49,9 +49,8 @@ class ApiProvider{
       );
       return response;
 
-    }on DioError catch (stack, error){
+    }on DioError catch (stack){
       CheckExceptions.response(stack.response!);
-
       print(stack.response!);
     }
     /*var response = await _dio.post(

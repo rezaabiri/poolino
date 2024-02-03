@@ -25,6 +25,7 @@ import '../../../home_feature/presentation/screens/home_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:delayed_widget/delayed_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -53,7 +54,6 @@ class _LoginPageState extends State<PhonePage> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     PrefsOperator prefsOperator = locator<PrefsOperator>();
-
 
     return SafeArea(
       child: Scaffold(
@@ -92,7 +92,7 @@ class _LoginPageState extends State<PhonePage> {
                     controller: phoneController,
                     maxLength: 11,
                     maxLines: 1,
-                    onChange: (value) {
+                    onChange: (value) async {
                       if(value.length != 11){
                         BlocProvider.of<LoginButtonCubit>(context).changeState(false);
                       }else{
@@ -127,6 +127,7 @@ class _LoginPageState extends State<PhonePage> {
                               text: "تایید شماره موبایل",
                               isEnabled: state.isCorrect,
                               onPressed: () {
+                                prefsOperator.setSharedData("phone", phoneController.text.toString());
                                 LoginParams loginParams = LoginParams(
                                     phoneController.value.text, "123456");
                                 BlocProvider.of<LoginBloc>(context).add(
@@ -137,12 +138,7 @@ class _LoginPageState extends State<PhonePage> {
                         );
                       },
                       listener: (context, state) {
-                        PoolinoSnackBar(
-                            icon: CupertinoIcons.checkmark_shield,
-                            type: Constants.SUCCESS
-                        ).show(context, "دیتاها دریافت شد");
-
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             PageTransition(type: PageTransitionType.rightToLeft,
                                 child: const VerifyCodePage()));

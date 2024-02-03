@@ -124,6 +124,22 @@ flutter:
       fonts:
         - asset: assets/fonts/medium.ttf
 
+    - family: bold
+      fonts:
+        - asset: assets/fonts/bold.ttf
+
+    - family: black
+      fonts:
+        - asset: assets/fonts/black.ttf
+
+    - family: extra_bold
+      fonts:
+        - asset: assets/fonts/extra_bold.ttf
+
+    - family: extra_black
+      fonts:
+        - asset: assets/fonts/extra_black.ttf
+
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

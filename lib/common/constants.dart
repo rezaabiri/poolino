@@ -8,5 +8,5 @@ class Constants {
   static const baseUrl = "https://poolinoapp.offerja.ir/poolino_ftp/public/api/";
   static const login = "login";
   static const verify = "verify";
-  static const refresh = "refresh";
+  static const refresh = "refreshToken";
 }

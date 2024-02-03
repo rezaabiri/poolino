@@ -20,8 +20,11 @@ import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart
 import '../../../../common/constants.dart';
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
+import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../common/widgets/loading.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../../../../locator.dart';
 
 
 class VerifyCodePage extends StatefulWidget {
@@ -53,6 +56,7 @@ class _LoginPageState extends State<VerifyCodePage> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    PrefsOperator prefsOperator = locator<PrefsOperator>();
 
     return Scaffold(
         appBar: AppBar(
@@ -71,7 +75,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                   height: 24,
                 ),
                 Center(
-                  child: Text(".کد تایید به شماره (09150575854) ارسال شد",
+                  child: Text(".کد تایید به شماره (${prefsOperator.getSharedDataNoSync("phone")}) ارسال شد",
                       style: theme.textTheme.labelLarge),
                 ),
                 const SizedBox(
@@ -94,6 +98,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                           context,
                           PageTransition(type: PageTransitionType.rightToLeft,
                               child: HomePage()));
+                      prefsOperator.setLoggedIn();
                       BlocProvider.of<VerifyButton>(context).changeState(true);
                     }
 
@@ -112,7 +117,8 @@ class _LoginPageState extends State<VerifyCodePage> {
                     }
                     if (state.verifyStatus is VerifyComplete) {
                       VerifyComplete verifyComplete = state.verifyStatus as VerifyComplete;
-
+                      prefsOperator.setSharedData("accessToken", verifyComplete.verifyEntity.result!.accessToken.toString());
+                      prefsOperator.setSharedData("refreshToken", verifyComplete.verifyEntity.result!.refreshToken.toString());
                       BlocProvider.of<VerifyButton>(context).changeState(true);
                     }
 
@@ -124,7 +130,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                         BlocProvider.of<VerifyButton>(context).changeState(false);
                       },
                       onComplete: (pin) {
-                        final VerifyParams verifyParams = VerifyParams("09150575854", pin);
+                        final VerifyParams verifyParams = VerifyParams(prefsOperator.getSharedDataNoSync("phone"), pin);
                         BlocProvider.of<VerifyBloc>(context).add(
                             LoadVerifyEvent(verifyParams));
 

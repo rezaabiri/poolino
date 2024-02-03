@@ -27,7 +27,6 @@ class CheckExceptions {
       case 402:
         throw TokenNotFoundException(message: "token peyda nashod");
       case 404:
-        return const DataFailed("khata");
         throw NotFoundException();
       case 500:
         throw ServerException();
@@ -59,7 +58,7 @@ class CheckExceptions {
         return DataFailed(appException.message);
 
       case Error406Exception:
-        return DataFailed(appException.message);
+        return DataFailed(appException.message +"رضا عبیری");
       default:
         return DataFailed(appException.message);
     }
