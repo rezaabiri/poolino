@@ -22,12 +22,14 @@ class LoginRepositoryImpl extends LoginRepository {
 
     response = await apiProvider.login(
         loginParams.email,
-        loginParams.password);
+        loginParams.password,
+        loginParams.signature
+    );
     if(response.statusCode == 200){
       LoginEntity loginEntity = LoginModel.fromJson(response.data);
       return DataSuccess(loginEntity);
     }else {
-      return const DataFailed("خطاهای کسشر خورده");
+      return const DataFailed("خطا خورده");
     }
 
     try {

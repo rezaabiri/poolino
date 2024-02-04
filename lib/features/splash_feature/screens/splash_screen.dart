@@ -69,8 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> gotoHome() async {
     PrefsOperator prefsOperator = locator<PrefsOperator>();
-    var loggedIn = await prefsOperator.getIntroState();
-    return Future.delayed(const Duration(seconds: 3),() {
+    var loggedIn = await prefsOperator.getLoggedIn();
+    print(loggedIn);
+    return Future.delayed(const Duration(seconds: 2),() {
 
       if(loggedIn) {
         Future.delayed(const Duration(seconds: 3), (){

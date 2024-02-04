@@ -9,14 +9,15 @@ import 'package:poolino/common/error_handler/check_exception.dart';
 class ApiProvider{
   final Dio _dio = Dio();
 
-  Future<dynamic> login(email, password) async {
+  Future<dynamic> login(email, password, signature) async {
 
     try{
       var response = await _dio.post(
           Constants.baseUrl+Constants.login,
           data: {
             'email': email,
-            'password':password
+            'password':password,
+            'signature':signature
           }
       );
       return response;

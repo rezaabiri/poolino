@@ -15,6 +15,7 @@ import 'package:poolino/features/home_feature/presentation/screens/home_page.dar
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_status.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
 
 import '../../../../common/constants.dart';
@@ -104,6 +105,7 @@ class _LoginPageState extends State<VerifyCodePage> {
 
                     if(state.verifyStatus is VerifyError){
                       BlocProvider.of<VerifyButton>(context).changeState(false);
+                      BlocProvider.of<VerifyPinPut>(context).changeState(false);
                       PoolinoSnackBar(
                           icon: CupertinoIcons.clear,
                           type: Constants.ERROR)
@@ -122,19 +124,22 @@ class _LoginPageState extends State<VerifyCodePage> {
                       BlocProvider.of<VerifyButton>(context).changeState(true);
                     }
 
-                    return PinPut(
-                      formKey: formKey,
-                      pinController: pinController,
-                      isValid: '000',
-                      onChange: (pin) {
-                        BlocProvider.of<VerifyButton>(context).changeState(false);
-                      },
-                      onComplete: (pin) {
-                        final VerifyParams verifyParams = VerifyParams(prefsOperator.getSharedDataNoSync("phone"), pin);
-                        BlocProvider.of<VerifyBloc>(context).add(
-                            LoadVerifyEvent(verifyParams));
-
-                      },
+                    return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
+                      builder: (context, state) {
+                        pinController.clear();
+                        return PinPut(
+                          formKey: formKey,
+                          pinController: pinController,
+                          onChange: (pin) {
+                            BlocProvider.of<VerifyButton>(context).changeState(false);
+                          },
+                          onComplete: (pin) {
+                            final VerifyParams verifyParams = VerifyParams(prefsOperator.getSharedDataNoSync("phone"), pin);
+                            BlocProvider.of<VerifyBloc>(context).add(
+                                LoadVerifyEvent(verifyParams));
+                            },
+                        );
+                        },
                     );
                   },
                 ),

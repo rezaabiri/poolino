@@ -6,6 +6,7 @@ import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
 import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
@@ -28,6 +29,7 @@ void main() async {
     BlocProvider(create: (_) => VerifyButton()),
     BlocProvider(create: (_) => LoginButtonCubit()),
     BlocProvider(create: (_) => locator<VerifyBloc>()),
+    BlocProvider(create: (_) => VerifyPinPut()),
   ], child: const MyApp(),),
   );
 }
@@ -50,7 +52,6 @@ class _MyAppState extends State<MyApp> {
     var theme = Theme.of(context).canvasColor;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-      statusBarBrightness: Brightness.dark,
       statusBarIconBrightness: Brightness.dark
     ));
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
