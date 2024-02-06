@@ -26,7 +26,7 @@ import '../../../home_feature/presentation/screens/home_page.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:delayed_display/delayed_display.dart';
 import 'package:delayed_widget/delayed_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';import 'package:android_sms_retriever/android_sms_retriever.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -128,9 +128,8 @@ class _LoginPageState extends State<PhonePage> {
                             onPressed: () {
                               prefsOperator.setSharedData("phone", phoneController.text.toString());
                               LoginParams loginParams = LoginParams(
-                                  phoneController.value.text, "", getSignature().toString());
-                              BlocProvider.of<LoginBloc>(context).add(
-                                  LoadLoginEvent(loginParams));
+                                  phoneController.value.text, "");
+                              BlocProvider.of<LoginBloc>(context).add(LoadLoginEvent(loginParams));
                             },
                           );
                         },
@@ -150,8 +149,4 @@ class _LoginPageState extends State<PhonePage> {
     );
   }
 
-  Future<String?> getSignature() async {
-    return await AndroidSmsRetriever.getAppSignature();
-
-  }
 }

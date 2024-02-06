@@ -3,13 +3,14 @@ import 'package:dio/dio.dart';
 import 'package:poolino/common/constants.dart';
 import 'package:poolino/common/error_handler/app_exception.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
+import 'package:android_sms_retriever/android_sms_retriever.dart';
 
 
 
 class ApiProvider{
   final Dio _dio = Dio();
 
-  Future<dynamic> login(email, password, signature) async {
+  Future<dynamic> login(email, password) async {
 
     try{
       var response = await _dio.post(
@@ -17,9 +18,10 @@ class ApiProvider{
           data: {
             'email': email,
             'password':password,
-            'signature':signature
+            'signature': await AndroidSmsRetriever.getAppSignature()
           }
       );
+      print(response);
       return response;
 
     }on DioError catch (stack, error){
@@ -27,6 +29,8 @@ class ApiProvider{
 
       print(stack.response!);
     }
+
+
     /*var response = await _dio.post(
       Constants.baseUrl+Constants.login,
       data: {

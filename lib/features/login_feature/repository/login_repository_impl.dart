@@ -23,7 +23,6 @@ class LoginRepositoryImpl extends LoginRepository {
     response = await apiProvider.login(
         loginParams.email,
         loginParams.password,
-        loginParams.signature
     );
     if(response.statusCode == 200){
       LoginEntity loginEntity = LoginModel.fromJson(response.data);
