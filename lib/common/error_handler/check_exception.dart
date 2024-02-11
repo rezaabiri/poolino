@@ -70,14 +70,14 @@ class CheckExceptions {
     Dio dio = locator<Dio>();
     PrefsOperator prefsOperator = locator<PrefsOperator>();
 
-   // var token = prefsOperator.getSharedData("accessToken");
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Bvb2xpbm9hcHAub2ZmZXJqYS5pci9wb29saW5vX2Z0cC9wdWJsaWMvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MDQ3MTA5MzIsImV4cCI6MTcwNDcxNDUzMiwibmJmIjoxNzA0NzEwOTMyLCJqdGkiOiJkMnFZMnZpd1d0N2IyNGlVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.fKJvD-gtvnopuCoCjkfzHXORFsjkHk8EEJ9EUgUNqs4";
+    var accessToken = await prefsOperator.getSharedData("accessToken");
+    var refreshToken = await prefsOperator.getSharedData("refreshToken");
     Response response = await dio.post(Constants.baseUrl+Constants.refresh,
         options: Options(
           contentType: "application/json"
         ),
         data: {
-      'token': token}
+      'token': refreshToken}
     );
 
 

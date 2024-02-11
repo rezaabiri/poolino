@@ -32,7 +32,6 @@ class VerifyRepositoryImpl extends VerifyRepository {
       VerifyEntity verifyEntity = VerifyModel.fromJson(response.data);
       return DataSuccess(verifyEntity);
     }on Exception catch (e){
-      print(e.toString());
       return DataFailed(e.toString());
       //return await CheckExceptions.getError(e);
     }
