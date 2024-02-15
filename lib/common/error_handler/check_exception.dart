@@ -76,7 +76,8 @@ class CheckExceptions {
           contentType: "application/json"
         ),
         data: {
-      'token': token}
+      'token': token
+    }
     );
 
 
