@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:poolino/locator.dart';
+import '../../features/login_feature/domain/entities/verify_entity.dart';
 import '../constants.dart';
 import '../resources/data_state.dart';
 import '../utils/prefs_opreator.dart';
@@ -29,6 +30,8 @@ class CheckExceptions {
         throw NotFoundException();
       case 500:
         throw ServerException();
+      case 406:
+        throw Error406Exception(message: response.statusMessage);
       default:
         throw FetchDataException(message: "${response.statusCode}fetch exception");
     }
@@ -36,29 +39,27 @@ class CheckExceptions {
 
   static dynamic getError(AppException appException) async {
     switch (appException.runtimeType) {
-    /// return error came from server
       case BadRequestException:
         return DataFailed(appException.message);
 
       case NotFoundException:
         return DataFailed(appException.message);
-    /// get refresh token and call api again
       case UnauthorisedException:
-        //return DataFailed(appException.message);
-
         if (refreshAttempts < 2) {
           await refreshToken();
-          //return await repeatRequestWithNewToken();
         } else {
           return DataFailed(appException.message);
         }
 
-    /// server error
       case ServerException:
         return DataFailed(appException.message);
 
-    /// dio or timeout and etc error
       case FetchDataException:
+        return DataFailed(appException.message);
+
+      case Error406Exception:
+        return DataFailed(appException.message +"رضا عبیری");
+      default:
         return DataFailed(appException.message);
     }
   }
@@ -69,15 +70,14 @@ class CheckExceptions {
     Dio dio = locator<Dio>();
     PrefsOperator prefsOperator = locator<PrefsOperator>();
 
-   // var token = prefsOperator.getSharedData("accessToken");
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Bvb2xpbm9hcHAub2ZmZXJqYS5pci9wb29saW5vX2Z0cC9wdWJsaWMvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MDQ3MTA5MzIsImV4cCI6MTcwNDcxNDUzMiwibmJmIjoxNzA0NzEwOTMyLCJqdGkiOiJkMnFZMnZpd1d0N2IyNGlVIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.fKJvD-gtvnopuCoCjkfzHXORFsjkHk8EEJ9EUgUNqs4";
+    var accessToken = await prefsOperator.getSharedData("accessToken");
+    var refreshToken = await prefsOperator.getSharedData("refreshToken");
     Response response = await dio.post(Constants.baseUrl+Constants.refresh,
         options: Options(
           contentType: "application/json"
         ),
         data: {
-      'token': token
-    }
+      'token': refreshToken}
     );
 
 

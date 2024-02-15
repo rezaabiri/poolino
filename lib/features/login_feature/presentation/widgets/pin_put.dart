@@ -4,10 +4,9 @@ import 'package:pinput/pinput.dart';
 class PinPut extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController pinController;
-  final String correctPin;
   final Function(String) onComplete;
   final Function(String) onChange;
-  PinPut({super.key, required this.formKey, required this.pinController, required this.correctPin, required this.onChange,required this.onComplete});
+  PinPut({super.key, required this.formKey, required this.pinController, required this.onChange,required this.onComplete});
   final focusNode = FocusNode();
   final defaultPinTheme = PinTheme(
     width: 50,
@@ -40,9 +39,6 @@ class PinPut extends StatelessWidget {
               errorTextStyle: const TextStyle(fontSize: 0, color: Colors.red, fontFamily: 'regular'),
               separatorBuilder: (index) => const SizedBox(width: 16),
               hapticFeedbackType: HapticFeedbackType.lightImpact,
-              validator: (value) {
-                return value==correctPin ? null : '';
-              },
               onCompleted: (pin) {
                 onComplete(pin);
               },

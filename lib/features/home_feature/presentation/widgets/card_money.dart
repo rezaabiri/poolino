@@ -30,7 +30,7 @@ class CardMoney extends StatelessWidget {
                     const Text("مانده حساب", style: TextStyle(fontFamily: "regular", fontSize: 16, color: Colors.white),),
                     Row(
                       children: [
-                        Text(total, style: const TextStyle(fontFamily: "regular", fontSize: 32, color: Colors.white)),
+                        Text(total, style: const TextStyle(fontFamily: "bold", fontSize: 32, color: Colors.white)),
                         const Padding(
                           padding: EdgeInsets.only(left: 8.0),
                           child: Text("تومان", style: TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.white)),

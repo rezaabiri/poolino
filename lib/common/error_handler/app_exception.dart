@@ -39,3 +39,7 @@ class UnauthorisedException extends AppException {
 class TokenNotFoundException extends AppException {
   TokenNotFoundException({String? message}) : super(message: message ?? "token not found.");
 }
+
+class Error406Exception extends AppException {
+  Error406Exception({String? message}) : super(message: message ?? "406 exception.");
+}

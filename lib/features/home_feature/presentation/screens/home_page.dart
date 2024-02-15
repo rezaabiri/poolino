@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     List<String> prices = [
       "1,230,000",
       "3,400,200",
@@ -159,58 +160,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               const SizedBox(
                 height: 18,
               ),
-              PoolinoTabBar(
-                  tabController: _tabController,
-                  tabs: const [
-                    Tab(
-                      text: "درآمد",
-                    ),
-                    Tab(
-                      text: "هزینه",
-                    ),
-                    Tab(
-                      text: "نامشخص",
-                    ),
-
-
-                  ]
-              ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
-                child: TabBarView(
-                  controller: _tabController,
-                  children:[
-                    ListView.builder(
-                      shrinkWrap: false,
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
+                child: ListView.builder(
+                  shrinkWrap: false,
+                  itemCount: _messages.length,
+                  itemBuilder: (context, index) {
 
-                        return TransactionWidget(
-                          price: getPrice(_messages[index].body.toString()),
-                          title: _messages[index].address.toString(),
-                          date: _messages[index].date.toString(),
-                          state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
+                    return TransactionWidget(
+                      price: getPrice(_messages[index].body.toString()),
+                      title: _messages[index].address.toString(),
+                      date: _messages[index].date.toString(),
+                      state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
 
-                       /* return Expanded(
-                          child: TransactionWidget(
-                            price: prices[index],
-                            title: titles[index],
-                            date: "1402/10/11",
-                            state: states[index].toInt(),*/
-                            onTap: (){
-                              Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: const IncomePage()));
-                            },
-                        );
+                      onTap: (){
+                        Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: const IncomePage()));
                       },
-                    ),
-                    const Center(
-                      child: Text("It's rainy here"),
-                    ),
-                    const Center(
-                      child: Text("It's sunny here"),
-                    ),
-                  ],
+                    );
+                  },
                 ),
+
               ),
             ],
           ),

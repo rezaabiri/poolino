@@ -18,23 +18,17 @@ class LoginRepositoryImpl extends LoginRepository {
 
   @override
   Future<DataState<LoginEntity>> fetchLogin(LoginParams loginParams) async {
-    Response response;
-
-    response = await apiProvider.login(
-        loginParams.email,
-        loginParams.password);
-    if(response.statusCode == 200){
-      LoginEntity loginEntity = LoginModel.fromJson(response.data);
-      return DataSuccess(loginEntity);
-    }else {
-      return const DataFailed("خطاهای کسشر خورده");
-    }
 
     try {
-
-    }on Exception catch (stackTrace, error){
-      print(stackTrace.toString());
-      return DataFailed("stackTrace.toString()");
+      Response response;
+      response = await apiProvider.login(
+        loginParams.email,
+        loginParams.password,
+      );
+      LoginEntity loginEntity = LoginModel.fromJson(response.data);
+      return DataSuccess(loginEntity);
+    }on Exception catch (stackTrace){
+      return DataFailed(stackTrace.toString());
     }
   }
 }

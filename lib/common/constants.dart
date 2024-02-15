@@ -6,6 +6,7 @@ class Constants {
   static const int WARNING = 2;
 
   static const baseUrl = "https://poolinoapp.offerja.ir/poolino_ftp/public/api/";
-  static const login = "auth/login";
-  static const refresh = "auth/refresh";
+  static const login = "login";
+  static const verify = "verify";
+  static const refresh = "refreshToken";
 }

@@ -4,8 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
+import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
+import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
 import 'common/theme/my_theme.dart';
@@ -25,6 +28,8 @@ void main() async {
     BlocProvider(create: (_) => locator<LoginBloc>()),
     BlocProvider(create: (_) => VerifyButton()),
     BlocProvider(create: (_) => LoginButtonCubit()),
+    BlocProvider(create: (_) => locator<VerifyBloc>()),
+    BlocProvider(create: (_) => VerifyPinPut()),
   ], child: const MyApp(),),
   );
 }
@@ -46,7 +51,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context).canvasColor;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.grey
+        statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark
     ));
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -58,9 +64,14 @@ class _MyAppState extends State<MyApp> {
             themeMode: ThemeMode.system,
             theme: state,
             darkTheme: MyThemes.darkTheme,
+            routes: {
+              '/home': (context) => HomePage(),
+              '/splash': (context) => SplashScreen(),
+              '/phone': (context) => PhonePage(),
+            },
             home: Scaffold(
                 key: scaffoldKey,
-                body: HomePage()
+                body: SplashScreen()
             )
         );
       },

@@ -65,6 +65,8 @@ dev_dependencies:
   pinput: ^3.0.1
   delayed_display: ^2.0.0
   figma_squircle: ^0.5.3
+  android_sms_retriever: ^1.3.0
+
 
 
 
@@ -123,6 +125,22 @@ flutter:
     - family: medium
       fonts:
         - asset: assets/fonts/medium.ttf
+
+    - family: bold
+      fonts:
+        - asset: assets/fonts/bold.ttf
+
+    - family: black
+      fonts:
+        - asset: assets/fonts/black.ttf
+
+    - family: extra_bold
+      fonts:
+        - asset: assets/fonts/extra_bold.ttf
+
+    - family: extra_black
+      fonts:
+        - asset: assets/fonts/extra_black.ttf
 
   #
   # For details regarding fonts from package dependencies,

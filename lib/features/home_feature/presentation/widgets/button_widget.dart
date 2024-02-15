@@ -12,21 +12,22 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30),
+      borderRadius: BorderRadius.circular(20),
       child: Material(
-        color: Utils.hexToColor('#F2F6FF'),
+        color: theme.cardColor,
         child: InkWell(
           onTap: onTap,
           child: SizedBox(
             height: 105,
-            width: MediaQuery.of(context).size.width /3.5,
+            width: MediaQuery.of(context).size.width /3.7,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SvgPicture.asset('assets/images/$icon.svg'),
                 const SizedBox(height: 14,),
-                Text(name, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 14, color: Colors.black))
+                Text(name, style: const TextStyle(fontFamily: "medium", fontSize: 12, color: Colors.black))
               ],
             ),
           ),
