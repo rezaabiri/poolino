@@ -16,7 +16,7 @@ class CheckExceptions {
         return response;
       case 400:
         throw BadRequestException(response: response);
-      case 401:
+      case 403:
         if (refreshAttempts < 2) {
           refreshToken();
           //return repeatRequestWithNewToken();
@@ -29,6 +29,7 @@ class CheckExceptions {
       case 404:
         throw NotFoundException();
       case 500:
+        return DataFailed(response.statusMessage);
         throw ServerException();
       case 406:
         throw Error406Exception(message: response.statusMessage);

@@ -3,13 +3,19 @@ import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:poolino/common/widgets/poolino_tabbar.dart';
+import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
+import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
+import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
 
+import '../../../../common/widgets/loading.dart';
 import '../widgets/bottom_sheets/add_cost.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/card_money.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/transaction_widget.dart';
 import 'income_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -84,10 +90,36 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ButtonWidget(
-                    name: "گزارش حساب",
-                    icon: "report_blue",
-                    onTap: () {},
+                  BlocConsumer<UserBloc, UserState>(
+                    listenWhen: (previous, current) {
+                      if (current.userStatus is UserComplete) {
+                        return true;
+                      }
+                      return false;
+                    },
+                    listener: (context, state) {
+
+                    },
+                    builder: (context, state) {
+
+                      if (state.userStatus is UserLoading) {
+                        //return const Loading();
+                      }
+                      if (state.userStatus is UserComplete) {
+                        UserComplete userComplete = state
+                            .userStatus as UserComplete;
+                        UserEntity userEntity = userComplete.userEntity;
+                        print(userEntity.result!.updatedAt);
+                      }
+
+                      return ButtonWidget(
+                        name: "گزارش حساب",
+                        icon: "report_blue",
+                        onTap: () {
+                          BlocProvider.of<UserBloc>(context).add(LoadUserEvent("09150575854"));
+                          },
+                      );
+                      },
                   ),
                   ButtonWidget(
                     name: "ثبت درآمد",
