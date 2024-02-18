@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
@@ -30,6 +31,7 @@ void main() async {
     BlocProvider(create: (_) => LoginButtonCubit()),
     BlocProvider(create: (_) => locator<VerifyBloc>()),
     BlocProvider(create: (_) => VerifyPinPut()),
+    BlocProvider(create: (_) => locator<UserBloc>()),
   ], child: const MyApp(),),
   );
 }

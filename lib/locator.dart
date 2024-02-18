@@ -1,5 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:poolino/features/card_feature/data/data_source/remote/user_api_provider.dart';
+import 'package:poolino/features/card_feature/domain/repository/user_repository.dart';
+import 'package:poolino/features/card_feature/domain/use_cases/user_usecase.dart';
+import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
+import 'package:poolino/features/card_feature/repository/user_repository_impl.dart';
 import 'package:poolino/features/login_feature/domain/repository/verify_repository.dart';
 import 'package:poolino/features/login_feature/domain/use_cases/verify_usecase.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
@@ -33,6 +38,11 @@ setup() async {
   locator.registerSingleton<VerifyRepository>(VerifyRepositoryImpl(locator()));
   locator.registerSingleton<VerifyUseCase>(VerifyUseCase(locator()));
   locator.registerSingleton<VerifyBloc>(VerifyBloc(locator()));
+
+  locator.registerSingleton<UserApiProvider>(UserApiProvider());
+  locator.registerSingleton<UserRepository>(UserRepositoryImpl(locator()));
+  locator.registerSingleton<UserUseCase>(UserUseCase(locator()));
+  locator.registerSingleton<UserBloc>(UserBloc(locator()));
 
 
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
