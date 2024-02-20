@@ -27,7 +27,7 @@ class ApiProvider{
     }on DioError catch (stack, error){
       CheckExceptions.response(stack.response!);
 
-      print(stack.response!);
+      //print(stack.response!);
     }
 
 
@@ -56,7 +56,7 @@ class ApiProvider{
 
     }on DioError catch (stack){
       CheckExceptions.response(stack.response!);
-      print(stack.response!);
+      //print(stack.response!);
     }
     /*var response = await _dio.post(
       Constants.baseUrl+Constants.login,

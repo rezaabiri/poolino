@@ -17,6 +17,7 @@ class CheckExceptions {
       case 400:
         throw BadRequestException(response: response);
       case 403:
+        return DataFailed("khata rohkid");
         if (refreshAttempts < 2) {
           refreshToken();
           //return repeatRequestWithNewToken();
@@ -46,6 +47,7 @@ class CheckExceptions {
       case NotFoundException:
         return DataFailed(appException.message);
       case UnauthorisedException:
+        return DataFailed(appException.message);
         if (refreshAttempts < 2) {
           await refreshToken();
         } else {

@@ -1,14 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:poolino/common/poolino_colors.dart';
-import 'package:poolino/features/home_feature/presentation/screens/income_page.dart';
-import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
 
 import '../../../common/utils/prefs_opreator.dart';
 import '../../../locator.dart';
-import '../../home_feature/presentation/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,23 +14,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late Timer _timer;
+
   @override
   void initState() {
-    gotoHome();
-    /*PrefsOperator prefsOperator = locator<PrefsOperator>();
-    if(prefsOperator.getSharedDataNoSync("loggedIn") == "true"){
-      Future.delayed(const Duration(seconds: 3), (){
-        Navigator.pushReplacementNamed(context, '/home');
-      });
-
-    }else{
-      Future.delayed(const Duration(seconds: 3), (){
-        Navigator.pushReplacementNamed(context, '/phone');
-      });
-    }*/
-
-
     super.initState();
+    gotoHome();
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -51,15 +42,13 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(
                 ".پولینو",
                 style: TextStyle(
-                    fontFamily: "bold",
-                    color: Colors.white,
-                    fontSize: 36),
+                    fontFamily: "bold", color: Colors.white, fontSize: 36),
               ),
-              Text(" :) حساب هیچی از دستت در نمی ره",
-                  style: TextStyle(
-                      fontFamily: "medium",
-                      color: Colors.white,
-                      fontSize: 16)),
+              Text(
+                " :) حساب هیچی از دستت در نمی ره",
+                style: TextStyle(
+                    fontFamily: "medium", color: Colors.white, fontSize: 16),
+              ),
             ],
           ),
         ),
@@ -70,17 +59,11 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> gotoHome() async {
     PrefsOperator prefsOperator = locator<PrefsOperator>();
     var loggedIn = await prefsOperator.getLoggedIn();
-    print(loggedIn);
-    return Future.delayed(const Duration(seconds: 2),() {
-
-      if(loggedIn) {
-        Future.delayed(const Duration(seconds: 3), (){
-          Navigator.pushReplacementNamed(context, '/home');
-        });
+    _timer = Timer(const Duration(seconds: 2), () {
+      if (loggedIn) {
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
-        Future.delayed(const Duration(seconds: 3), (){
-          Navigator.pushReplacementNamed(context, '/phone');
-        });
+        Navigator.pushReplacementNamed(context, '/phone');
       }
     });
   }
