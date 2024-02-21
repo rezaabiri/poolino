@@ -20,6 +20,7 @@ import 'package:poolino/features/login_feature/presentation/bloc/login_status.da
 import 'package:poolino/features/login_feature/presentation/screens/verify_code_page.dart';
 import '../../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/params/login_params.dart';
+import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../locator.dart';
 import '../../../home_feature/presentation/screens/home_page.dart';
@@ -107,13 +108,13 @@ class _LoginPageState extends State<PhonePage> {
                     listenWhen: (previous, current) {
                       if (current.loginStatus is LoginComplete) {
                         return true;
+                      }if (current.loginStatus is LoginLoading) {
+                        return true;
                       }
                       return false;
                     },
                     builder: (context, state) {
-                      if (state.loginStatus is LoginLoading) {
-                        return const Loading();
-                      }
+
                       if (state.loginStatus is LoginComplete) {
                         LoginComplete loginComplete = state
                             .loginStatus as LoginComplete;
@@ -136,10 +137,17 @@ class _LoginPageState extends State<PhonePage> {
                       );
                     },
                     listener: (context, state) {
-                      Navigator.push(
-                          context,
-                          PageTransition(type: PageTransitionType.rightToLeft,
-                              child: const VerifyCodePage()));
+                      if (state.loginStatus is LoginLoading) {
+                        LoadingScreen.show(context: context);
+                      }
+                      if (state.loginStatus is LoginComplete) {
+                        LoadingScreen.hide(context);
+                        Navigator.push(
+                            context,
+                            PageTransition(type: PageTransitionType.rightToLeft,
+                                child: const VerifyCodePage()));
+                      }
+
                     })
               ],
             ),

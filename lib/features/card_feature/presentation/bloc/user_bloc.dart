@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
+import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 
@@ -18,9 +19,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     on<LoadUserEvent>((event, emit) async {
       emit(state.copyWith(newUserStatus: UserLoading()));
 
-      DataState dataState = await userUseCase(event.number);
+      DataState<UserEntity> dataState = await userUseCase(event.number);
       if(dataState is DataSuccess){
-        emit(state.copyWith(newUserStatus: UserComplete(dataState.data)));
+        emit(state.copyWith(newUserStatus: UserComplete(dataState.data!)));
       }
 
       if(dataState is DataFailed){

@@ -25,15 +25,14 @@ class VerifyRepositoryImpl extends VerifyRepository {
   @override
   Future<DataState<VerifyEntity>> fetchVerify(VerifyParams verifyParams) async {
 
-
     try {
       Response response;
       response = await apiProvider.verify(verifyParams.email, verifyParams.code);
       VerifyEntity verifyEntity = VerifyModel.fromJson(response.data);
       return DataSuccess(verifyEntity);
-    }on Exception catch (e){
-      return DataFailed(e.toString());
-      //return await CheckExceptions.getError(e);
+    }on AppException catch (e){
+      final errorDataState = await CheckExceptions.getError(e);
+      return DataFailed<VerifyEntity>(errorDataState.error);
     }
   }
 

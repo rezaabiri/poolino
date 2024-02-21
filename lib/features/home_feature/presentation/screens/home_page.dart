@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:poolino/common/constants.dart';
+import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/common/widgets/poolino_tabbar.dart';
 import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
 
+import '../../../../common/utils/loading_screen.dart';
+import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../common/widgets/loading.dart';
+import '../../../../locator.dart';
 import '../widgets/bottom_sheets/add_cost.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/card_money.dart';
@@ -48,6 +53,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    PrefsOperator prefsOperator = locator<PrefsOperator>();
+
     var theme = Theme.of(context);
     List<String> prices = [
       "1,230,000",
@@ -94,22 +101,31 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     listenWhen: (previous, current) {
                       if (current.userStatus is UserComplete) {
                         return true;
+                      }if (current.userStatus is UserLoading) {
+                        return true;
                       }
+
                       return false;
                     },
                     listener: (context, state) {
-
+                      if (state.userStatus is UserLoading) {
+                        LoadingScreen.show(context: context);
+                      }
+                      if (state.userStatus is UserComplete) {
+                        LoadingScreen.hide(context);
+                      }
                     },
                     builder: (context, state) {
-
-                      if (state.userStatus is UserLoading) {
-                        //return const Loading();
-                      }
                       if (state.userStatus is UserComplete) {
                         UserComplete userComplete = state
                             .userStatus as UserComplete;
                         UserEntity userEntity = userComplete.userEntity;
                         print(userEntity.result!.updatedAt);
+
+                      }
+                      if(state.userStatus is UserError) {
+                        UserError u = state.userStatus as UserError;
+                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                       }
 
                       return ButtonWidget(

@@ -25,7 +25,7 @@ class DataParsingException extends AppException {
 }
 
 class BadRequestException extends AppException {
-  BadRequestException({String? message,Response? response}) : super(message: message ?? "bad request exception.",response: response);
+  BadRequestException({String? message, Response? response}) : super(message: message ?? "bad request exception.",response: response);
 }
 
 class FetchDataException extends AppException {
@@ -33,7 +33,7 @@ class FetchDataException extends AppException {
 }
 
 class UnauthorisedException extends AppException {
-  UnauthorisedException({String? message}) : super(message: message ?? "token has been expired.");
+  UnauthorisedException({String? message, Response? response}) : super(message: message ?? "توکن منقضی شده است!", response: response);
 }
 
 class TokenNotFoundException extends AppException {
@@ -41,5 +41,6 @@ class TokenNotFoundException extends AppException {
 }
 
 class Error406Exception extends AppException {
-  Error406Exception({String? message}) : super(message: message ?? "406 exception.");
+  Error406Exception({String? message}) : super(message: message ?? "کد خطای 406");
 }
+

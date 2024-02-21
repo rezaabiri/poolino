@@ -1,6 +1,3 @@
-
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:poolino/common/error_handler/app_exception.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
@@ -10,7 +7,6 @@ import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/domain/repository/user_repository.dart';
 import 'package:poolino/features/card_feature/models/user_model.dart';
 import 'package:poolino/features/login_feature/models/login_model.dart';
-import '../../../common/error_handler/error_handler.dart';
 import '../data/data_source/remote/user_api_provider.dart';
 
 
@@ -21,9 +17,6 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<DataState<UserEntity>> fetchUserDetails(String number) async {
-
-
-
     try {
 
       Response response;
@@ -31,14 +24,12 @@ class UserRepositoryImpl extends UserRepository {
         number,
       );
 
-      //Response handledResponse = await ErrorHandler.handleResponseError(response);
       UserEntity userEntity = UserModel.fromJson(response.data);
       return DataSuccess(userEntity);
 
     }on AppException catch (e){
-      //CheckExceptions.getError(stackTrace);
-      //print(stackTrace);
-      return await CheckExceptions.getError(e);
+      final errorDataState = await CheckExceptions.getError(e);
+      return DataFailed<UserEntity>(errorDataState.error);
     }
   }
 

@@ -11,36 +11,19 @@ class ApiProvider{
   final Dio _dio = Dio();
 
   Future<dynamic> login(email, password) async {
-
-    try{
-      var response = await _dio.post(
-          Constants.baseUrl+Constants.login,
-          data: {
-            'email': email,
-            'password':password,
-            'signature': await AndroidSmsRetriever.getAppSignature()
-          }
-      );
-      print(response);
-      return response;
-
-    }on DioError catch (stack, error){
-      CheckExceptions.response(stack.response!);
-
-      //print(stack.response!);
-    }
-
-
-    /*var response = await _dio.post(
-      Constants.baseUrl+Constants.login,
-      data: {
-        'email': email,
-        'password':password
-      }
-    ).onError((DioError error, stackTrace){
-      print(error.response!);
+    var response = await _dio.post(
+        Constants.baseUrl+Constants.login,
+        data: {
+          'email': email,
+          'password':password,
+          'signature': await AndroidSmsRetriever.getAppSignature()
+        }
+    ).onError((DioError error, stackTrace) {
       return CheckExceptions.response(error.response!);
-    });*/
+    });
+    print(response);
+    return response;
+
   }
   Future<dynamic> verify(email, code) async {
 
