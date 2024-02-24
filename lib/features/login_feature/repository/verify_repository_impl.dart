@@ -11,7 +11,7 @@ import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/features/login_feature/models/login_model.dart';
 import 'package:poolino/features/login_feature/models/verify_model.dart';
 
-import '../data/data_source/remote/api_provider.dart';
+import '../data/api_provider.dart';
 import '../domain/entities/login_entity.dart';
 import '../domain/entities/verify_entity.dart';
 import '../domain/repository/login_repository.dart';

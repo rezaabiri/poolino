@@ -3,7 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/poolino_colors.dart';
 
 class AddCost {
-  Future<void> showModal(context, {required Function() onTapChoose, required Function() onTapCustom}) async {
+  Future<void> showModal(context, {
+    required Function() onTapChoose,
+    required Function() onTapCustom
+  }) async {
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(

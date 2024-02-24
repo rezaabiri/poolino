@@ -155,8 +155,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       add.showModal(
                         context,
                         onTapChoose: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("ثبت هزینه انتخابی")));
+                          Navigator.pushNamed(context, "/add_container");
                           Navigator.pop(context);
                         },
                         onTapCustom: () async {

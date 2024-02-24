@@ -7,7 +7,8 @@ import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/domain/repository/user_repository.dart';
 import 'package:poolino/features/card_feature/models/user_model.dart';
 import 'package:poolino/features/login_feature/models/login_model.dart';
-import '../data/user_api_provider.dart';
+
+import '../../card_feature/data/user_api_provider.dart';
 
 
 class UserRepositoryImpl extends UserRepository {

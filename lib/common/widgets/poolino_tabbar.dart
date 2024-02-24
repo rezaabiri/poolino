@@ -30,13 +30,12 @@ class PoolinoTabBar<T> extends StatelessWidget {
         child: TabBar(
             controller: tabController,
             unselectedLabelStyle: const TextStyle(
-              fontFamily: "yekan_regular",
+              fontFamily: "regular",
             ),
             unselectedLabelColor: Colors.black,
-            overlayColor:
-                MaterialStateProperty.all<Color>(Colors.grey.shade400),
+            overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
             splashBorderRadius: BorderRadius.circular(12),
-            labelStyle: TextStyle(fontFamily: "regular"),
+            labelStyle: const TextStyle(fontFamily: "regular"),
             tabAlignment: TabAlignment.fill,
             automaticIndicatorColorAdjustment: false,
             indicatorColor: Colors.transparent,

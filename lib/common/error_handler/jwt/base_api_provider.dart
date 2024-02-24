@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
 import 'package:poolino/common/utils/prefs_opreator.dart';
 import 'package:poolino/locator.dart';
+import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
@@ -28,6 +28,7 @@ class BaseApiProvider {
       onError: (DioError e, handler) async {
         if (e.response?.statusCode == 403) {
           String newAccessToken = await refreshToken();
+
           log(newAccessToken);
           e.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
           return handler.resolve(await dio.fetch(e.requestOptions));
@@ -49,7 +50,6 @@ class BaseApiProvider {
       Constants.baseUrl + Constants.refresh,
       data: {'refreshToken': refreshToken},
     );
-    log(response.data.toString());
     String refresh = response.data['result']['refresh_token'];
     String access = response.data['result']['access_token'];
     prefsOperator.setSharedData("accessToken", access);

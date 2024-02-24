@@ -61,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
     var loggedIn = await prefsOperator.getLoggedIn();
     _timer = Timer(const Duration(seconds: 2), () {
       if (loggedIn) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/add_container');
       } else {
-        Navigator.pushReplacementNamed(context, '/phone');
+        Navigator.pushReplacementNamed(context, '/add_container');
       }
     });
   }
