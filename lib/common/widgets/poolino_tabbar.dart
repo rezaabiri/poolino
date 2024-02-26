@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/common/poolino_colors.dart';
+import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 
 

@@ -1,8 +1,9 @@
 
 import 'package:dio/dio.dart';
-import 'package:poolino/common/constants.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
 import 'package:poolino/common/error_handler/jwt/base_api_provider.dart';
+
+import '../../../common/utils/constants.dart';
 
 
 class AddApiProvider extends BaseApiProvider{

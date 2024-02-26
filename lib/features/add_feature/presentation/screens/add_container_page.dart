@@ -37,7 +37,7 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
       )),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.of(context).size.height*0.70,
+          height: MediaQuery.of(context).size.height,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(

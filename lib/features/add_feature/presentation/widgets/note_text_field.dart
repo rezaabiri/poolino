@@ -16,36 +16,44 @@ class NoteTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: TextField(
-        textDirection: TextDirection.rtl,
-        minLines: 5,
-        maxLines: 10,
-        decoration: InputDecoration(
-            isDense: true,
-            filled: true,
-            prefixIcon: Padding(
-              padding: const EdgeInsets.only(right: 10, left: 10),
-              child: SvgPicture.asset(icon),
+      child: Stack(
+        children: [
+          TextField(
+            textDirection: TextDirection.rtl,
+            minLines: 5,
+            maxLines: null,
+            maxLength: 400,
+            decoration: InputDecoration(
+              isDense: false,
+              filled: true,
+              contentPadding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1, right: 12, bottom: 0, left: 12),
+              fillColor: Colors.grey.shade200,
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none
+              ),
+              disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide.none
+              ),
             ),
-            prefixIconConstraints: BoxConstraints(maxWidth: 50, maxHeight: 50),
-            fillColor: Colors.grey.shade200,
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide.none
-            ),
-            disabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide.none
-            ),
-            enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide.none
-            ),
-            hintText: hint,
-            hintFadeDuration: Duration(milliseconds: 300),
-            hintStyle: TextStyle(fontFamily: 'regular', fontSize: 16, color: Colors.black87),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10, right: 8),
+            child: Row(
+              children: [
+                SvgPicture.asset(icon),
+                const SizedBox(width: 10,),
+                const Text("توضیحات", style: TextStyle(fontFamily: 'regular', fontSize: 16, color: Colors.black87)),
 
-        ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

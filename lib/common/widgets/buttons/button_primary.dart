@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:poolino/common/poolino_colors.dart';
-import 'package:delayed_widget/delayed_widget.dart';
 import 'package:delayed_display/delayed_display.dart';
+import 'package:delayed_widget/delayed_widget.dart';
 import 'package:figma_squircle/figma_squircle.dart';
+import 'package:flutter/material.dart';
+
+import '../../utils/poolino_colors.dart';
 
 
 

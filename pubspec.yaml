@@ -66,6 +66,8 @@ dev_dependencies:
   delayed_display: ^2.0.0
   figma_squircle: ^0.5.3
   android_sms_retriever: ^1.3.0
+  persian_number_utility: ^1.1.4
+
 
 
 

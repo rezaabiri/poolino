@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:poolino/common/poolino_colors.dart';
 
+import '../../../common/utils/poolino_colors.dart';
 import '../../../common/utils/prefs_opreator.dart';
 import '../../../locator.dart';
 

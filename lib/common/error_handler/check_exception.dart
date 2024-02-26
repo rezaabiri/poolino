@@ -1,11 +1,7 @@
 
 import 'package:dio/dio.dart';
-import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
-import 'package:poolino/locator.dart';
-import '../../features/login_feature/domain/entities/verify_entity.dart';
-import '../constants.dart';
+
 import '../resources/data_state.dart';
-import '../utils/prefs_opreator.dart';
 import 'app_exception.dart';
 
 class CheckExceptions {

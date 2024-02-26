@@ -23,30 +23,20 @@ class PoolinoAppBar extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(16),
-              child: Material(
-                color: Colors.grey.shade200,
-                child: InkWell(
-                  onTap: onTap,
-                  child: const SizedBox(
-                    height: 50,
-                    width: 50,
-                    child: Icon(Icons.arrow_back_ios_new_rounded, size: 24, color: Colors.black,),
-                  ),
+              child: InkWell(
+                onTap: onTap,
+                child: const SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Icon(Icons.arrow_back_ios_new_rounded, size: 24, color: Colors.black,),
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+            Row(
               children: [
-                Row(
-                  children: [
-                    Text(title, style: TextStyle(fontFamily: 'regular', fontSize: 14),),
-                    SizedBox(width: 12,),
-                    SvgPicture.asset(icon, width: 24, height: 24,),
-                  ],
-                ),
-                SizedBox(height: 6,),
-                Text(description, style: TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.grey),)
+                Text(title, style: TextStyle(fontFamily: 'regular', fontSize: 14),),
+                SizedBox(width: 12,),
+                //SvgPicture.asset(icon, width: 24, height: 24,),
               ],
             )
           ],

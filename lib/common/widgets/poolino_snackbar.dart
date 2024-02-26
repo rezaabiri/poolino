@@ -1,8 +1,9 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:flutter/material.dart';
-import 'package:poolino/common/poolino_colors.dart';
 import 'package:figma_squircle/figma_squircle.dart';
-import '../constants.dart';
+import 'package:flutter/material.dart';
+
+import '../utils/constants.dart';
+import '../utils/poolino_colors.dart';
 
 class PoolinoSnackBar {
   late IconData icon;
