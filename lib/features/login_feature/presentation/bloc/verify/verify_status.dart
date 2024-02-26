@@ -1,4 +1,3 @@
-import 'package:poolino/common/base_model.dart';
 
 import '../../../domain/entities/verify_entity.dart';
 

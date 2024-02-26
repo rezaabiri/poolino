@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/common/constants.dart';
-import 'package:poolino/common/poolino_colors.dart';
 
 import '../../../../common/theme/ThemeSwitcher.dart';
+import '../../../../common/utils/poolino_colors.dart';
 import '../../../../common/utils/utils.dart';
 
 class ToolbarWidget extends StatelessWidget  {

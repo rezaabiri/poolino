@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:poolino/common/poolino_colors.dart';
+
+import '../utils/poolino_colors.dart';
 
 class MyThemes {
   static ThemeData get darkTheme => ThemeData.dark().copyWith(

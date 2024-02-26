@@ -7,7 +7,8 @@ import 'package:poolino/common/params/login_params.dart';
 import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/features/login_feature/models/login_model.dart';
 
-import '../data/data_source/remote/api_provider.dart';
+import '../../../common/error_handler/app_exception.dart';
+import '../data/api_provider.dart';
 import '../domain/entities/login_entity.dart';
 import '../domain/repository/login_repository.dart';
 
@@ -27,8 +28,9 @@ class LoginRepositoryImpl extends LoginRepository {
       );
       LoginEntity loginEntity = LoginModel.fromJson(response.data);
       return DataSuccess(loginEntity);
-    }on Exception catch (stackTrace){
-      return DataFailed(stackTrace.toString());
+    }on AppException catch (e){
+      final errorDataState = await CheckExceptions.getError(e);
+      return DataFailed<LoginEntity>(errorDataState.error);
     }
   }
 }

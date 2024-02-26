@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:figma_squircle/figma_squircle.dart';
 
 
-import '../poolino_colors.dart';
+import '../utils/poolino_colors.dart';
 
 class PoolinoTextField extends StatelessWidget {
   TextEditingController controller;

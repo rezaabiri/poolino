@@ -6,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:pinput/pinput.dart';
-import 'package:poolino/common/base_model.dart';
 import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
@@ -18,13 +18,12 @@ import 'package:poolino/features/login_feature/presentation/bloc/verify_button_e
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
 
-import '../../../../common/constants.dart';
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
+import '../../../../common/utils/constants.dart';
+import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../common/widgets/loading.dart';
-import 'package:page_transition/page_transition.dart';
-
 import '../../../../locator.dart';
 
 
@@ -89,12 +88,18 @@ class _LoginPageState extends State<VerifyCodePage> {
                     }
                     if (current.verifyStatus is VerifyError) {
                       return true;
+                    }if (current.verifyStatus is VerifyLoading) {
+                      return true;
                     }
                     return false;
                   },
 
                   listener: (context, state) {
+                    if(state.verifyStatus is VerifyLoading){
+                      LoadingScreen.show(context: context);
+                    }
                     if (state.verifyStatus is VerifyComplete) {
+                      LoadingScreen.hide(context);
                       Navigator.pushReplacement(
                           context,
                           PageTransition(type: PageTransitionType.rightToLeft,
@@ -114,9 +119,6 @@ class _LoginPageState extends State<VerifyCodePage> {
 
                   },
                   builder: (context, state) {
-                    if (state.verifyStatus is VerifyLoading) {
-                      return const Loading();
-                    }
                     if (state.verifyStatus is VerifyComplete) {
                       VerifyComplete verifyComplete = state.verifyStatus as VerifyComplete;
                       prefsOperator.setSharedData("accessToken", verifyComplete.verifyEntity.result!.accessToken.toString());

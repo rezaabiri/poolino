@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
               '/home': (context) => HomePage(),
               '/splash': (context) => SplashScreen(),
               '/phone': (context) => PhonePage(),
+              '/add_container':(context) => AddContainerPage()
             },
             home: Scaffold(
                 key: scaffoldKey,
