@@ -1,10 +1,14 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
-import 'package:poolino/common/widgets/poolino_tabbar.dart';
+import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
@@ -12,7 +16,7 @@ import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
-import '../../../../common/widgets/loading.dart';
+import '../../../../common/utils/utils.dart';
 import '../../../../locator.dart';
 import '../widgets/bottom_sheets/add_cost.dart';
 import '../widgets/button_widget.dart';
@@ -155,13 +159,14 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       add.showModal(
                         context,
                         onTapChoose: () {
-                          Navigator.pushNamed(context, "/add_container");
                           Navigator.pop(context);
+                          Navigator.pushNamed(context, "/add_container");
+                          //Navigator.pop(context);
                         },
                         onTapCustom: () async {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("ثبت هزینه دستی")));
-                          Navigator.pop(context);
+                         // Navigator.pop(context);
+
+                         // Navigator.pushNamed(context, "/add_container");
 
                           var permission = await Permission.sms.status;
                           if(permission.isGranted){
@@ -188,45 +193,80 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "مشاهده همه (${states.length})",
-                    style: const TextStyle(
-                        fontFamily: "yekan_bold",
-                        fontSize: 16,
-                        color: Colors.blue),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, "/all_transaction");
+                    },
+                    child: Text(
+                      "مشاهده همه (${states.length})",
+                      style: const TextStyle(
+                          fontFamily: "regular",
+                          fontSize: 16,
+                          color: Colors.blue
+                      ),
+                    ),
                   ),
-                  const Text(
-                    "تراکنش های اخیر",
-                    style: TextStyle(
-                        fontFamily: "yekan_bold",
-                        fontSize: 16,
-                        color: Colors.black),
+                  Row(
+                    children: [
+                      const Text(
+                        "تراکنش های اخیر",
+                        style: TextStyle(
+                            fontFamily: "regular",
+                            fontSize: 16,
+                            color: Colors.black),
+                      ),
+                      const SizedBox(width: 8,),
+                      SvgPicture.asset("assets/images/chart.svg",),
+                    ],
                   )
                 ],
               ),
               const SizedBox(
                 height: 18,
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: ListView.builder(
-                  shrinkWrap: false,
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-
-                    return TransactionWidget(
-                      price: getPrice(_messages[index].body.toString()),
-                      title: _messages[index].address.toString(),
-                      date: _messages[index].date.toString(),
-                      state: _messages[index].body.toString().contains("خرید") ? 1 : 0,
-
-                      onTap: (){
-                        Navigator.push(context, PageTransition(type: PageTransitionType.fade, child: const IncomePage()));
-                      },
-                    );
-                  },
+              Container(
+                decoration: BoxDecoration(
+                  color: PoolinoColors.f7Color,
+                  borderRadius: BorderRadius.circular(20)
                 ),
-
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height*0.40,
+                  child: ListView.builder(
+                    physics: ClampingScrollPhysics(),
+                    padding: const EdgeInsets.only(top: 16, bottom: 16),
+                    shrinkWrap: true,
+                    itemCount: _messages.length,
+                    itemBuilder: (context, index) {
+                      if(index ==  _messages.length - 1){
+                        return TransactionWidget(
+                          price: Utils.getPrice(_messages[index].body.toString()),
+                          title: "مشخص نشده",
+                          date: _messages[index].date.toString(),
+                          state: 0,
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) =>
+                                    AddContainerPage(priceText: Utils.getPrice(_messages[index].body.toString()),)));
+                          },
+                        );
+                      }
+                      return TransactionWidget(
+                        price: Utils.getPrice(_messages[index].body.toString()),
+                        title: "مشخص نشده",
+                        date: _messages[index].date.toString(),
+                        state: 1,
+                        onTap: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) =>
+                                  AddContainerPage(priceText: Utils.getPrice(_messages[index].body.toString()),)));
+                          },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 18,
               ),
             ],
           ),
@@ -235,32 +275,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
-String getPrice(String smsBody) {
-  print(smsBody);
-  List<String> amounts = [];
-
-  RegExp regex = RegExp(r'(برداشت|واریز|مبلغ|خرید)[:\s]*([-+]?\d{1,15}(?:,\d{3})*(?:\.\d{2})?)');
-  Iterable<Match> matches = regex.allMatches(smsBody);
-
-  // چک کردن برای وجود match
-  if (matches != null) {
-    for (Match match in matches) {
-      String word = match.group(1)!;
-      String amount = match.group(2)!;
-      amounts.add(amount);
-    }
-  } else {
-    return 'تطابق پیدا نشد.';
-  }
-
-  if (amounts.isNotEmpty) {
-    return amounts.join(', '); // یا هر روش دیگری که برای نمایش لیست مناسب است
-  } else {
-    return 'تطابق پیدا نشد.';
-  }
-}
-
-
 
 Future<void> requestPermission() async {
   const permission = Permission.sms;

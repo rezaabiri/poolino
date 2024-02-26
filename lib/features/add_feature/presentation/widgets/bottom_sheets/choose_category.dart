@@ -2,13 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../common/utils/poolino_colors.dart';
+import '../../../domain/models/category_model.dart';
 
 class ChooseCategory {
+
   Future<void> showModal(context, {
     required Function() onTapChoose,
   }) async {
+
+    List<CategoryModel> categoryModels = [];
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 1"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 2"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 3"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 4"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 5"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 6"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 7"));
+    categoryModels.add(CategoryModel(icon: "", title: "دسته 8"));
+
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
+      showDragHandle: const bool.fromEnvironment("handle", defaultValue: true),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
@@ -20,9 +34,9 @@ class ChooseCategory {
           padding: const EdgeInsets.only(left: 24, right: 24),
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: 4,
+            itemCount: categoryModels.length,
             itemBuilder: (context, index){
-              return categoryItem(context, onTapChoose);
+              return categoryItem(context, onTapChoose, categoryModels[index].icon, categoryModels[index].title);
             },
           )
         );
@@ -30,13 +44,14 @@ class ChooseCategory {
     );
   }
 
-  Widget categoryItem(context, onTapChoose){
+  Widget categoryItem(context, onTapChoose, String icon, String title){
     return Padding(
       padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Material(
-          color: Colors.grey.shade200,
+
+          color: PoolinoColors.f9Color,
           child: InkWell(
             onTap: onTapChoose,
             child: SizedBox(
@@ -50,11 +65,11 @@ class ChooseCategory {
                     SvgPicture.asset("assets/images/arrow_left.svg"),
                     Row(
                       children: [
-                        const Text("انتخاب از پیامک های بانکی", style: TextStyle(fontSize: 16, fontFamily: "yekan_regular"),),
+                        Text(title, style: const TextStyle(fontSize: 16, fontFamily: "regular"),),
                         const SizedBox(width: 14,),
                         Container(height: 40, width: 2, color: PoolinoColors.e4Color,),
                         const SizedBox(width: 14,),
-                        SvgPicture.asset("assets/images/choose_sms.svg"),
+                        SvgPicture.asset(icon),
                       ],
                     )
                   ],

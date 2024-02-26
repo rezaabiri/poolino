@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_text_field.dart';
+import 'package:poolino/features/add_feature/domain/models/category_model.dart';
 import 'package:poolino/features/add_feature/presentation/widgets/bottom_sheets/choose_category.dart';
 import 'package:poolino/features/add_feature/presentation/widgets/selectable_item.dart';
 import  'package:persian_number_utility/persian_number_utility.dart';
@@ -10,7 +11,10 @@ import '../widgets/add_text_field.dart';
 import '../widgets/note_text_field.dart';
 
 class AddCostPage extends StatefulWidget {
-  const AddCostPage({super.key});
+  AddCostPage({super.key, required this.price});
+
+  String price;
+
 
   @override
   State<AddCostPage> createState() => _AddCostPageState();
@@ -18,12 +22,17 @@ class AddCostPage extends StatefulWidget {
 
 class _AddCostPageState extends State<AddCostPage> {
 
-  final controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    controller.text = widget.price;
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         const SizedBox(height: 16,),
@@ -41,7 +50,9 @@ class _AddCostPageState extends State<AddCostPage> {
           icon: "assets/images/calendar.svg",
           colors: PoolinoColors.baseColor,
           isDate: true,
-          onTap: (){},
+          onTap: (){
+            print(controller.text);
+          },
         ),
         SelectableItem(
           title: "دسته بندی هزینه",

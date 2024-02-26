@@ -10,40 +10,37 @@ class ToolbarWidget extends StatelessWidget  {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             child: Material(
-              color: theme.cardColor,
+              color: PoolinoColors.f9Color,
               child: InkWell(
                 onTap: onTap,
                 child: const SizedBox(
-                  height: 55,
-                  width: 55,
-                  child: Icon(Icons.person_2_outlined, size: 32, color: Colors.black,),
+                  height: 40,
+                  width: 40,
+                  child: Icon(Icons.person_2_outlined, size: 25, color: Colors.black,),
                 ),
               ),
             ),
           ),
           Text(".پولینو", style: TextStyle(fontFamily: "medium", fontSize: 22, color: PoolinoColors.baseColor)),
           ClipRRect(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(8),
             child: Material(
-              color: theme.cardColor,
+              color: PoolinoColors.f9Color,
               child: const SizedBox(
-                height: 55,
-                width: 55,
+                height: 40,
+                width: 40,
                 child: ThemeSwitcher(),
               ),
             ),
           ),
-
-
         ],
       ),
     );

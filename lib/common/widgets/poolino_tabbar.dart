@@ -17,7 +17,7 @@ class PoolinoTabBar<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: ShapeDecoration(
-        color: Colors.grey.shade200,
+        color: PoolinoColors.f9Color,
         shape: SmoothRectangleBorder(
           borderRadius: SmoothBorderRadius(
             cornerRadius: 12,
@@ -33,7 +33,6 @@ class PoolinoTabBar<T> extends StatelessWidget {
               fontFamily: "regular",
             ),
             unselectedLabelColor: Colors.black,
-            overlayColor: MaterialStateProperty.all<Color>(Colors.grey.shade400),
             splashBorderRadius: BorderRadius.circular(12),
             labelStyle: const TextStyle(fontFamily: "regular"),
             tabAlignment: TabAlignment.fill,

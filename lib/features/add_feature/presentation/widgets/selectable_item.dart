@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import  'package:persian_number_utility/persian_number_utility.dart';
 
+import '../../../../common/utils/poolino_colors.dart';
+
 
 class SelectableItem extends StatelessWidget {
   String title;
@@ -29,7 +31,7 @@ class SelectableItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(14),
           child: Material(
-            color: Colors.grey.shade200,
+            color: PoolinoColors.f9Color,
             child: InkWell(
               onTap: onTap,
               child: Row(

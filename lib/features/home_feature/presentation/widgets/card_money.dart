@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:poolino/common/utils/poolino_colors.dart';
 
 import '../../../../common/utils/utils.dart';
 
@@ -49,7 +50,7 @@ class CardMoney extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               height: 105,
               decoration: BoxDecoration(
-                  color: Utils.hexToColor('#F2F6FF'),
+                  color: PoolinoColors.secondaryColor,
                   borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(24),
                       bottomRight: Radius.circular(24)
@@ -98,9 +99,9 @@ class CardMoney extends StatelessWidget {
                         Row(
                           children: [
                             SvgPicture.asset('assets/images/daramad.svg'),
-                            const Padding(
-                              padding: EdgeInsets.only(left: 8.0),
-                              child: Text("درآمد ها", style: TextStyle(fontFamily: "medium", fontSize: 16, color: Colors.green),),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Text("درآمد ها", style: TextStyle(fontFamily: "medium", fontSize: 16, color: PoolinoColors.green),),
                             ),
                           ],
                         ),

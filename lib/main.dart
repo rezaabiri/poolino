@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
+import 'package:poolino/features/home_feature/presentation/screens/all_transactions_page.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
@@ -71,7 +72,8 @@ class _MyAppState extends State<MyApp> {
               '/home': (context) => HomePage(),
               '/splash': (context) => SplashScreen(),
               '/phone': (context) => PhonePage(),
-              '/add_container':(context) => AddContainerPage()
+              '/add_container':(context) => AddContainerPage(),
+              '/all_transaction':(context) => AllTransactionsPage(),
             },
             home: Scaffold(
                 key: scaffoldKey,

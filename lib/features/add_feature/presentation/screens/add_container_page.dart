@@ -6,7 +6,9 @@ import '../../../../common/widgets/poolino_tabbar.dart';
 import 'add_cost_page.dart';
 
 class AddContainerPage extends StatefulWidget {
-  const AddContainerPage({super.key});
+  AddContainerPage({super.key, this.priceText});
+  String? priceText="0";
+
 
   @override
   State<AddContainerPage> createState() => _AddContainerPageState();
@@ -15,6 +17,7 @@ class AddContainerPage extends StatefulWidget {
 
 class _AddContainerPageState extends State<AddContainerPage> with TickerProviderStateMixin {
   late final TabController _tabController;
+
 
   @override
   void initState() {
@@ -32,7 +35,7 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
         description: "اطلاعات فرم را تکمیل کنید",
         icon: "assets/images/cost_blue.svg",
         onTap: (){
-          Navigator.pushReplacementNamed(context, "/home");
+          Navigator.pop(context);
         },
       )),
       body: SingleChildScrollView(
@@ -62,7 +65,7 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                   child: TabBarView(
                     controller: _tabController,
                     children:[
-                      const AddCostPage(),
+                      AddCostPage(price: widget.priceText!,),
                       const AddIncomePage(),
                     ],
                   ),

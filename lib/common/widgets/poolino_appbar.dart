@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:poolino/common/utils/poolino_colors.dart';
 
 
 class PoolinoAppBar extends StatelessWidget {
@@ -17,28 +18,41 @@ class PoolinoAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, top: 3),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: InkWell(
-                onTap: onTap,
-                child: const SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: Icon(Icons.arrow_back_ios_new_rounded, size: 24, color: Colors.black,),
+              borderRadius: BorderRadius.circular(8),
+              child: Material(
+                color: PoolinoColors.f9Color,
+                child: InkWell(
+                  onTap: onTap,
+                  child: const SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: Icon(Icons.info_outlined, size: 24, color: Colors.black,),
+                  ),
                 ),
               ),
             ),
-            Row(
-              children: [
-                Text(title, style: TextStyle(fontFamily: 'regular', fontSize: 14),),
-                SizedBox(width: 12,),
-                //SvgPicture.asset(icon, width: 24, height: 24,),
-              ],
-            )
+            Text(title, style: const TextStyle(fontFamily: 'medium', fontSize: 14),),
+
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Material(
+                color: PoolinoColors.f9Color,
+                child: InkWell(
+                  onTap: onTap,
+                  child: const SizedBox(
+                    height: 40,
+                    width: 40,
+                    child: Icon(Icons.arrow_forward_ios_rounded, size: 24, color: Colors.black,),
+                  ),
+                ),
+              ),
+            ),
+
           ],
         ),
       ),

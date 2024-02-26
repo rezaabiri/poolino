@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:poolino/common/utils/poolino_colors.dart';
+import 'package:dotted_line/dotted_line.dart';
+
 
 import '../../../../common/utils/utils.dart';
 
@@ -13,48 +16,68 @@ class TransactionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12, bottom: 12),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(price, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 20, color: Colors.black)),
-                    SizedBox(height: 6,),
-                    Text("تومان", style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Utils.hexToColor("#676767")))
-                  ],
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 14, right: 14),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(price, style: const TextStyle(fontFamily: "medium", fontSize: 14, color: Colors.black)),
+                      const SizedBox(height: 6,),
+                      Text("تومان", style: TextStyle(fontFamily: "regular", fontSize: 12, color: Utils.hexToColor("#676767")))
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(title, style: const TextStyle(fontFamily: "yekan_bold", fontSize: 16, color: Colors.black)),
-                    SizedBox(height: 10,),
-                    Text(date, style: TextStyle(fontFamily: "yekan_regular", fontSize: 14, color: Utils.hexToColor("#676767")))
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(title, style: const TextStyle(fontFamily: "medium", fontSize: 14, color: Colors.black)),
+                      const SizedBox(height: 10,),
+                      Text(date, style: TextStyle(fontFamily: "regular", fontSize: 12, color: Utils.hexToColor("#676767")))
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                height: 55,
-                width: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: state == 1 ? Utils.hexToColor("#FFF8F8") : Utils.hexToColor("#F5FCF6")
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: state==1 ? SvgPicture.asset('assets/images/kharj.svg', width: 35, height: 35) : SvgPicture.asset('assets/images/daramad.svg', width: 35, height: 35),
-                ),
-              )
-            ],
-          ),
+                Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Utils.hexToColor("#ffffff")
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: SvgPicture.asset('assets/images/card_edit.svg', width: 24, height: 24),
+                  ),
+                )
+              ],
+            ),
+            Builder(
+              builder: (context) {
+                if(state == 1){
+                  return Padding(
+                    padding: const EdgeInsets.only(top: 12, bottom: 12),
+                    child: DottedLine(
+                      dashColor: PoolinoColors.d9Color,
+                      dashLength: 10,
+                      dashGapLength: 5,
+                      lineThickness: 1.8,
+                      dashGapRadius: 10,
+                      dashRadius: 10,
+                    ),
+                  );
+                }
+                return Container();
+              }
+            ),
+          ],
         ),
       ),
     );
