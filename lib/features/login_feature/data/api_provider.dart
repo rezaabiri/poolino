@@ -22,6 +22,7 @@ class ApiProvider{
       return CheckExceptions.response(error.response!);
     });
     print(response);
+    print(await AndroidSmsRetriever.getAppSignature());
     return response;
 
   }

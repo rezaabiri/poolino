@@ -17,6 +17,8 @@ import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_s
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
+import 'package:android_sms_retriever/android_sms_retriever.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
@@ -32,6 +34,7 @@ class VerifyCodePage extends StatefulWidget {
 
   @override
   State<VerifyCodePage> createState() => _LoginPageState();
+
 }
 
 class _LoginPageState extends State<VerifyCodePage> {
@@ -52,6 +55,12 @@ class _LoginPageState extends State<VerifyCodePage> {
       border: Border.all(color: Colors.grey),
     ),
   );
+
+  @override
+  void initState() {
+    verifyCode();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +137,7 @@ class _LoginPageState extends State<VerifyCodePage> {
 
                     return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
                       builder: (context, state) {
-                        pinController.clear();
+                        //pinController.clear();
                         return PinPut(
                           formKey: formKey,
                           pinController: pinController,
@@ -137,10 +146,8 @@ class _LoginPageState extends State<VerifyCodePage> {
                           },
                           onComplete: (pin) {
                             final VerifyParams verifyParams = VerifyParams(prefsOperator.getSharedDataNoSync("phone"), pin);
-                            BlocProvider.of<VerifyBloc>(context).add(
-                                LoadVerifyEvent(verifyParams));
-                            },
-                        );
+                            BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
+                            },);
                         },
                     );
                   },
@@ -180,155 +187,19 @@ class _LoginPageState extends State<VerifyCodePage> {
               ],
             ),
           ),
-        ));
+        ),
+    );
   }
 
-/*Form form(){
-    var theme = Theme.of(context);
-
-    return Form(
-      key: formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: Pinput(
-              controller: pinController,
-              focusNode: focusNode,
-              androidSmsAutofillMethod:
-              AndroidSmsAutofillMethod.smsUserConsentApi,
-              listenForMultipleSmsOnAndroid: true,
-              defaultPinTheme: defaultPinTheme,
-              errorTextStyle: TextStyle(fontSize: 0, color: Colors.red, fontFamily: 'regular'),
-              separatorBuilder: (index) => const SizedBox(width: 16),
-              validator: (value) {
-                return value == '2222' ? null : '';
-              },
-              hapticFeedbackType: HapticFeedbackType.lightImpact,
-              onCompleted: (pin) {
-                debugPrint('onCompleted: $pin');
-              },
-              onChanged: (value) {
-                debugPrint('onChanged: $value');
-              },
-              cursor: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 9),
-                    width: 22,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-              focusedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  border: Border.all(color: Colors.blue, width: 2),
-                ),
-              ),
-              submittedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  color: Colors.white,
-                  border: Border.all(color: Colors.green),
-                ),
-              ),
-              errorPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  border: Border.all(color: Colors.red)
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-    return Form(
-      key: formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Directionality(
-            // Specify direction if desired
-            textDirection: TextDirection.ltr,
-            child: Pinput(
-              controller: pinController,
-              focusNode: focusNode,
-              androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsRetrieverApi,
-              listenForMultipleSmsOnAndroid: true,
-              defaultPinTheme:  PinTheme(
-                width: MediaQuery.of(context).size.width/4,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.blue, width: 1),
-                ),
-              ),
-              errorTextStyle: TextStyle(fontSize: 0, color: Colors.red, fontFamily: 'regular'),
-              separatorBuilder: (index) => const SizedBox(width: 30),
-              validator: (value) {
-                return value == '2222' ? null : '';
-              },
-              hapticFeedbackType: HapticFeedbackType.lightImpact,
-              onCompleted: (pin) {
-                debugPrint('onCompleted: $pin');
-              },
-              onChanged: (value) {
-                debugPrint('onChanged: $value');
-              },
-              cursor: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 9),
-                    width: 22,
-                    height: 1,
-                    color: Colors.grey,
-                  ),
-                ],
-              ),
-              focusedPinTheme: PinTheme(
-                width: MediaQuery.of(context).size.width/4,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.blue, width: 2),
-                ),
-              ),
-              */ /*focusedPinTheme: defaultPinTheme.copyWith(
-                decoration: defaultPinTheme.decoration!.copyWith(
-                  border: Border.all(color: Colors.blue, width: 2),
-                ),
-              ),*/ /*
-              submittedPinTheme:  PinTheme(
-                width: MediaQuery.of(context).size.width/4,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.green, width: 1),
-                ),
-              ),
-              errorPinTheme:  PinTheme(
-                width: MediaQuery.of(context).size.width/4,
-                height: 60,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.red, width: 1),
-                ),
-              ),
-            ),
-          ),
-          */ /*TextButton(
-            onPressed: () {
-              focusNode.unfocus();
-              formKey.currentState!.validate();
-            },
-            child: const Text('Validate'),
-          ),*/ /*
-        ],
-      ),
-    );
-
-  }*/
+  verifyCode() async{
+    var rawNumber = "0";
+    await AndroidSmsRetriever.listenForSms().then((value) {
+      final RegExp regExp = RegExp(r'\b\d{4}\b');
+      final Iterable<Match> matches = regExp.allMatches(value.toString());
+      for (Match match in matches) {
+        rawNumber = match.group(0)!;
+        pinController.setText(rawNumber);
+      }
+    });
+  }
 }
