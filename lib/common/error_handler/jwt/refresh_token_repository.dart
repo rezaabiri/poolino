@@ -1,21 +1,22 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:poolino/common/error_handler/app_exception.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
-import 'package:poolino/common/error_handler/jwt/refresh_token_repository.dart';
+import 'package:poolino/common/error_handler/jwt/base_api_provider.dart';
+import 'package:poolino/common/params/login_params.dart';
 import 'package:poolino/common/resources/data_state.dart';
-import 'package:poolino/common/utils/prefs_opreator.dart';
-import 'package:poolino/locator.dart';
 
+import '../../../locator.dart';
 import '../../utils/constants.dart';
-import '../app_exception.dart';
+import '../../utils/prefs_opreator.dart';
 
 
-class BaseApiProvider {
-  final Dio dio = Dio();
+
+class RefreshTokenRepository {
+  Dio dio = Dio();
   final PrefsOperator prefsOperator = locator<PrefsOperator>();
-  BaseApiProvider() {
+  RefreshTokenRepository(){
     dio.interceptors.add(LogInterceptor(
       responseBody: true,
       responseHeader: true,
@@ -31,20 +32,14 @@ class BaseApiProvider {
       },
       onError: (DioError e, handler) async {
         if (e.response?.statusCode == 403) {
-          try{
-            DataState<String> dataState = await refreshToken();
+          DataState<String> dataState = await refreshToken();
 
-            String newAccessToken = dataState.data.toString();
+          String newAccessToken = dataState.data.toString();
 
-            log(newAccessToken);
-            e.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
-            return handler.resolve(await dio.fetch(e.requestOptions));
-          }on AppException catch (e){
-            final errorDataState = await CheckExceptions.getError(e);
-            DataFailed<String>(errorDataState.error);
-            return;
-            //CheckExceptions.getError(e);
-          }
+          log(newAccessToken);
+          e.requestOptions.headers['Authorization'] = 'Bearer $newAccessToken';
+          return handler.resolve(await dio.fetch(e.requestOptions));
+
 
         }
         return handler.next(e);
@@ -73,5 +68,7 @@ class BaseApiProvider {
     prefsOperator.setSharedData("refreshToken", refresh);
     return DataSuccess(access);
   }
+
+
 
 }

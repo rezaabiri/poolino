@@ -17,7 +17,7 @@ class CheckExceptions {
       case 403:
         String errorMessage = response.data['message'];
         throw UnauthorisedException(message: errorMessage);
-      case 402:
+      case 407:
         String errorMessage = response.data['message'];
         throw TokenNotFoundException(message: errorMessage);
       case 404:
