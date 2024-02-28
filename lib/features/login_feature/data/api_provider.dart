@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:android_sms_retriever/android_sms_retriever.dart';
 import 'package:dio/dio.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
@@ -16,7 +18,8 @@ class ApiProvider{
         data: {
           'email': email,
           'password':password,
-          'signature': await AndroidSmsRetriever.getAppSignature()
+          if(Platform.isAndroid)
+            'signature': (await AndroidSmsRetriever.getAppSignature())
         }
     ).onError((DioError error, stackTrace) {
       return CheckExceptions.response(error.response!);

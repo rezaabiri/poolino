@@ -29,7 +29,13 @@ class UserRepositoryImpl extends UserRepository {
 
     }on AppException catch (e){
       final errorDataState = await CheckExceptions.getError(e);
+      print(e);
       return DataFailed<UserEntity>(errorDataState.error);
+      if(errorDataState.error.toString().contains("توکن منقضی شده است")){
+        return DataLogOut(errorDataState.error);
+        return DataFailed<UserEntity>(errorDataState.error);
+      }
+      return DataLogOut(errorDataState.error);
     }
   }
 

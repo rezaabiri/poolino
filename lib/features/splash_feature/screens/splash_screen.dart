@@ -63,7 +63,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (loggedIn) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/phone');
       }
     });
   }

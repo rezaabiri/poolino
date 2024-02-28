@@ -14,3 +14,7 @@ class UserError extends UserStatus{
   final String message;
   UserError(this.message);
 }
+class UserLogOut extends UserStatus{
+  final String message;
+  UserLogOut(this.message);
+}

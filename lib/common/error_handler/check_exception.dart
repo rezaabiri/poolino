@@ -47,6 +47,8 @@ class CheckExceptions {
         return DataFailed(appException.message);
       case Error406Exception:
         return DataFailed(appException.message);
+      case TokenNotFoundException:
+        return DataLogOut(appException.message);
       default:
         return DataFailed(appException.message);
     }

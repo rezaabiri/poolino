@@ -43,6 +43,7 @@ setup() async {
   locator.registerSingleton<UserUseCase>(UserUseCase(locator()));
   locator.registerSingleton<UserBloc>(UserBloc(locator()));
 
+
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));
 
   //locator.registerSingleton<ProductApiProvider>(ProductApiProvider(locator()));

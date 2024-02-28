@@ -1,5 +1,6 @@
-import 'dart:math';
+import 'dart:io';
 
+import 'package:android_sms_retriever/android_sms_retriever.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:pinput/pinput.dart';
-import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
@@ -17,15 +17,12 @@ import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_s
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
-import 'package:android_sms_retriever/android_sms_retriever.dart';
-import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
-import '../../../../common/widgets/loading.dart';
 import '../../../../locator.dart';
 
 
@@ -58,7 +55,7 @@ class _LoginPageState extends State<VerifyCodePage> {
 
   @override
   void initState() {
-    verifyCode();
+    if(Platform.isAndroid) verifyCode();
     super.initState();
   }
 

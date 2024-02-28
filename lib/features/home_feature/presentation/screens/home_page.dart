@@ -6,6 +6,7 @@ import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:poolino/common/error_handler/logout_bottom_sheet.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
@@ -103,20 +104,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   BlocConsumer<UserBloc, UserState>(
                     listenWhen: (previous, current) {
-                      if (current.userStatus is UserComplete) {
+                      /*if (current.userStatus is UserComplete) {
                         return true;
                       }if (current.userStatus is UserLoading) {
                         return true;
-                      }
-
-                      return false;
+                      }if (current.userStatus is UserError) {
+                        return true;
+                      }if (current.userStatus is UserLogOut) {
+                        return true;
+                      }*/
+                      return true;
                     },
                     listener: (context, state) {
+
                       if (state.userStatus is UserLoading) {
                         LoadingScreen.show(context: context);
-                      }
-                      if (state.userStatus is UserComplete) {
+                      }else{
                         LoadingScreen.hide(context);
+                        //Navigator.pushNamed(context, "/phone");
+
                       }
                     },
                     builder: (context, state) {
@@ -129,6 +135,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       }
                       if(state.userStatus is UserError) {
                         UserError u = state.userStatus as UserError;
+                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
+                      }
+
+                      if(state.userStatus is UserLogOut) {
+                        UserLogOut u = state.userStatus as UserLogOut;
+                        //Navigator.pushReplacementNamed(context, "/phone");
                         PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                       }
 

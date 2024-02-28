@@ -13,3 +13,7 @@ class DataSuccess<T> extends DataState<T>{
 class DataFailed<T> extends DataState<T>{
   const DataFailed(String? error) : super(null, error);
 }
+
+class DataLogOut<T> extends DataState<T>{
+  const DataLogOut(String? error) : super(null, error);
+}

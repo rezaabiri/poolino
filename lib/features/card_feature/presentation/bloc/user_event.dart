@@ -6,3 +6,8 @@ class LoadUserEvent extends UserEvent{
   final String number;
   LoadUserEvent(this.number);
 }
+class DataLogOutEvent extends UserEvent {
+  final String message;
+
+  DataLogOutEvent(this.message);
+}
