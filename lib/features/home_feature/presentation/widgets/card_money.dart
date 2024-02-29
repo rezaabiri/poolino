@@ -20,7 +20,15 @@ class CardMoney extends StatelessWidget {
       children: [
         Stack(
           children: [
-            SvgPicture.asset("assets/images/card_bg.svg",),
+            //SvgPicture.asset("assets/images/card_bg.svg", width: MediaQuery.of(context).size.width,),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 210,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(24),
+                color: PoolinoColors.baseColor
+              ),
+            ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.03,
               child: Padding(

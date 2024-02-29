@@ -45,8 +45,8 @@ class AddCost {
                                   const Text(
                                     "انتخاب از پیامک های بانکی",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: "yekan_regular"),
+                                        fontSize: 14,
+                                        fontFamily: "regular"),
                                   ),
                                   const SizedBox(
                                     width: 14,
@@ -93,8 +93,8 @@ class AddCost {
                                   const Text(
                                     "ثبت هزینه به صورت دستی",
                                     style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: "yekan_regular"),
+                                        fontSize: 14,
+                                        fontFamily: "regular"),
                                   ),
                                   const SizedBox(
                                     width: 14,

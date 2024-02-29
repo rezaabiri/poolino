@@ -126,8 +126,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         UserError u = state.userStatus as UserError;
                         LoadingScreen.hide(context);
                         if(u.message=="logout") {
-                          await prefsOperator.logout();
-                          Navigator.pushNamed(context, "/phone");
+                          //await prefsOperator.logout();
+                          Navigator.pushNamedAndRemoveUntil(context, '/phone', ModalRoute.withName('/'));
+
+                          //Navigator.pushNamed(context, "/phone");
                         }
                       }
                     },

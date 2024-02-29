@@ -17,6 +17,7 @@ import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_s
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';
@@ -116,6 +117,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                     PoolinoSnackBar(
                             icon: CupertinoIcons.clear, type: Constants.ERROR)
                         .show(context, "کد تایید صحیح نیست");
+                    LoadingScreen.hide(context);
                   }
                 },
                 builder: (context, state) {
@@ -145,7 +147,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                         },
                         onComplete: (pin) {
                           final VerifyParams verifyParams = VerifyParams(
-                              prefsOperator.getSharedDataNoSync("phone"), pin);
+                              prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(), pin.toEnglishDigit());
                           BlocProvider.of<VerifyBloc>(context)
                               .add(LoadVerifyEvent(verifyParams));
                         },

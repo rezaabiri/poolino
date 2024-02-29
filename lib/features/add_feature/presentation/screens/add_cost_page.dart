@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
+import 'package:poolino/common/widgets/bottom_sheets/choose_date.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_text_field.dart';
+import 'package:poolino/date_picker.dart';
 import 'package:poolino/features/add_feature/domain/models/category_model.dart';
 import 'package:poolino/features/add_feature/presentation/widgets/bottom_sheets/choose_category.dart';
 import 'package:poolino/features/add_feature/presentation/widgets/selectable_item.dart';
@@ -33,59 +35,64 @@ class _AddCostPageState extends State<AddCostPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16,),
-        AddTextField(
-          formKey: formKey,
-          hint: "مبلغ",
-          prefixText: "تومان",
-          icon: "assets/images/moneys.svg",
-          controller: controller,
-        ),
-        const SizedBox(height: 8,),
-        SelectableItem(
-          title: "تاریخ",
-          prefixText: DateTime.now().day.toString() + DateTime.now().month.toString() + DateTime.now().year.toString(),
-          icon: "assets/images/calendar.svg",
-          colors: PoolinoColors.baseColor,
-          isDate: true,
-          onTap: (){
-            print(controller.text);
-          },
-        ),
-        SelectableItem(
-          title: "دسته بندی هزینه",
-          prefixText: "انتخاب کنید",
-          icon: "assets/images/category.svg",
-          colors: PoolinoColors.baseColor,
-          isDate: false,
-          onTap: (){
-            ChooseCategory().showModal(context, onTapChoose: (){
-
-            });
-          },
-        ),
-        SelectableItem(
-          title: "اولویت هزینه",
-          prefixText: "انتخاب کنید",
-          icon: "assets/images/status.svg",
-          colors: PoolinoColors.baseColor,
-          isDate: false,
-          onTap: (){},
-        ),
-        const SizedBox(height: 8,),
-        NoteTextField(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Column(
+        children: [
+          const SizedBox(height: 16,),
+          AddTextField(
             formKey: formKey,
             hint: "مبلغ",
             prefixText: "تومان",
-            icon: "assets/images/note.svg",
-            controller: controller
-        ),
+            icon: "assets/images/moneys.svg",
+            controller: controller,
+          ),
+          const SizedBox(height: 8,),
+          SelectableItem(
+            title: "تاریخ",
+            prefixText: DateTime.now().day.toString() + DateTime.now().month.toString() + DateTime.now().year.toString(),
+            icon: "assets/images/calendar.svg",
+            colors: PoolinoColors.baseColor,
+            isDate: true,
+            onTap: (){
+              ChooseDate().showModal(context, onTapChoose: (){
 
-        SizedBox(height: 16,),
-        ButtonPrimary(text: "ثبت هزینه", isEnabled: false, onPressed: (){})
-      ],
+              });
+            },
+          ),
+          SelectableItem(
+            title: "دسته بندی هزینه",
+            prefixText: "انتخاب کنید",
+            icon: "assets/images/category.svg",
+            colors: PoolinoColors.baseColor,
+            isDate: false,
+            onTap: (){
+              ChooseCategory().showModal(context, onTapChoose: (){
+
+              });
+            },
+          ),
+          SelectableItem(
+            title: "اولویت هزینه",
+            prefixText: "انتخاب کنید",
+            icon: "assets/images/status.svg",
+            colors: PoolinoColors.baseColor,
+            isDate: false,
+            onTap: (){},
+          ),
+          const SizedBox(height: 8,),
+          NoteTextField(
+              formKey: formKey,
+              hint: "مبلغ",
+              prefixText: "تومان",
+              icon: "assets/images/note.svg",
+              controller: controller
+          ),
+
+          SizedBox(height: 16,),
+          ButtonPrimary(text: "ثبت هزینه", isEnabled: false, onPressed: (){})
+        ],
+      ),
     );
   }
 }

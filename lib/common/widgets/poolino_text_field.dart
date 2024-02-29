@@ -33,7 +33,7 @@ class PoolinoTextField extends StatelessWidget {
           maxLength: maxLength,
           maxLines: maxLines,
           minLines: minLines,
-          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+          //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           cursorRadius: const Radius.circular(20),
           textAlign: TextAlign.end,
           cursorColor: PoolinoColors.baseColor,
