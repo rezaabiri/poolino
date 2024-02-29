@@ -110,41 +110,32 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     listenWhen: (previous, current) {
                       if (current.userStatus is UserLoading) {
                         LoadingScreen.show(context: context);
-                        return true;
                       }
                       if (current.userStatus is UserComplete) {
                         LoadingScreen.hide(context);
-                        return true;
                       }if (current.userStatus is UserError) {
                         UserError u = current.userStatus as UserError;
-                        //PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                         LoadingScreen.hide(context);
-                        return true;
-                      }if (current.userStatus is UserLogOut) {
-                        UserLogOut u = current.userStatus as UserLogOut;
-                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
-                        LoadingScreen.hide(context);
+                        if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                         return true;
                       }
                       return false;
                     },
-                    listener: (context, state) {},
+                    listener: (context, state) async {
+                      if (state.userStatus is UserError) {
+                        UserError u = state.userStatus as UserError;
+                        LoadingScreen.hide(context);
+                        if(u.message=="logout") {
+                          await prefsOperator.logout();
+                          Navigator.pushNamed(context, "/phone");
+                        }
+                      }
+                    },
                     builder: (context, state) {
                       if (state.userStatus is UserComplete) {
                         UserComplete userComplete = state.userStatus as UserComplete;
                         UserEntity userEntity = userComplete.userEntity;
-
                       }
-                      if(state.userStatus is UserError) {
-                        UserError u = state.userStatus as UserError;
-                      }
-
-                      if(state.userStatus is UserLogOut) {
-                        UserLogOut u = state.userStatus as UserLogOut;
-                        //Navigator.pushReplacementNamed(context, "/phone");
-                        //PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
-                      }
-
                       return ButtonWidget(
                         name: "گزارش حساب",
                         icon: "report_blue",

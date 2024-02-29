@@ -14,9 +14,9 @@ class CheckExceptions {
       case 400:
         String errorMessage = response.data['message'];
         throw BadRequestException(response: response, message: errorMessage);
-      case 403:
+      /*case 403:
         String errorMessage = response.data['message'];
-        throw UnauthorisedException(message: errorMessage);
+        throw UnauthorisedException(message: errorMessage);*/
       case 407:
         String errorMessage = response.data['message'];
         throw TokenNotFoundException(message: errorMessage);
@@ -29,7 +29,7 @@ class CheckExceptions {
         String errorMessage = response.data['message'];
         throw Error406Exception(message: errorMessage);
       default:
-        throw FetchDataException(message: "${response.statusCode}fetch exception");
+        throw FetchDataException(message: "logout");
     }
   }
 
@@ -39,8 +39,8 @@ class CheckExceptions {
         return DataFailed(appException.message);
       case NotFoundException:
         return DataFailed(appException.message);
-      case UnauthorisedException:
-        return DataFailed(appException.message);
+      /*case UnauthorisedException:
+        return DataFailed(appException.message);*/
       case ServerException:
         return DataFailed(appException.message);
       case FetchDataException:
@@ -48,7 +48,7 @@ class CheckExceptions {
       case Error406Exception:
         return DataFailed(appException.message);
       case TokenNotFoundException:
-        return DataLogOut(appException.message);
+        return DataFailed(appException.message);
       default:
         return DataFailed(appException.message);
     }

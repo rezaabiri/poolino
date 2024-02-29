@@ -28,7 +28,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         emit(state.copyWith(newUserStatus: UserError(dataState.error!)));
       }
 
-
     });
   }
 }

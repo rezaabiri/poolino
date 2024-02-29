@@ -25,13 +25,11 @@ import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../locator.dart';
 
-
 class VerifyCodePage extends StatefulWidget {
   const VerifyCodePage({super.key});
 
   @override
   State<VerifyCodePage> createState() => _LoginPageState();
-
 }
 
 class _LoginPageState extends State<VerifyCodePage> {
@@ -55,7 +53,7 @@ class _LoginPageState extends State<VerifyCodePage> {
 
   @override
   void initState() {
-    if(Platform.isAndroid) verifyCode();
+    if (Platform.isAndroid) verifyCode();
     super.initState();
   }
 
@@ -65,138 +63,146 @@ class _LoginPageState extends State<VerifyCodePage> {
     PrefsOperator prefsOperator = locator<PrefsOperator>();
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          actions: const [ThemeSwitcher()],
-        ),
-        body: SingleChildScrollView(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset("assets/images/login_vector.svg"),
-                const SizedBox(
-                  height: 24,
-                ),
-                Center(
-                  child: Text(".کد تایید به شماره (${prefsOperator.getSharedDataNoSync("phone")}) ارسال شد",
-                      style: theme.textTheme.labelLarge),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                BlocConsumer<VerifyBloc, VerifyState>(
-                  listenWhen: (previous, current) {
-                    if (current.verifyStatus is VerifyComplete) {
-                      return true;
-                    }
-                    if (current.verifyStatus is VerifyError) {
-                      return true;
-                    }if (current.verifyStatus is VerifyLoading) {
-                      return true;
-                    }
-                    return false;
-                  },
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        actions: const [ThemeSwitcher()],
+      ),
+      body: SingleChildScrollView(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SvgPicture.asset("assets/images/login_vector.svg"),
+              const SizedBox(
+                height: 24,
+              ),
+              Center(
+                child: Text(
+                    ".کد تایید به شماره (${prefsOperator.getSharedDataNoSync("phone")}) ارسال شد",
+                    style: theme.textTheme.labelLarge),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              BlocConsumer<VerifyBloc, VerifyState>(
+                listenWhen: (previous, current) {
+                  if (current.verifyStatus is VerifyComplete) {
+                    return true;
+                  }
+                  if (current.verifyStatus is VerifyError) {
+                    return true;
+                  }
+                  if (current.verifyStatus is VerifyLoading) {
+                    return true;
+                  }
+                  return false;
+                },
+                listener: (context, state) {
+                  if (state.verifyStatus is VerifyLoading) {
+                    LoadingScreen.show(context: context);
+                  }
+                  if (state.verifyStatus is VerifyComplete) {
+                    LoadingScreen.hide(context);
+                    Navigator.pushReplacementNamed(context, "/home");
+                    prefsOperator.setLoggedIn();
+                    BlocProvider.of<VerifyButton>(context).changeState(true);
+                  }
 
-                  listener: (context, state) {
-                    if(state.verifyStatus is VerifyLoading){
-                      LoadingScreen.show(context: context);
-                    }
-                    if (state.verifyStatus is VerifyComplete) {
-                      LoadingScreen.hide(context);
-                      Navigator.pushReplacement(
-                          context,
-                          PageTransition(type: PageTransitionType.rightToLeft,
-                              child: HomePage()));
-                      prefsOperator.setLoggedIn();
-                      BlocProvider.of<VerifyButton>(context).changeState(true);
-                    }
+                  if (state.verifyStatus is VerifyError) {
+                    BlocProvider.of<VerifyButton>(context).changeState(false);
+                    BlocProvider.of<VerifyPinPut>(context).changeState(false);
+                    PoolinoSnackBar(
+                            icon: CupertinoIcons.clear, type: Constants.ERROR)
+                        .show(context, "کد تایید صحیح نیست");
+                  }
+                },
+                builder: (context, state) {
+                  if (state.verifyStatus is VerifyComplete) {
+                    VerifyComplete verifyComplete =
+                        state.verifyStatus as VerifyComplete;
+                    prefsOperator.setSharedData(
+                        "accessToken",
+                        verifyComplete.verifyEntity.result!.accessToken
+                            .toString());
+                    prefsOperator.setSharedData(
+                        "refreshToken",
+                        verifyComplete.verifyEntity.result!.refreshToken
+                            .toString());
+                    BlocProvider.of<VerifyButton>(context).changeState(true);
+                  }
 
-                    if(state.verifyStatus is VerifyError){
-                      BlocProvider.of<VerifyButton>(context).changeState(false);
-                      BlocProvider.of<VerifyPinPut>(context).changeState(false);
-                      PoolinoSnackBar(
-                          icon: CupertinoIcons.clear,
-                          type: Constants.ERROR)
-                          .show(context, "کد تایید صحیح نیست");
-                    }
-
-                  },
-                  builder: (context, state) {
-                    if (state.verifyStatus is VerifyComplete) {
-                      VerifyComplete verifyComplete = state.verifyStatus as VerifyComplete;
-                      prefsOperator.setSharedData("accessToken", verifyComplete.verifyEntity.result!.accessToken.toString());
-                      prefsOperator.setSharedData("refreshToken", verifyComplete.verifyEntity.result!.refreshToken.toString());
-                      BlocProvider.of<VerifyButton>(context).changeState(true);
-                    }
-
-                    return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
-                      builder: (context, state) {
-                        //pinController.clear();
-                        return PinPut(
-                          formKey: formKey,
-                          pinController: pinController,
-                          onChange: (pin) {
-                            BlocProvider.of<VerifyButton>(context).changeState(false);
-                          },
-                          onComplete: (pin) {
-                            final VerifyParams verifyParams = VerifyParams(prefsOperator.getSharedDataNoSync("phone"), pin);
-                            BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
-                            },);
+                  return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
+                    builder: (context, state) {
+                      //pinController.clear();
+                      return PinPut(
+                        formKey: formKey,
+                        pinController: pinController,
+                        onChange: (pin) {
+                          BlocProvider.of<VerifyButton>(context)
+                              .changeState(false);
                         },
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "ویرایش شماره",
-                      style: TextStyle(
-                          fontFamily: 'medium',
-                          fontSize: 12,
-                          color: theme.primaryColor),
-                    ),
-                    Text(
-                      "ارسال مجدد کد تایید: 01:30",
-                      style: theme.textTheme.labelMedium,
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                BlocBuilder<VerifyButton, VerifyButtonState>(
-                  builder: (context, state) {
-                    return ButtonPrimary(
-                        text: "تایید",
-                        isEnabled: state.isCorrect,
-                        onPressed: () {
-
-                        });
-                  },
-                ),
-              ],
-            ),
+                        onComplete: (pin) {
+                          final VerifyParams verifyParams = VerifyParams(
+                              prefsOperator.getSharedDataNoSync("phone"), pin);
+                          BlocProvider.of<VerifyBloc>(context)
+                              .add(LoadVerifyEvent(verifyParams));
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "ویرایش شماره",
+                    style: TextStyle(
+                        fontFamily: 'medium',
+                        fontSize: 12,
+                        color: theme.primaryColor),
+                  ),
+                  Text(
+                    "ارسال مجدد کد تایید: 01:30",
+                    style: theme.textTheme.labelMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              BlocBuilder<VerifyButton, VerifyButtonState>(
+                builder: (context, state) {
+                  return ButtonPrimary(
+                    text: "تایید",
+                    isEnabled: state.isCorrect,
+                    onPressed: () {},
+                  );
+                },
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 
-  verifyCode() async{
+  verifyCode() async {
     var rawNumber = "0";
-    await AndroidSmsRetriever.listenForSms().then((value) {
-      final RegExp regExp = RegExp(r'\b\d{4}\b');
-      final Iterable<Match> matches = regExp.allMatches(value.toString());
-      for (Match match in matches) {
-        rawNumber = match.group(0)!;
-        pinController.setText(rawNumber);
-      }
-    });
+    await AndroidSmsRetriever.listenForSms().then(
+      (value) {
+        final RegExp regExp = RegExp(r'\b\d{4}\b');
+        final Iterable<Match> matches = regExp.allMatches(value.toString());
+        for (Match match in matches) {
+          rawNumber = match.group(0)!;
+          pinController.setText(rawNumber);
+        }
+      },
+    );
   }
 }
