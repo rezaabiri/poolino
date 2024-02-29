@@ -80,13 +80,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     List<int> states = [1, 2, 1, 1, 2, 2];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.only(left: 16, right: 16, top: 36),
         child: SingleChildScrollView(
           child: Column(
             children: [
               ToolbarWidget(
-                onTap: () {},
+                profile: (){},
+                menu: (){
+                  Drawer();
+                },
               ),
               const SizedBox(
                 height: 18,
@@ -104,44 +108,41 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 children: [
                   BlocConsumer<UserBloc, UserState>(
                     listenWhen: (previous, current) {
-                      /*if (current.userStatus is UserComplete) {
+                      if (current.userStatus is UserLoading) {
+                        LoadingScreen.show(context: context);
                         return true;
-                      }if (current.userStatus is UserLoading) {
+                      }
+                      if (current.userStatus is UserComplete) {
+                        LoadingScreen.hide(context);
                         return true;
                       }if (current.userStatus is UserError) {
+                        UserError u = current.userStatus as UserError;
+                        //PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
+                        LoadingScreen.hide(context);
                         return true;
                       }if (current.userStatus is UserLogOut) {
-                        return true;
-                      }*/
-                      return true;
-                    },
-                    listener: (context, state) {
-
-                      if (state.userStatus is UserLoading) {
-                        LoadingScreen.show(context: context);
-                      }else{
+                        UserLogOut u = current.userStatus as UserLogOut;
+                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                         LoadingScreen.hide(context);
-                        //Navigator.pushNamed(context, "/phone");
-
+                        return true;
                       }
+                      return false;
                     },
+                    listener: (context, state) {},
                     builder: (context, state) {
                       if (state.userStatus is UserComplete) {
-                        UserComplete userComplete = state
-                            .userStatus as UserComplete;
+                        UserComplete userComplete = state.userStatus as UserComplete;
                         UserEntity userEntity = userComplete.userEntity;
-                        print(userEntity.result!.updatedAt);
 
                       }
                       if(state.userStatus is UserError) {
                         UserError u = state.userStatus as UserError;
-                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                       }
 
                       if(state.userStatus is UserLogOut) {
                         UserLogOut u = state.userStatus as UserLogOut;
                         //Navigator.pushReplacementNamed(context, "/phone");
-                        PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
+                        //PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                       }
 
                       return ButtonWidget(
@@ -185,13 +186,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                             final messages = await _query.querySms(
                               kinds: [
                                 SmsQueryKind.inbox,
-                                SmsQueryKind.sent,
                               ],
                               address: '9830008528',
+
                               count: 10,
                             );
 
-                            setState(() => _messages = messages);
+                            //setState(() => _messages = messages);
                           }
                         },
                       );
@@ -238,7 +239,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: PoolinoColors.f7Color,
+                  color: PoolinoColors.f9Color,
                   borderRadius: BorderRadius.circular(20)
                 ),
                 child: SizedBox(

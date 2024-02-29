@@ -5,8 +5,9 @@ import '../../../../common/utils/poolino_colors.dart';
 import '../../../../common/utils/utils.dart';
 
 class ToolbarWidget extends StatelessWidget  {
-  Function() onTap;
-  ToolbarWidget({super.key, required this.onTap});
+  Function() profile;
+  Function() menu;
+  ToolbarWidget({super.key, required this.profile, required this.menu});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class ToolbarWidget extends StatelessWidget  {
             child: Material(
               color: PoolinoColors.f9Color,
               child: InkWell(
-                onTap: onTap,
+                onTap: profile,
                 child: const SizedBox(
                   height: 40,
                   width: 40,
@@ -34,10 +35,10 @@ class ToolbarWidget extends StatelessWidget  {
             borderRadius: BorderRadius.circular(8),
             child: Material(
               color: PoolinoColors.f9Color,
-              child: const SizedBox(
+              child: SizedBox(
                 height: 40,
                 width: 40,
-                child: ThemeSwitcher(),
+                child: IconButton(onPressed : menu, icon: const Icon(Icons.menu_rounded, color: Colors.black,)),
               ),
             ),
           ),

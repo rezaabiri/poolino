@@ -25,16 +25,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
 
       if(dataState is DataFailed){
-        print("data logout shod222");
         emit(state.copyWith(newUserStatus: UserError(dataState.error!)));
       }
 
       if(dataState is DataLogOut){
-        print("data logout shod");
         emit(state.copyWith(newUserStatus: UserLogOut(dataState.error!)));
       }
-
-
     });
   }
 }

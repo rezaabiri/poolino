@@ -23,6 +23,9 @@ class ChooseCategory {
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
       showDragHandle: const bool.fromEnvironment("handle", defaultValue: true),
+      elevation: 0,
+      isScrollControlled: false,
+      enableDrag: true,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(20),
@@ -50,7 +53,6 @@ class ChooseCategory {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Material(
-
           color: PoolinoColors.f9Color,
           child: InkWell(
             onTap: onTapChoose,
