@@ -50,7 +50,7 @@ class PoolinoTextField extends StatelessWidget {
           decoration: InputDecoration(
             hintTextDirection: TextDirection.rtl,
             counterText: "",
-            contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             suffixIcon: IconButton(
               icon: Icon(Icons.clear, color: theme.canvasColor, size: 20,),
               highlightColor: Colors.blue.withOpacity(0.05),
@@ -64,7 +64,7 @@ class PoolinoTextField extends StatelessWidget {
                 cornerSmoothing: 1,
               ),
               borderSide: BorderSide(
-                width: 1,
+                width: 1.5,
                 color: PoolinoColors.baseColor,
               ),
             ),

@@ -12,20 +12,20 @@ import '../../domain/use_cases/user_usecase.dart';
 part 'user_event.dart';
 part 'user_state.dart';
 
-class UserBloc extends Bloc<UserEvent, UserState> {
+class AddBloc extends Bloc<UserEvent, UserState> {
   final UserUseCase userUseCase;
 
-  UserBloc(this.userUseCase) : super(UserState(userStatus: LoadingInitial())) {
+  AddBloc(this.userUseCase) : super(UserState(userStatus: LoadingInitial())) {
     on<LoadUserEvent>((event, emit) async {
       emit(state.copyWith(newUserStatus: UserLoading()));
 
       DataState<UserEntity> dataState = await userUseCase(event.number);
       if(dataState is DataSuccess){
-        emit(state.copyWith(newUserStatus: UserComplete(dataState.data!)));
+        emit(state.copyWith(newUserStatus: AddComplete(dataState.data!)));
       }
 
       if(dataState is DataFailed){
-        emit(state.copyWith(newUserStatus: UserError(dataState.error!)));
+        emit(state.copyWith(newUserStatus: AddError(dataState.error!)));
       }
 
       if(dataState is DataLogOut){

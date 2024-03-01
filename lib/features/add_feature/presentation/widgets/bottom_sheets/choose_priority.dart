@@ -1,24 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:poolino/common/widgets/item_list_bottom_sheet.dart';
 
 import '../../../../../common/utils/poolino_colors.dart';
-import '../../../../../common/widgets/item_list_bottom_sheet.dart';
 import '../../../domain/models/category_model.dart';
 
-class ChooseCategory {
+class ChoosePriority {
 
   Future<void> showModal(context, {
     required Function(String) onTapChoose,
   }) async {
 
     List<CategoryModel> categoryModels = [];
-    categoryModels.add(CategoryModel(icon: "khordani", title: "خوردنی"));
-    categoryModels.add(CategoryModel(icon: "shop", title: "خرید"));
-    categoryModels.add(CategoryModel(icon: "r_a", title: "رفت و آمد"));
-    categoryModels.add(CategoryModel(icon: "home_1", title: "خونه"));
-    categoryModels.add(CategoryModel(icon: "funny", title: "خوش گذرونی"));
-    categoryModels.add(CategoryModel(icon: "health", title: "سلامتی"));
-    categoryModels.add(CategoryModel(icon: "gift", title: "هدیه"));
+    categoryModels.add(CategoryModel(icon: "priority/arrow-square-up", title: "ضروری"));
+    categoryModels.add(CategoryModel(icon: "priority/arrow-square-left", title: "معمولی"));
+    categoryModels.add(CategoryModel(icon: "priority/arrow-square-down", title: "غیر ضروری"));
+
 
     showModalBottomSheet<void>(
       backgroundColor: Colors.white,
@@ -40,5 +37,8 @@ class ChooseCategory {
       },
     );
   }
+
+
+
 }
 

@@ -7,7 +7,7 @@ import 'package:poolino/features/card_feature/domain/repository/user_repository.
 import '../../../../../config/use_case/use_case.dart';
 
 class UserUseCase extends UseCase<DataState<UserEntity>, String>{
-  final UserRepository userRepository;
+  final AddRepository userRepository;
   UserUseCase(this.userRepository);
 
   @override

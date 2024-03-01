@@ -38,10 +38,10 @@ setup() async {
   locator.registerSingleton<VerifyUseCase>(VerifyUseCase(locator()));
   locator.registerSingleton<VerifyBloc>(VerifyBloc(locator()));
 
-  locator.registerSingleton<UserApiProvider>(UserApiProvider());
-  locator.registerSingleton<UserRepository>(UserRepositoryImpl(locator()));
+  locator.registerSingleton<AddApiProvider>(AddApiProvider());
+  locator.registerSingleton<AddRepository>(UserRepositoryImpl(locator()));
   locator.registerSingleton<UserUseCase>(UserUseCase(locator()));
-  locator.registerSingleton<UserBloc>(UserBloc(locator()));
+  locator.registerSingleton<AddBloc>(AddBloc(locator()));
 
 
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));

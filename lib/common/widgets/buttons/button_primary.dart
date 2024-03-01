@@ -20,7 +20,7 @@ class ButtonPrimary extends StatelessWidget {
     if(isEnabled) {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 50,
+        height: 40,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
               backgroundColor: PoolinoColors.baseColor,
@@ -38,7 +38,7 @@ class ButtonPrimary extends StatelessWidget {
       );
     }
     return Container(
-      height: 50,
+      height: 40,
       decoration: ShapeDecoration(
         color: PoolinoColors.disableButtonColor,
         shape: SmoothRectangleBorder(

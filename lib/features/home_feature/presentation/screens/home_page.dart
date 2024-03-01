@@ -60,23 +60,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     PrefsOperator prefsOperator = locator<PrefsOperator>();
 
-    var theme = Theme.of(context);
-    List<String> prices = [
-      "1,230,000",
-      "3,400,200",
-      "500,000",
-      "4,103,000",
-      "8,000,000",
-      "2,300,000"
-    ];
-    List<String> titles = [
-      "خرید طلای آبشده",
-      "پروژه برنامه نویسی",
-      "هارد لپ تاپ",
-      "مانیتور 27 سامسونگ",
-      "لپ تاپ استوک",
-      "رم 16 گیگ پی سی"
-    ];
     List<int> states = [1, 2, 1, 1, 2, 2];
 
     return Scaffold(
@@ -106,15 +89,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BlocConsumer<UserBloc, UserState>(
+                  BlocConsumer<AddBloc, UserState>(
                     listenWhen: (previous, current) {
                       if (current.userStatus is UserLoading) {
                         LoadingScreen.show(context: context);
                       }
-                      if (current.userStatus is UserComplete) {
+                      if (current.userStatus is AddComplete) {
                         LoadingScreen.hide(context);
-                      }if (current.userStatus is UserError) {
-                        UserError u = current.userStatus as UserError;
+                      }if (current.userStatus is AddError) {
+                        AddError u = current.userStatus as AddError;
                         LoadingScreen.hide(context);
                         if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                         return true;
@@ -122,8 +105,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       return false;
                     },
                     listener: (context, state) async {
-                      if (state.userStatus is UserError) {
-                        UserError u = state.userStatus as UserError;
+                      if (state.userStatus is AddError) {
+                        AddError u = state.userStatus as AddError;
                         LoadingScreen.hide(context);
                         if(u.message=="logout") {
                           //await prefsOperator.logout();
@@ -134,15 +117,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       }
                     },
                     builder: (context, state) {
-                      if (state.userStatus is UserComplete) {
-                        UserComplete userComplete = state.userStatus as UserComplete;
+                      if (state.userStatus is AddComplete) {
+                        AddComplete userComplete = state.userStatus as AddComplete;
                         UserEntity userEntity = userComplete.userEntity;
                       }
                       return ButtonWidget(
                         name: "گزارش حساب",
                         icon: "report_blue",
                         onTap: () {
-                          BlocProvider.of<UserBloc>(context).add(LoadUserEvent("09150575854"));
+                          BlocProvider.of<AddBloc>(context).add(LoadUserEvent("09150575854"));
                           },
                       );
                       },

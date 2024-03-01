@@ -6,13 +6,13 @@ import 'package:poolino/features/card_feature/domain/repository/user_repository.
 
 import '../../../../../config/use_case/use_case.dart';
 
-class UserUseCase extends UseCase<DataState<UserEntity>, String>{
-  final UserRepository userRepository;
-  UserUseCase(this.userRepository);
+class AddUseCase extends UseCase<DataState<UserEntity>, String>{
+  final AddRepository addRepository;
+  AddUseCase(this.addRepository);
 
   @override
   Future<DataState<UserEntity>> call(String number) {
-    return userRepository.fetchUserDetails(number);
+    return addRepository.fetchUserDetails(number);
   }
   
 }

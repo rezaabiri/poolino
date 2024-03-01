@@ -11,10 +11,10 @@ import 'package:poolino/features/login_feature/models/login_model.dart';
 import '../../card_feature/data/user_api_provider.dart';
 
 
-class UserRepositoryImpl extends UserRepository {
-  UserApiProvider apiProvider;
+class AddRepositoryImpl extends AddRepository {
+  AddApiProvider apiProvider;
 
-  UserRepositoryImpl(this.apiProvider);
+  AddRepositoryImpl(this.apiProvider);
 
   @override
   Future<DataState<UserEntity>> fetchUserDetails(String number) async {

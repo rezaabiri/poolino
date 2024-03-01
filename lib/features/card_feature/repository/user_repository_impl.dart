@@ -10,8 +10,8 @@ import 'package:poolino/features/login_feature/models/login_model.dart';
 import '../data/user_api_provider.dart';
 
 
-class UserRepositoryImpl extends UserRepository {
-  UserApiProvider apiProvider;
+class UserRepositoryImpl extends AddRepository {
+  AddApiProvider apiProvider;
 
   UserRepositoryImpl(this.apiProvider);
 

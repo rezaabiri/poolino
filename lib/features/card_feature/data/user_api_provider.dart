@@ -6,7 +6,7 @@ import 'package:poolino/common/error_handler/jwt/base_api_provider.dart';
 import '../../../common/utils/constants.dart';
 
 
-class UserApiProvider extends BaseApiProvider{
+class AddApiProvider extends BaseApiProvider{
   Future<dynamic> getUserDetails(email) async {
     var response = await dio.post(
       Constants.baseUrl + Constants.getUserDetails,

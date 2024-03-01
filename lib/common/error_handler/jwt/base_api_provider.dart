@@ -7,7 +7,7 @@ import 'package:poolino/common/error_handler/jwt/refresh_token_repository.dart';
 import 'package:poolino/common/error_handler/logout_bottom_sheet.dart';
 import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/common/utils/prefs_opreator.dart';
-import 'package:poolino/features/add_feature/domain/use_cases/user_usecase.dart';
+import 'package:poolino/features/add_feature/domain/use_cases/add_usecase.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/locator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +44,7 @@ class BaseApiProvider {
           }
         }else if(e.response?.statusCode == 407){
           print(e.response!.data["message"]);
-          //userBloc.add(DataLogoutEvent("errorMessage"));
+          //AddBloc.add(DataLogoutEvent("errorMessage"));
           //add(DataLogoutEvent("errorMessage"));
         }
         return handler.next(e);

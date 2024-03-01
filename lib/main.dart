@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/add_feature/presentation/bloc/category_cubit/category_cubit.dart';
+import 'package:poolino/features/add_feature/presentation/bloc/priority_cubit/priority_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/all_transactions_page.dart';
@@ -33,7 +35,9 @@ void main() async {
     BlocProvider(create: (_) => LoginButtonCubit()),
     BlocProvider(create: (_) => locator<VerifyBloc>()),
     BlocProvider(create: (_) => VerifyPinPut()),
-    BlocProvider(create: (_) => locator<UserBloc>()),
+    BlocProvider(create: (_) => locator<AddBloc>()),
+    BlocProvider(create: (_) => CategoryCubit()),
+    BlocProvider(create: (_) => PriorityCubit()),
   ], child: const MyApp(),),
   );
 }
@@ -53,10 +57,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context).canvasColor;
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark
+      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light
     ));
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
