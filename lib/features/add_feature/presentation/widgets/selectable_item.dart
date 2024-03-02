@@ -31,7 +31,7 @@ class SelectableItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(14),
           child: Material(
-            color: PoolinoColors.f9Color,
+            color: PoolinoColors.f0Color,
             child: InkWell(
               onTap: onTap,
               child: Row(

@@ -7,17 +7,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
-import 'package:page_transition/page_transition.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pinput/pinput.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
-import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_status.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/widgets/pin_put.dart';
-import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/params/verify_params.dart';
 import '../../../../common/theme/ThemeSwitcher.dart';

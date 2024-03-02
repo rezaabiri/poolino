@@ -2,9 +2,7 @@
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
-import 'package:poolino/features/home_feature/presentation/widgets/button_widget.dart';
 
 
 

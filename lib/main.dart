@@ -13,6 +13,7 @@ import 'package:poolino/features/login_feature/presentation/bloc/verify/verify_b
 import 'package:poolino/features/login_feature/presentation/bloc/verify_button_event/verify_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/verify_pinput/verify_pinput_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/screens/phone_page.dart';
+import 'package:poolino/features/login_feature/presentation/screens/verify_code_page.dart';
 import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
@@ -73,15 +74,16 @@ class _MyAppState extends State<MyApp> {
             theme: state,
             darkTheme: MyThemes.darkTheme,
             routes: {
-              '/home': (context) => HomePage(),
-              '/splash': (context) => SplashScreen(),
-              '/phone': (context) => PhonePage(),
+              '/verify': (context) => const VerifyCodePage(),
+              '/home': (context) => const HomePage(),
+              '/splash': (context) => const SplashScreen(),
+              '/phone': (context) => const PhonePage(),
               '/add_container':(context) => AddContainerPage(),
-              '/all_transaction':(context) => AllTransactionsPage(),
+              '/all_transaction':(context) => const AllTransactionsPage(),
             },
             home: Scaffold(
                 key: scaffoldKey,
-                body: SplashScreen()
+                body: const SplashScreen()
             )
         );
       },

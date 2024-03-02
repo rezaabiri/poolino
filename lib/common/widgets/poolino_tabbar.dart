@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 
 
 class PoolinoTabBar<T> extends StatelessWidget {
@@ -17,13 +16,10 @@ class PoolinoTabBar<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: ShapeDecoration(
-        color: PoolinoColors.f9Color,
-        shape: SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius(
-            cornerRadius: 12,
-            cornerSmoothing: 1,
-          ),
-        ),
+        color: PoolinoColors.f0Color,
+        shape:  RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12)
+        )
       ),
       child: DefaultTabController(
         length: tabs.length,
@@ -44,12 +40,9 @@ class PoolinoTabBar<T> extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             indicator: ShapeDecoration(
               color: PoolinoColors.baseColor,
-              shape: SmoothRectangleBorder(
-                borderRadius: SmoothBorderRadius(
-                  cornerRadius: 12,
-                  cornerSmoothing: 1,
-                ),
-              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)
+              )
             ),
             onTap: (int index) {},
             tabs: tabs),

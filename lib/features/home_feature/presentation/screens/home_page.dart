@@ -1,12 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:poolino/common/error_handler/logout_bottom_sheet.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
@@ -24,7 +20,6 @@ import '../widgets/button_widget.dart';
 import '../widgets/card_money.dart';
 import '../widgets/toolbar_widget.dart';
 import '../widgets/transaction_widget.dart';
-import 'income_page.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -215,7 +210,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: PoolinoColors.f9Color,
+                  color: PoolinoColors.f0Color,
                   borderRadius: BorderRadius.circular(20)
                 ),
                 child: SizedBox(

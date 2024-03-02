@@ -4,14 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_text_field.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_text_field.dart';
 import 'package:poolino/features/login_feature/domain/entities/login_entity.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_status.dart';
-import 'package:poolino/features/login_feature/presentation/screens/verify_code_page.dart';
 
 import '../../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/params/login_params.dart';
@@ -132,10 +130,7 @@ class _LoginPageState extends State<PhonePage> {
                       }
                       if (state.loginStatus is LoginComplete) {
                         LoadingScreen.hide(context);
-                        Navigator.push(
-                            context,
-                            PageTransition(type: PageTransitionType.rightToLeft,
-                                child: const VerifyCodePage()));
+                        Navigator.pushNamed(context, "/verify");
                       }
 
                     })

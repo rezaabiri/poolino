@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:poolino/common/widgets/poolino_appbar.dart';
 
 import '../../../../common/utils/poolino_colors.dart';
 import '../../../../common/utils/utils.dart';
 import '../widgets/transaction_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
-import 'package:flutter/rendering.dart';
 
 
 class AllTransactionsPage extends StatefulWidget {

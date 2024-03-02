@@ -14,6 +14,6 @@ class PoolinoColors {
 
   static Color f7Color = Utils.hexToColor("#F7F7F7");
   static Color e4Color = Utils.hexToColor("#E4E4E4");
-  static Color f9Color  = Utils.hexToColor("#F9F9F9");
+  static Color f0Color  = Utils.hexToColor("#F0F0F0");
   static Color d9Color  = Utils.hexToColor("#D9D9D9");
 }

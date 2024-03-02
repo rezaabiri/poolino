@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:poolino/features/add_feature/domain/models/category_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
+import 'package:poolino/features/add_feature/domain/models/category_model.dart';
 
 import '../utils/poolino_colors.dart';
 class ListItemBottomSheet extends StatelessWidget {
@@ -26,7 +24,7 @@ class ListItemBottomSheet extends StatelessWidget {
       child: ClipRRect(
           borderRadius: BorderRadius.circular(14),
           child: Material(
-            color: PoolinoColors.f9Color,
+            color: PoolinoColors.f0Color,
             child: InkWell(
               onTap: onTapChoose,
               child: SizedBox(

@@ -1,8 +1,7 @@
+import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
-import 'package:dotted_line/dotted_line.dart';
-
 
 import '../../../../common/utils/utils.dart';
 

@@ -1,5 +1,4 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/constants.dart';
@@ -26,14 +25,9 @@ class PoolinoSnackBar {
               padding: const EdgeInsets.only(left: 16, right: 16),
               height: 55,
               width: MediaQuery.of(context).size.width,
-              decoration: ShapeDecoration(
+              decoration: BoxDecoration(
                 color: type == Constants.ERROR ? PoolinoColors.error : (type==Constants.WARNING ? PoolinoColors.warning : PoolinoColors.success),
-                shape: SmoothRectangleBorder(
-                  borderRadius: SmoothBorderRadius(
-                    cornerRadius: 14,
-                    cornerSmoothing: 1,
-                  ),
-                ),
+                borderRadius: BorderRadius.circular(14),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

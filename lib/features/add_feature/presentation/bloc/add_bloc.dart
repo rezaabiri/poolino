@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
 import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
-import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 
 import '../../../../common/resources/data_state.dart';
 import '../../domain/use_cases/add_usecase.dart';

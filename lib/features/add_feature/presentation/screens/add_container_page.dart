@@ -47,7 +47,7 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
               children: [
                 const SizedBox(height: 10,),
                 SizedBox(
-                  height: 40,
+                  height: 44,
                   child: PoolinoTabBar(
                       tabController: _tabController,
                       tabs: const [

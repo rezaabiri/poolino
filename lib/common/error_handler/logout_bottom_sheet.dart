@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
-
-import '../../../../../common/utils/poolino_colors.dart';
 
 class LogoutBottomSheet {
 

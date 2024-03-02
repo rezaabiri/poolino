@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+
 part 'priority_state.dart';
 
 class PriorityCubit extends Cubit<PriorityState> {

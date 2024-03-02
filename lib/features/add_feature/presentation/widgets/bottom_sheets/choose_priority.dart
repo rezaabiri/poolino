@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/widgets/item_list_bottom_sheet.dart';
 
-import '../../../../../common/utils/poolino_colors.dart';
 import '../../../domain/models/category_model.dart';
 
 class ChoosePriority {

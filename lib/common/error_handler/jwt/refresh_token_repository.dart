@@ -1,10 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:poolino/common/error_handler/app_exception.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
-import 'package:poolino/common/error_handler/jwt/base_api_provider.dart';
-import 'package:poolino/common/params/login_params.dart';
 import 'package:poolino/common/resources/data_state.dart';
 
 import '../../../locator.dart';

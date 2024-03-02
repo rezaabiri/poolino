@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import  'package:persian_number_utility/persian_number_utility.dart';
 
@@ -42,7 +40,7 @@ class AddTextField extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10, left: 15),
             child: SvgPicture.asset(icon),
           ),
-          fillColor: PoolinoColors.f9Color,
+          fillColor: PoolinoColors.f0Color,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
             borderSide: BorderSide.none

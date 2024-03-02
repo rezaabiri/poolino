@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/utils/poolino_colors.dart';
-import '../../../../common/utils/utils.dart';
 
 class ToolbarWidget extends StatelessWidget  {
   Function() profile;
@@ -19,7 +17,7 @@ class ToolbarWidget extends StatelessWidget  {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Material(
-              color: PoolinoColors.f9Color,
+              color: PoolinoColors.f0Color,
               child: InkWell(
                 onTap: profile,
                 child: const SizedBox(
@@ -34,7 +32,7 @@ class ToolbarWidget extends StatelessWidget  {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Material(
-              color: PoolinoColors.f9Color,
+              color: PoolinoColors.f0Color,
               child: SizedBox(
                 height: 40,
                 width: 40,

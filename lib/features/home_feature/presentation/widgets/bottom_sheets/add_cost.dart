@@ -28,7 +28,7 @@ class AddCost {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Material(
-                    color: PoolinoColors.f9Color,
+                    color: PoolinoColors.f0Color,
                     child: InkWell(
                       onTap: onTapChoose,
                       child: SizedBox(
@@ -76,7 +76,7 @@ class AddCost {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Material(
-                    color: PoolinoColors.f9Color,
+                    color: PoolinoColors.f0Color,
                     child: InkWell(
                       onTap: onTapCustom,
                       child: SizedBox(

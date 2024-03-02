@@ -1,8 +1,7 @@
-import 'package:equatable/equatable.dart';
 
 import '../../models/login_model.dart';
 
-class LoginEntity extends Equatable{
+class LoginEntity {
 
   final String? message;
   final Result? result;
@@ -10,7 +9,5 @@ class LoginEntity extends Equatable{
 
   const LoginEntity({this.message, this.result});
 
-  @override
-  List<Object?> get props => [];
 
 }

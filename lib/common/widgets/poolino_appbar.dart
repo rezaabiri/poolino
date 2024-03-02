@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
 
 
@@ -25,7 +24,7 @@ class PoolinoAppBar extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Material(
-                color: PoolinoColors.f9Color,
+                color: PoolinoColors.f0Color,
                 child: InkWell(
                   onTap: onTap,
                   child: const SizedBox(
@@ -41,7 +40,7 @@ class PoolinoAppBar extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Material(
-                color: PoolinoColors.f9Color,
+                color: PoolinoColors.f0Color,
                 child: InkWell(
                   onTap: onTap,
                   child: const SizedBox(

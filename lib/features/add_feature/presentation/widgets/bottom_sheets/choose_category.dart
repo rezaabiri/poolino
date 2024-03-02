@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../../../common/utils/poolino_colors.dart';
 import '../../../../../common/widgets/item_list_bottom_sheet.dart';
 import '../../../domain/models/category_model.dart';
 

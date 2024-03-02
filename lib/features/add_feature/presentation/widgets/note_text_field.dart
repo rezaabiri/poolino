@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../common/utils/poolino_colors.dart';
@@ -29,7 +28,7 @@ class NoteTextField extends StatelessWidget {
               isDense: false,
               filled: true,
               contentPadding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1, right: 12, bottom: 0, left: 12),
-              fillColor: PoolinoColors.f9Color,
+              fillColor: PoolinoColors.f0Color,
               focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                   borderSide: BorderSide.none

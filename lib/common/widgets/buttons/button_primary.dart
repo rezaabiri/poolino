@@ -1,12 +1,6 @@
-import 'package:delayed_display/delayed_display.dart';
-import 'package:delayed_widget/delayed_widget.dart';
-import 'package:figma_squircle/figma_squircle.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/poolino_colors.dart';
-
-
-
 
 class ButtonPrimary extends StatelessWidget {
   String text;
@@ -16,21 +10,16 @@ class ButtonPrimary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     if(isEnabled) {
       return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 40,
+        height: 45,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              backgroundColor: PoolinoColors.baseColor,
-            shape: SmoothRectangleBorder(
-              borderRadius: SmoothBorderRadius(
-                cornerRadius: 14,
-                cornerSmoothing: 1,
-
-              ),
-            ),
+            backgroundColor: PoolinoColors.baseColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14)
+            )
           ),
           onPressed: onPressed,
           child: Text(text, style: const TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.white),),
@@ -38,15 +27,10 @@ class ButtonPrimary extends StatelessWidget {
       );
     }
     return Container(
-      height: 40,
-      decoration: ShapeDecoration(
+      height: 45,
+      decoration: BoxDecoration(
         color: PoolinoColors.disableButtonColor,
-        shape: SmoothRectangleBorder(
-          borderRadius: SmoothBorderRadius(
-            cornerRadius: 14,
-            cornerSmoothing: 1,
-          ),
-        ),
+        borderRadius: BorderRadius.circular(14)
       ),
       child: Center(
         child: Text(text, style: const TextStyle(fontFamily: 'regular', fontSize: 14, color: Colors.white),),
