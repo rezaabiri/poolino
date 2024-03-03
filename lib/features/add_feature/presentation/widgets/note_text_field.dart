@@ -24,6 +24,7 @@ class NoteTextField extends StatelessWidget {
             minLines: 5,
             maxLines: null,
             maxLength: 400,
+            controller: controller,
             decoration: InputDecoration(
               isDense: false,
               filled: true,

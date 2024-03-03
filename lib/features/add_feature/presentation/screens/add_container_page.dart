@@ -65,8 +65,9 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                   child: TabBarView(
                     controller: _tabController,
                     children:[
-                      AddCostPage(price: widget.priceText ?? "0",),
                       const AddIncomePage(),
+                      AddCostPage(price: widget.priceText ?? "0",),
+
                     ],
                   ),
                 ),

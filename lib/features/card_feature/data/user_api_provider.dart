@@ -7,10 +7,17 @@ import '../../../common/utils/constants.dart';
 
 
 class AddApiProvider extends BaseApiProvider{
-  Future<dynamic> getUserDetails(email) async {
+  Future<dynamic> saveCost(String price, String date, String category, String priority, String description) async {
     var response = await dio.post(
-      Constants.baseUrl + Constants.getUserDetails,
-      data: {'email': email},
+      Constants.baseUrl + Constants.addCost,
+      data: {
+        'price': price,
+        'date':date,
+        'category':category,
+        'priority':priority,
+        'description':description
+
+      },
     ).onError((DioError error, stackTrace) {
       return CheckExceptions.response(error.response!);
     });

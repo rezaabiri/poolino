@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/category_cubit/category_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/priority_cubit/priority_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
-import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
 import 'package:poolino/features/home_feature/presentation/screens/all_transactions_page.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
@@ -18,6 +17,7 @@ import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
 import 'common/theme/my_theme.dart';
+import 'features/add_feature/presentation/bloc/add_bloc.dart';
 import 'locator.dart';
 
 void main() async {

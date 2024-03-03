@@ -12,7 +12,7 @@ import 'package:poolino/features/login_feature/domain/entities/login_entity.dart
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_status.dart';
-import 'package:device_info_plus/device_info_plus.dart';
+//import 'package:device_info_plus/device_info_plus.dart';
 
 import '../../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/params/login_params.dart';

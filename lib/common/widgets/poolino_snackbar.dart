@@ -13,7 +13,7 @@ class PoolinoSnackBar {
   void show(BuildContext context, String message) {
     final snackbar = AnimatedSnackBar(
       mobileSnackBarPosition: MobileSnackBarPosition.bottom,
-      duration: const Duration(seconds: 5),
+      duration: const Duration(seconds: 4),
       snackBarStrategy: RemoveSnackBarStrategy(),
       mobilePositionSettings: const MobilePositionSettings(
         bottomOnAppearance: 20,
@@ -42,28 +42,5 @@ class PoolinoSnackBar {
       }),
     );
     snackbar.show(context);
-
-    /*ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
-            SizedBox(width: 8.0),
-            Text(
-              message,
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-        behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.only(bottom: 20, right: 20, left: 20),
-        backgroundColor: Colors.blue,
-        duration: Duration(seconds: 3),
-
-      ),
-    );*/
   }
 }

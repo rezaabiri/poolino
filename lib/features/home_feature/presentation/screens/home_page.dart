@@ -7,8 +7,6 @@ import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
-import 'package:poolino/features/card_feature/presentation/bloc/user_bloc.dart';
-import 'package:poolino/features/card_feature/presentation/bloc/user_status.dart';
 
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/loading_screen.dart';
@@ -84,46 +82,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BlocConsumer<AddBloc, UserState>(
-                    listenWhen: (previous, current) {
-                      if (current.userStatus is UserLoading) {
-                        LoadingScreen.show(context: context);
-                      }
-                      if (current.userStatus is AddComplete) {
-                        LoadingScreen.hide(context);
-                      }if (current.userStatus is AddError) {
-                        AddError u = current.userStatus as AddError;
-                        LoadingScreen.hide(context);
-                        if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
-                        return true;
-                      }
-                      return false;
+                  ButtonWidget(
+                    name: "گزارش حساب",
+                    icon: "report_blue",
+                    onTap: () {
+                      // BlocProvider.of<AddBloc>(context).add(LoadUserEvent("09150575854"));
                     },
-                    listener: (context, state) async {
-                      if (state.userStatus is AddError) {
-                        AddError u = state.userStatus as AddError;
-                        LoadingScreen.hide(context);
-                        if(u.message=="logout") {
-                          //await prefsOperator.logout();
-                          Navigator.pushNamedAndRemoveUntil(context, '/phone', ModalRoute.withName('/'));
-
-                          //Navigator.pushNamed(context, "/phone");
-                        }
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state.userStatus is AddComplete) {
-                        AddComplete userComplete = state.userStatus as AddComplete;
-                        UserEntity userEntity = userComplete.userEntity;
-                      }
-                      return ButtonWidget(
-                        name: "گزارش حساب",
-                        icon: "report_blue",
-                        onTap: () {
-                          BlocProvider.of<AddBloc>(context).add(LoadUserEvent("09150575854"));
-                          },
-                      );
-                      },
                   ),
                   ButtonWidget(
                     name: "ثبت درآمد",
@@ -169,6 +133,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       );
                     },
                   ),
+
                 ],
               ),
               const SizedBox(
