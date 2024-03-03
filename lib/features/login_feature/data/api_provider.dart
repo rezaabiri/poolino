@@ -4,13 +4,14 @@ import 'dart:io';
 import 'package:android_sms_retriever/android_sms_retriever.dart';
 import 'package:dio/dio.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
+import 'package:poolino/common/error_handler/jwt/base_api_provider.dart';
 import 'package:poolino/common/resources/data_state.dart';
 
 import '../../../common/utils/constants.dart';
 
 
 
-class ApiProvider{
+class ApiProvider extends BaseApiProvider{
   final Dio _dio = Dio();
 
   Future<dynamic> login(email, password) async {

@@ -112,9 +112,11 @@ class _LoginPageState extends State<VerifyCodePage> {
                   if (state.verifyStatus is VerifyError) {
                     BlocProvider.of<VerifyButton>(context).changeState(false);
                     BlocProvider.of<VerifyPinPut>(context).changeState(false);
+
+                    VerifyError u = state.verifyStatus as VerifyError;
                     PoolinoSnackBar(
                             icon: CupertinoIcons.clear, type: Constants.ERROR)
-                        .show(context, "کد تایید صحیح نیست");
+                        .show(context, u.message);
                     LoadingScreen.hide(context);
                   }
                 },

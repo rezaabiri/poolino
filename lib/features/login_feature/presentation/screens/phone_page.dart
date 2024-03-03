@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +12,7 @@ import 'package:poolino/features/login_feature/domain/entities/login_entity.dart
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_status.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 import '../../../../../common/theme/ThemeSwitcher.dart';
 import '../../../../common/params/login_params.dart';
@@ -116,8 +119,7 @@ class _LoginPageState extends State<PhonePage> {
                             isEnabled: state.isCorrect,
                             onPressed: () {
                               prefsOperator.setSharedData("phone", phoneController.text.toString());
-                              LoginParams loginParams = LoginParams(
-                                  phoneController.value.text, "");
+                              LoginParams loginParams = LoginParams(phoneController.value.text, "android id");
                               BlocProvider.of<LoginBloc>(context).add(LoadLoginEvent(loginParams));
                             },
                           );
