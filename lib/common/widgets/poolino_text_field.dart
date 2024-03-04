@@ -45,6 +45,9 @@ class PoolinoTextField extends StatelessWidget {
           onChanged: (value){
             onChange(value);
           },
+          onEditingComplete: (){
+
+          },
           decoration: InputDecoration(
             hintTextDirection: TextDirection.rtl,
             counterText: "",
