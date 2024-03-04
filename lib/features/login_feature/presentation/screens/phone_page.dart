@@ -119,7 +119,7 @@ class _LoginPageState extends State<PhonePage> {
                             isEnabled: state.isCorrect,
                             onPressed: () {
                               prefsOperator.setSharedData("phone", phoneController.text.toString());
-                              LoginParams loginParams = LoginParams(phoneController.value.text, "android id");
+                              LoginParams loginParams = LoginParams(phoneController.value.text, "123456");
                               BlocProvider.of<LoginBloc>(context).add(LoadLoginEvent(loginParams));
                             },
                           );

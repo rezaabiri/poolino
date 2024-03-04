@@ -1,15 +1,17 @@
+
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
 class PinPut extends StatelessWidget {
+  double? size = 0;
   final GlobalKey<FormState> formKey;
   final TextEditingController pinController;
   final Function(String) onComplete;
   final Function(String) onChange;
-  PinPut({super.key, required this.formKey, required this.pinController, required this.onChange,required this.onComplete});
+  PinPut({super.key, this.size, required this.formKey, required this.pinController, required this.onChange,required this.onComplete});
   final focusNode = FocusNode();
   final defaultPinTheme = PinTheme(
-    width: 50,
+    width: 60,
     height: 56,
     textStyle: const TextStyle(
       fontSize: 22,

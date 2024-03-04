@@ -40,11 +40,16 @@ class _AddCostPageState extends State<AddCostPage> {
   @override
   void initState() {
     priceController.text = widget.price;
+    BlocProvider.of<CategoryCubit>(context).changeCategory("انتخاب کنید");
+    BlocProvider.of<PriorityCubit>(context).changePriority("انتخاب کنید");
     super.initState();
   }
 
   @override
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
@@ -136,6 +141,7 @@ class _AddCostPageState extends State<AddCostPage> {
               if (current.addStatus is AddComplete) {
                 LoadingScreen.hide(context);
                 PoolinoSnackBar(icon: CupertinoIcons.checkmark_square, type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
+                Navigator.pop(context);
               }if (current.addStatus is AddError) {
                 AddError u = current.addStatus as AddError;
                 LoadingScreen.hide(context);
@@ -156,6 +162,7 @@ class _AddCostPageState extends State<AddCostPage> {
       ),
     );
   }
+
   void validate(){
     if(priceController.value.text.isEmpty || priceController.value.text == "0"){
       PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "مبلغ را صحیح وارد نمایید");

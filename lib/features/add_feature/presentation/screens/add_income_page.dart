@@ -34,9 +34,15 @@ class _AddIncomePageState extends State<AddIncomePage> {
   TextEditingController descController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String date = "";
-  String category = "";
-  String priority = "";
+  String category = "fadf";
+  String priority = "adffdsf";
 
+  @override
+  void dispose() {
+    category = "انتخاب کنید";
+    priority = "انتخاب کنید";
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

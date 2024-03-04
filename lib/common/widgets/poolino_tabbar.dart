@@ -4,11 +4,13 @@ import 'package:poolino/common/utils/poolino_colors.dart';
 class PoolinoTabBar<T> extends StatelessWidget {
   TabController tabController;
   List<Tab> tabs;
+  Function(int) onTap;
 
   PoolinoTabBar({
     super.key,
     required this.tabController,
     required this.tabs,
+    required this.onTap
   });
 
   @override
@@ -21,6 +23,8 @@ class PoolinoTabBar<T> extends StatelessWidget {
       child: DefaultTabController(
         length: tabs.length,
         child: TabBar(
+            physics: const NeverScrollableScrollPhysics(),
+            isScrollable: false,
             controller: tabController,
             unselectedLabelStyle: const TextStyle(
               fontFamily: "regular",
@@ -39,7 +43,9 @@ class PoolinoTabBar<T> extends StatelessWidget {
                 color: PoolinoColors.baseColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12))),
-            onTap: (int index) {},
+            onTap: (int index) {
+              onTap(index);
+            },
             tabs: tabs),
       ),
     );

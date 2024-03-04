@@ -3,7 +3,9 @@ import 'package:poolino/common/widgets/poolino_appbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_income_page.dart';
 
 import '../../../../common/widgets/poolino_tabbar.dart';
+import '../bloc/priority_cubit/priority_cubit.dart';
 import 'add_cost_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddContainerPage extends StatefulWidget {
   AddContainerPage({super.key, this.priceText});
@@ -25,11 +27,16 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(preferredSize: Size.fromHeight(60),
+      appBar: PreferredSize(preferredSize: const Size.fromHeight(60),
       child: PoolinoAppBar(
         title: "ثبت هزینه",
         description: "اطلاعات فرم را تکمیل کنید",
@@ -48,25 +55,38 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                 const SizedBox(height: 10,),
                 SizedBox(
                   height: 44,
-                  child: PoolinoTabBar(
+                  child: Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: PoolinoTabBar(
                       tabController: _tabController,
                       tabs: const [
                         Tab(
-                          text: "درآمد",
-                        ),
-                        Tab(
                           text: "هزینه",
-                        )
-                      ]
+                        ),
+                          Tab(
+                            text: "درآمد",
+                          ),
+
+                        ],
+                      onTap: (index){
+                        /*if(index == 0){
+                          return const AddIncomePage();
+                        }else {
+                          return AddCostPage(price: widget.priceText ?? "0",);
+                        }*/
+                      },
+                    ),
                   ),
                 ),
 
                 Expanded(
                   child: TabBarView(
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: _tabController,
                     children:[
-                      const AddIncomePage(),
                       AddCostPage(price: widget.priceText ?? "0",),
+                      const AddIncomePage(),
+
 
                     ],
                   ),
@@ -77,5 +97,6 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
         ),
       ),
     );
+
   }
 }
