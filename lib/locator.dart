@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:poolino/features/add_feature/domain/use_cases/add_usecase.dart';
-import 'package:poolino/features/add_feature/presentation/bloc/add_bloc.dart';
-import 'package:poolino/features/card_feature/data/user_api_provider.dart';
+import 'package:poolino/features/add_feature/presentation/bloc/add_cost_bloc/add_cost_bloc.dart';
 import 'package:poolino/features/card_feature/domain/repository/user_repository.dart';
 import 'package:poolino/features/login_feature/domain/repository/verify_repository.dart';
 import 'package:poolino/features/login_feature/domain/use_cases/verify_usecase.dart';
@@ -11,6 +10,7 @@ import 'package:poolino/features/login_feature/repository/verify_repository_impl
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/utils/prefs_opreator.dart';
+import 'features/add_feature/data/add_cost_api_provider.dart';
 import 'features/add_feature/repository/add_repository_impl.dart';
 import 'features/login_feature/data/api_provider.dart';
 import 'features/login_feature/domain/repository/login_repository.dart';
@@ -42,7 +42,7 @@ setup() async {
   locator.registerSingleton<AddApiProvider>(AddApiProvider());
   locator.registerSingleton<AddRepository>(AddRepositoryImpl(locator()));
   locator.registerSingleton<AddUseCase>(AddUseCase(locator()));
-  locator.registerSingleton<AddBloc>(AddBloc(locator()));
+  locator.registerSingleton<AddCostBloc>(AddCostBloc(locator()));
 
 
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));

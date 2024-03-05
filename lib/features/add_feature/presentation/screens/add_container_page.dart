@@ -5,7 +5,6 @@ import 'package:poolino/features/add_feature/presentation/screens/add_income_pag
 import '../../../../common/widgets/poolino_tabbar.dart';
 import '../bloc/priority_cubit/priority_cubit.dart';
 import 'add_cost_page.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddContainerPage extends StatefulWidget {
   AddContainerPage({super.key, this.priceText});
@@ -66,7 +65,6 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                           Tab(
                             text: "درآمد",
                           ),
-
                         ],
                       onTap: (index){
                         /*if(index == 0){
@@ -86,8 +84,6 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                     children:[
                       AddCostPage(price: widget.priceText ?? "0",),
                       const AddIncomePage(),
-
-
                     ],
                   ),
                 ),

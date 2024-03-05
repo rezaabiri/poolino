@@ -17,7 +17,7 @@ import 'package:poolino/features/splash_feature/screens/splash_screen.dart';
 
 import 'common/theme/cubit/theme_cubit.dart';
 import 'common/theme/my_theme.dart';
-import 'features/add_feature/presentation/bloc/add_bloc.dart';
+import 'features/add_feature/presentation/bloc/add_cost_bloc/add_cost_bloc.dart';
 import 'locator.dart';
 
 void main() async {
@@ -36,7 +36,7 @@ void main() async {
     BlocProvider(create: (_) => LoginButtonCubit()),
     BlocProvider(create: (_) => locator<VerifyBloc>()),
     BlocProvider(create: (_) => VerifyPinPut()),
-    BlocProvider(create: (_) => locator<AddBloc>()),
+    BlocProvider(create: (_) => locator<AddCostBloc>()),
     BlocProvider(create: (_) => CategoryCubit()),
     BlocProvider(create: (_) => PriorityCubit()),
   ], child: const MyApp(),),

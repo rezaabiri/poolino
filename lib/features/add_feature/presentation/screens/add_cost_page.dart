@@ -7,7 +7,7 @@ import 'package:poolino/common/widgets/bottom_sheets/choose_date.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/data/cost_params.dart';
-import 'package:poolino/features/add_feature/presentation/bloc/add_status.dart';
+import 'package:poolino/features/add_feature/presentation/bloc/add_cost_bloc/add_cost_status.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/category_cubit/category_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/priority_cubit/priority_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/widgets/bottom_sheets/choose_category.dart';
@@ -16,7 +16,7 @@ import 'package:poolino/features/add_feature/presentation/widgets/selectable_ite
 import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/utils/loading_screen.dart';
-import '../bloc/add_bloc.dart';
+import '../bloc/add_cost_bloc/add_cost_bloc.dart';
 import '../widgets/add_text_field.dart';
 import '../widgets/note_text_field.dart';
 
@@ -133,17 +133,17 @@ class _AddCostPageState extends State<AddCostPage> {
             height: 16,
           ),
 
-          BlocConsumer<AddBloc, AddState>(
+          BlocConsumer<AddCostBloc, AddCostState>(
             listenWhen: (previous, current) {
-              if (current.addStatus is AddLoading) {
+              if (current.addStatus is AddCostLoading) {
                 LoadingScreen.show(context: context);
               }
-              if (current.addStatus is AddComplete) {
+              if (current.addStatus is AddCostComplete) {
                 LoadingScreen.hide(context);
                 PoolinoSnackBar(icon: CupertinoIcons.checkmark_square, type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
                 Navigator.pop(context);
-              }if (current.addStatus is AddError) {
-                AddError u = current.addStatus as AddError;
+              }if (current.addStatus is AddCostError) {
+                AddCostError u = current.addStatus as AddCostError;
                 LoadingScreen.hide(context);
                 if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
                 return true;
@@ -174,7 +174,7 @@ class _AddCostPageState extends State<AddCostPage> {
       PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "توضیحات الزامی است");
     }else {
       CostParams costParams = CostParams(priceController.text, date, category, priority, descController.text);
-      BlocProvider.of<AddBloc>(context).add(LoadAddEvent(costParams));
+      BlocProvider.of<AddCostBloc>(context).add(LoadAddEvent(costParams));
     }
   }
 }
