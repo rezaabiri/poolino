@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
@@ -57,20 +58,36 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      drawer: Container(color: Colors.white,),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text("پولینو"),
+        titleTextStyle: TextStyle(fontSize: 22, color: PoolinoColors.baseColor, fontFamily: 'medium'),
+        centerTitle: true,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return Padding(
+              padding: const EdgeInsets.only(top: 12, left: 12, bottom: 4),
+              child: ToolbarWidget(onTap: (){
+                Scaffold.of(context).openDrawer();},
+              ),
+            );
+          }
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(top: 4, right: 8),
+            child: ToolbarWidget(onTap: (){}),
+          ),
+
+        ],
+
+      ),
       body: Padding(
         padding: EdgeInsets.only(left: 16, right: 16, top: 36),
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ToolbarWidget(
-                profile: (){},
-                menu: (){
-                  Drawer();
-                },
-              ),
-              const SizedBox(
-                height: 18,
-              ),
               CardMoney(
                 cost: "15,000,330",
                 income: "23,000,000",

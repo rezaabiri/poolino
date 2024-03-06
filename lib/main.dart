@@ -32,7 +32,7 @@ void main() async {
     BlocProvider(create: (_) => ThemeCubit()),
     BlocProvider.value(value: themeCubit),
     BlocProvider(create: (_) => locator<LoginBloc>()),
-    BlocProvider(create: (_) => VerifyButton()),
+    BlocProvider(create: (_) => VerifyButtonCubit()),
     BlocProvider(create: (_) => LoginButtonCubit()),
     BlocProvider(create: (_) => locator<VerifyBloc>()),
     BlocProvider(create: (_) => VerifyPinPut()),

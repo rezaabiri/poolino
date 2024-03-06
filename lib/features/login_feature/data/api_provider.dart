@@ -14,12 +14,12 @@ import '../../../common/utils/constants.dart';
 class ApiProvider extends BaseApiProvider{
   final Dio _dio = Dio();
 
-  Future<dynamic> login(email, password) async {
+  Future<dynamic> login(phone, password) async {
     try{
       var response = await _dio.post(
           Constants.baseUrl+Constants.login,
           data: {
-            'email': email,
+            'phone': phone,
             'password':password,
             if(Platform.isAndroid)
               'signature': (await AndroidSmsRetriever.getAppSignature())
@@ -34,13 +34,13 @@ class ApiProvider extends BaseApiProvider{
 
 
   }
-  Future<dynamic> verify(email, code) async {
+  Future<dynamic> verify(phone, code) async {
 
     try{
       var response = await _dio.post(
           Constants.baseUrl+Constants.verify,
           data: {
-            'email': email,
+            'phone': phone,
             'code':code
           }
       );

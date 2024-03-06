@@ -1,6 +1,6 @@
 class LoginParams{
-  String email;
+  String phone;
   String password;
 
-  LoginParams(this.email, this.password);
+  LoginParams(this.phone, this.password);
 }

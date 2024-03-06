@@ -20,7 +20,7 @@ class VerifyRepositoryImpl extends VerifyRepository {
 
     try {
       Response response;
-      response = await apiProvider.verify(verifyParams.email, verifyParams.code);
+      response = await apiProvider.verify(verifyParams.phone, verifyParams.code);
       VerifyEntity verifyEntity = VerifyModel.fromJson(response.data);
       return DataSuccess(verifyEntity);
     }on AppException catch (e){

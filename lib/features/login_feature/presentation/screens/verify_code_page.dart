@@ -24,6 +24,7 @@ import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/loading_screen.dart';
 import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../locator.dart';
+import '../bloc/login_button/login_button_cubit.dart';
 
 class VerifyCodePage extends StatefulWidget {
   const VerifyCodePage({super.key});
@@ -37,6 +38,7 @@ class _LoginPageState extends State<VerifyCodePage> {
   final pinController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isCorrect = false;
+  PrefsOperator prefsOperator = locator<PrefsOperator>();
 
   final defaultPinTheme = PinTheme(
     width: 50,
@@ -60,7 +62,6 @@ class _LoginPageState extends State<VerifyCodePage> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    PrefsOperator prefsOperator = locator<PrefsOperator>();
 
     return SafeArea(
       child: Scaffold(
@@ -108,11 +109,11 @@ class _LoginPageState extends State<VerifyCodePage> {
                       LoadingScreen.hide(context);
                       Navigator.pushReplacementNamed(context, "/home");
                       prefsOperator.setLoggedIn();
-                      BlocProvider.of<VerifyButton>(context).changeState(true);
+                      BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
                     }
 
                     if (state.verifyStatus is VerifyError) {
-                      BlocProvider.of<VerifyButton>(context).changeState(false);
+                      BlocProvider.of<VerifyButtonCubit>(context).changeState(false);
                       BlocProvider.of<VerifyPinPut>(context).changeState(false);
 
                       VerifyError u = state.verifyStatus as VerifyError;
@@ -134,31 +135,30 @@ class _LoginPageState extends State<VerifyCodePage> {
                           "refreshToken",
                           verifyComplete.verifyEntity.result!.refreshToken
                               .toString());
-                      BlocProvider.of<VerifyButton>(context).changeState(true);
+                      BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
                     }
 
                     return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
                       builder: (context, state) {
-                        //pinController.clear();
                         return PoolinoTextField(
                             formKey: formKey,
                             text: "کد تایید",
                             controller: pinController,
                             onChange: (value){
-                              print(value);
-                              final VerifyParams verifyParams = VerifyParams(
-                                  prefsOperator
-                                      .getSharedDataNoSync("phone")
-                                      .toEnglishDigit(),
-                                  value.toEnglishDigit());
-                              BlocProvider.of<VerifyBloc>(context)
-                                  .add(LoadVerifyEvent(verifyParams));
+                              if(value.length >= 3){
+                                final VerifyParams verifyParams = VerifyParams(
+                                  prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(),
+                                  value.toEnglishDigit(),
+                                );
+                                BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
+                                BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
+                              }
                             });
                         return PinPut(
                           formKey: formKey,
                           pinController: pinController,
                           onChange: (pin) {
-                            BlocProvider.of<VerifyButton>(context)
+                            BlocProvider.of<VerifyButtonCubit>(context)
                                 .changeState(false);
                           },
                           onComplete: (pin) {
@@ -197,7 +197,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                 const SizedBox(
                   height: 16,
                 ),
-                BlocBuilder<VerifyButton, VerifyButtonState>(
+                BlocBuilder<VerifyButtonCubit, VerifyButtonState>(
                   builder: (context, state) {
                     return ButtonPrimary(
                       text: "تایید",
@@ -223,6 +223,16 @@ class _LoginPageState extends State<VerifyCodePage> {
         for (Match match in matches) {
           rawNumber = match.group(0)!;
           pinController.setText(rawNumber);
+          if(pinController.text.length >= 3){
+
+            final VerifyParams verifyParams = VerifyParams(
+              prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(),
+              rawNumber.toEnglishDigit(),
+            );
+            BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
+            BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
+          }
+
         }
       },
     );

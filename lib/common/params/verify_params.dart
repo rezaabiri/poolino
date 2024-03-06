@@ -1,6 +1,6 @@
 class VerifyParams{
-  String email;
+  String phone;
   String code;
 
-  VerifyParams(this.email, this.code);
+  VerifyParams(this.phone, this.code);
 }

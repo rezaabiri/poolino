@@ -21,7 +21,7 @@ class LoginRepositoryImpl extends LoginRepository {
     try {
       Response response;
       response = await apiProvider.login(
-        loginParams.email,
+        loginParams.phone,
         loginParams.password,
       );
       LoginEntity loginEntity = LoginModel.fromJson(response.data);
