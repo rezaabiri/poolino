@@ -60,7 +60,7 @@ class AddCost {
                                     width: 14,
                                   ),
                                   SvgPicture.asset(
-                                      "assets/images/choose_sms.svg"),
+                                      "assets/images/message.svg"),
                                 ],
                               )
                             ],

@@ -57,7 +57,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
             formKey: formKey,
             hint: "مبلغ",
             prefixText: "تومان",
-            icon: "assets/images/moneys.svg",
+            icon: "moneys.svg",
             controller: priceController,
           ),
           const SizedBox(
@@ -69,7 +69,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
                 return SelectableItem(
                   title: "تاریخ",
                   prefixText: DateTime.now().toPersianDateStr(showDayStr: true),
-                  icon: "assets/images/calendar.svg",
+                  icon: "calendar.svg",
                   colors: PoolinoColors.baseColor,
                   isDate: true,
                   onTap: () {
@@ -82,7 +82,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
             return SelectableItem(
               title: "دسته بندی هزینه",
               prefixText: state.category,
-              icon: "assets/images/category.svg",
+              icon: "category.svg",
               colors: PoolinoColors.baseColor,
               isDate: false,
               onTap: () {
@@ -105,7 +105,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
               formKey: formKey,
               hint: "مبلغ",
               prefixText: "تومان",
-              icon: "assets/images/note.svg",
+              icon: "note.svg",
               controller: descController),
           const SizedBox(
             height: 16,
@@ -118,11 +118,11 @@ class _AddIncomePageState extends State<AddIncomePage> {
               }
               if (current.addStatus is AddCostComplete) {
                 LoadingScreen.hide(context);
-                PoolinoSnackBar(icon: CupertinoIcons.checkmark_square, type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
+                PoolinoSnackBar(icon: "tick.svg", type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
               }if (current.addStatus is AddCostError) {
                 AddCostError u = current.addStatus as AddCostError;
                 LoadingScreen.hide(context);
-                if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
+                if(u.message!="logout") PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, u.message);
                 return true;
               }
               return false;

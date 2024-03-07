@@ -118,7 +118,7 @@ class _LoginPageState extends State<VerifyCodePage> {
 
                       VerifyError u = state.verifyStatus as VerifyError;
                       PoolinoSnackBar(
-                              icon: CupertinoIcons.clear, type: Constants.ERROR)
+                              icon: "close.svg", type: Constants.ERROR)
                           .show(context, u.message);
                       LoadingScreen.hide(context);
                     }

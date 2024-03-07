@@ -38,7 +38,7 @@ class AddTextField extends StatelessWidget {
           counterText: "",
           prefixIcon: Padding(
             padding: const EdgeInsets.only(right: 10, left: 15),
-            child: SvgPicture.asset(icon),
+            child: SvgPicture.asset("assets/images/$icon", width: 28, height: 28,),
           ),
           fillColor: PoolinoColors.f0Color,
           focusedBorder: OutlineInputBorder(

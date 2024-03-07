@@ -51,7 +51,7 @@ class SelectableItem extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 9),
-                        child: SvgPicture.asset(icon, width: 24, height: 24,),
+                        child: SvgPicture.asset("assets/images/$icon", width: 28, height: 28,),
                       ),
                     ],
                   ),

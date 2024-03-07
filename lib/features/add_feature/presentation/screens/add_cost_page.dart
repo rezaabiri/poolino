@@ -61,7 +61,7 @@ class _AddCostPageState extends State<AddCostPage> {
             formKey: formKey,
             hint: "مبلغ",
             prefixText: "تومان",
-            icon: "assets/images/moneys.svg",
+            icon: "moneys.svg",
             controller: priceController,
           ),
           const SizedBox(
@@ -73,7 +73,7 @@ class _AddCostPageState extends State<AddCostPage> {
               return SelectableItem(
                 title: "تاریخ",
                 prefixText: DateTime.now().toPersianDateStr(showDayStr: true),
-                icon: "assets/images/calendar.svg",
+                icon: "calendar.svg",
                 colors: PoolinoColors.baseColor,
                 isDate: true,
                 onTap: () {
@@ -86,7 +86,7 @@ class _AddCostPageState extends State<AddCostPage> {
             return SelectableItem(
               title: "دسته بندی هزینه",
               prefixText: state.category,
-              icon: "assets/images/category.svg",
+              icon: "category.svg",
               colors: PoolinoColors.baseColor,
               isDate: false,
               onTap: () {
@@ -107,7 +107,7 @@ class _AddCostPageState extends State<AddCostPage> {
             return SelectableItem(
               title: "اولویت هزینه",
               prefixText: state.priority,
-              icon: "assets/images/status.svg",
+              icon: "chart.svg",
               colors: PoolinoColors.baseColor,
               isDate: false,
               onTap: () {
@@ -127,7 +127,7 @@ class _AddCostPageState extends State<AddCostPage> {
               formKey: formKey,
               hint: "مبلغ",
               prefixText: "تومان",
-              icon: "assets/images/note.svg",
+              icon: "note.svg",
               controller: descController),
           const SizedBox(
             height: 16,
@@ -140,12 +140,12 @@ class _AddCostPageState extends State<AddCostPage> {
               }
               if (current.addStatus is AddCostComplete) {
                 LoadingScreen.hide(context);
-                PoolinoSnackBar(icon: CupertinoIcons.checkmark_square, type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
+                PoolinoSnackBar(icon: "tick.svg", type: Constants.SUCCESS).show(context, "هزینه با موفقیت ثبت شد");
                 Navigator.pop(context);
               }if (current.addStatus is AddCostError) {
                 AddCostError u = current.addStatus as AddCostError;
                 LoadingScreen.hide(context);
-                if(u.message!="logout") PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, u.message);
+                if(u.message!="logout") PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, u.message);
                 return true;
               }
               return false;
@@ -165,13 +165,13 @@ class _AddCostPageState extends State<AddCostPage> {
 
   void validate(){
     if(priceController.value.text.isEmpty || priceController.value.text == "0"){
-      PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "مبلغ را صحیح وارد نمایید");
+      PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, "مبلغ را صحیح وارد نمایید");
     }else if(category == ""){
-      PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "دسته بندی الزامی است");
+      PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, "دسته بندی الزامی است");
     }else if(priority == ""){
-      PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "اولویت هزینه الزامی است");
+      PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, "اولویت هزینه الزامی است");
     }else if(descController.value.text.isEmpty) {
-      PoolinoSnackBar(icon: Icons.error_outline, type: Constants.ERROR).show(context, "توضیحات الزامی است");
+      PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR).show(context, "توضیحات الزامی است");
     }else {
       CostParams costParams = CostParams(priceController.text, date, category, priority, descController.text);
       BlocProvider.of<AddCostBloc>(context).add(LoadAddEvent(costParams));

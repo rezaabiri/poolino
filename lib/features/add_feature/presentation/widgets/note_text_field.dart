@@ -48,7 +48,7 @@ class NoteTextField extends StatelessWidget {
             padding: const EdgeInsets.only(top: 10, right: 8),
             child: Row(
               children: [
-                SvgPicture.asset(icon),
+                SvgPicture.asset("assets/images/$icon", width: 28, height: 28,),
                 const SizedBox(width: 10,),
                 const Text("توضیحات", style: TextStyle(fontFamily: 'regular', fontSize: 16, color: Colors.black87)),
 

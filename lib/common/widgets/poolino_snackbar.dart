@@ -1,11 +1,12 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../utils/constants.dart';
 import '../utils/poolino_colors.dart';
 
 class PoolinoSnackBar {
-  late IconData icon;
+  late String icon;
   late int type;
 
   PoolinoSnackBar({required this.icon, required this.type});
@@ -31,7 +32,7 @@ class PoolinoSnackBar {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(icon, color: Colors.white),
+                SvgPicture.asset("assets/images/$icon", width: 40, height: 40,),
                 Expanded(child: Text(message, style: const TextStyle(fontSize: 14, fontFamily: "regular", color: Colors.white), textDirection: TextDirection.rtl,)),
               ],
             )

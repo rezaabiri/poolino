@@ -19,10 +19,11 @@ import 'common/theme/cubit/theme_cubit.dart';
 import 'common/theme/my_theme.dart';
 import 'features/add_feature/presentation/bloc/add_cost_bloc/add_cost_bloc.dart';
 import 'locator.dart';
+import 'package:telephony/telephony.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await setup();
 
   final ThemeCubit themeCubit = ThemeCubit();

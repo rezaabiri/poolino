@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../utils/poolino_colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class PoolinoTextField extends StatelessWidget {
   TextEditingController controller;
@@ -53,7 +54,7 @@ class PoolinoTextField extends StatelessWidget {
             counterText: "",
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             suffixIcon: IconButton(
-              icon: Icon(Icons.clear, color: theme.canvasColor, size: 20,),
+              icon: SvgPicture.asset("assets/images/clear.svg", width: 30, height: 30,),
               highlightColor: Colors.blue.withOpacity(0.05),
               onPressed: () {
                 controller.clear();

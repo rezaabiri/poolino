@@ -32,7 +32,7 @@ class PoolinoKeyboard extends StatelessWidget {
               width: MediaQuery.of(context).size.width / 3.5,
               height: MediaQuery.of(context).size.height * 0.70,
               child: Center(
-                child: type=="icon" ? SvgPicture.asset('assets/images/ic_clear_keyboard.svg') : Text(value, style: TextStyle(
+                child: type=="icon" ? SvgPicture.asset('assets/images/clear.svg') : Text(value, style: TextStyle(
                     fontFamily: 'yekan_semibold',
                     fontSize: type=="number" ? 24 : 16,
                     color: type=="number" ? Colors.black : Colors.white),
