@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       allMessages.addAll(messages);
     }
     setState(() {
-      _messages = allMessages;
+      //_messages = allMessages;
     });
   }
 
@@ -247,37 +247,45 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height*0.40,
-                child: ListView.builder(
-                  physics: ClampingScrollPhysics(),
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  shrinkWrap: true,
-                  itemCount: _messages.length,
-                  itemBuilder: (context, index) {
-                   /* if(index ==  _messages.length - 1){
-                      return TransactionWidget(
-                        price: Utils.extractAmount(_messages[index].body.toString()),
-                        title: "مشخص نشده",
-                        date: Utils.formatDateStr(_messages[index].date!),
-                        state: 0,
-                        onTap: (){
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) =>
-                                  AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
-                        },
-                      );
-                    }*/
-                    return TransactionWidget(
-                      price: Utils.extractAmount(_messages[index].body.toString()),
-                      title: "مشخص نشده",
-                      date: Utils.formatDateStr(_messages[index].date!),
-                      state: 1,
-                      onTap: (){
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) =>
-                                AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
-                        },
+                width: MediaQuery.of(context).size.width,
+                child: Builder(
+                  builder: (context) {
+                    if(_messages.isEmpty){
+                      return Icon(Icons.hourglass_empty, color: Colors.red,);
+                    }
+                    return ListView.builder(
+                      physics: ClampingScrollPhysics(),
+                      padding: const EdgeInsets.only(top: 16, bottom: 16),
+                      shrinkWrap: true,
+                      itemCount: _messages.length,
+                      itemBuilder: (context, index) {
+                       /* if(index ==  _messages.length - 1){
+                          return TransactionWidget(
+                            price: Utils.extractAmount(_messages[index].body.toString()),
+                            title: "مشخص نشده",
+                            date: Utils.formatDateStr(_messages[index].date!),
+                            state: 0,
+                            onTap: (){
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
+                            },
+                          );
+                        }*/
+                        return TransactionWidget(
+                          price: Utils.extractAmount(_messages[index].body.toString()),
+                          title: "مشخص نشده",
+                          date: Utils.formatDateStr(_messages[index].date!),
+                          state: 1,
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) =>
+                                    AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
+                            },
+                        );
+                      },
                     );
-                  },
+                  }
                 ),
               ),
             ),
