@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
+import 'package:poolino/common/widgets/loading.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
@@ -40,7 +42,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   int hexToInteger(String hex) => int.parse(hex, radix: 16);
   late final TabController _tabController;
-  List<SmsMessage> _messages = [];
+  final StreamController<List<SmsMessage>> _messagesStreamController = StreamController<List<SmsMessage>>.broadcast();
+
   String extracted = "";
   String sms = "";
   Telephony telephony = Telephony.instance;
@@ -78,9 +81,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       );
       allMessages.addAll(messages);
     }
-    setState(() {
-      //_messages = allMessages;
-    });
+    _messagesStreamController.add(allMessages);
+    /*setState(() {
+      _messages = allMessages;
+    });*/
   }
 
   @override
@@ -213,13 +217,18 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   onTap: (){
                     Navigator.pushNamed(context, "/all_transaction");
                   },
-                  child: Text(
-                    "مشاهده همه (${16})",
-                    style: const TextStyle(
-                        fontFamily: "regular",
-                        fontSize: 16,
-                        color: Colors.blue
-                    ),
+                  child: StreamBuilder<List<SmsMessage>>(
+                    stream: _messagesStreamController.stream,
+                    builder: (context, snapshot) {
+                      return Text(
+                        "مشاهده همه (${snapshot.data?.length})",
+                        style: const TextStyle(
+                            fontFamily: "regular",
+                            fontSize: 16,
+                            color: Colors.blue
+                        ),
+                      );
+                    }
                   ),
                 ),
                 Row(
@@ -248,43 +257,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height*0.40,
                 width: MediaQuery.of(context).size.width,
-                child: Builder(
-                  builder: (context) {
-                    if(_messages.isEmpty){
-                      return Icon(Icons.hourglass_empty, color: Colors.red,);
+                child: StreamBuilder<List<SmsMessage>>(
+                  stream: _messagesStreamController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<SmsMessage> messages = snapshot.data!;
+                      return list(messages);
+                    } else if (snapshot.hasError) {
+                      return const Text('خطا در دریافت داده‌ها');
+                    } else {
+                      return const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Loading(),
+                        ],
+                      );
                     }
-                    return ListView.builder(
-                      physics: ClampingScrollPhysics(),
-                      padding: const EdgeInsets.only(top: 16, bottom: 16),
-                      shrinkWrap: true,
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                       /* if(index ==  _messages.length - 1){
-                          return TransactionWidget(
-                            price: Utils.extractAmount(_messages[index].body.toString()),
-                            title: "مشخص نشده",
-                            date: Utils.formatDateStr(_messages[index].date!),
-                            state: 0,
-                            onTap: (){
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) =>
-                                      AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
-                            },
-                          );
-                        }*/
-                        return TransactionWidget(
-                          price: Utils.extractAmount(_messages[index].body.toString()),
-                          title: "مشخص نشده",
-                          date: Utils.formatDateStr(_messages[index].date!),
-                          state: 1,
-                          onTap: (){
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) =>
-                                    AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
-                            },
-                        );
-                      },
-                    );
+
                   }
                 ),
               ),
@@ -310,5 +299,40 @@ Future<void> requestPermission() async {
   if (await permission.isDenied) {
     await permission.request();
   }
+}
+
+Widget list(List<SmsMessage> messages) {
+  return ListView.builder(
+    physics: const ClampingScrollPhysics(),
+    padding: const EdgeInsets.only(top: 16, bottom: 16),
+    shrinkWrap: true,
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      /* if(index ==  _messages.length - 1){
+                              return TransactionWidget(
+                                price: Utils.extractAmount(_messages[index].body.toString()),
+                                title: "مشخص نشده",
+                                date: Utils.formatDateStr(_messages[index].date!),
+                                state: 0,
+                                onTap: (){
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
+                                },
+                              );
+                            }*/
+      return TransactionWidget(
+        price: Utils.extractAmount(messages[index].body.toString()),
+        title: "مشخص نشده",
+        date: Utils.formatDateStr(messages[index].date!),
+        state: 1,
+        onTap: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) =>
+                  AddContainerPage(priceText: Utils.extractAmount(messages[index].body.toString()),)));
+        },
+      );
+    },
+  );
 }
 
