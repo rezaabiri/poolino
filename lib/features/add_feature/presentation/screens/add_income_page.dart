@@ -76,7 +76,7 @@ class _AddIncomePageState extends State<AddIncomePage> {
                 return SelectableItem(
                   title: "تاریخ",
                   prefixText: DateTime.now().toPersianDateStr(showDayStr: true),
-                  icon: "calendar.svg",
+                  icon: "calendar_edit.svg",
                   colors: PoolinoColors.baseColor,
                   isDate: true,
                   onTap: () {
