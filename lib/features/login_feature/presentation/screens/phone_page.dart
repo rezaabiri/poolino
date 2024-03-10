@@ -55,12 +55,7 @@ class _LoginPageState extends State<PhonePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  DelayedWidget(
-                      animationDuration: const Duration(seconds: 1),
-                      // Not required
-                      animation: DelayedAnimations.SLIDE_FROM_TOP,
-                      child:
-                          SvgPicture.asset("assets/images/login_vector.svg")),
+                  SvgPicture.asset("assets/images/login_vector.svg", color: Colors.red,),
                   const SizedBox(
                     height: 24,
                   ),

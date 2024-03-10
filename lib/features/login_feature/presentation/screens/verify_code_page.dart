@@ -145,7 +145,7 @@ class _LoginPageState extends State<VerifyCodePage> {
                             text: "کد تایید",
                             controller: pinController,
                             onChange: (value){
-                              if(value.length >= 3){
+                              if(value.length == 4){
                                 final VerifyParams verifyParams = VerifyParams(
                                   prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(),
                                   value.toEnglishDigit(),

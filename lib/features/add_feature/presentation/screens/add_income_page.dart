@@ -22,7 +22,8 @@ import '../widgets/add_text_field.dart';
 import '../widgets/note_text_field.dart';
 
 class AddIncomePage extends StatefulWidget {
-  const AddIncomePage({super.key});
+  AddIncomePage({super.key, required this.price});
+  String price;
 
   @override
   State<AddIncomePage> createState() => _AddIncomePageState();
@@ -34,9 +35,15 @@ class _AddIncomePageState extends State<AddIncomePage> {
   TextEditingController descController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   String date = "";
-  String category = "fadf";
-  String priority = "adffdsf";
+  String category = "";
+  String priority = "";
 
+  @override
+  void initState() {
+    priceController.text = widget.price
+        .replaceAll("-", "").replaceAll("+", "");
+    super.initState();
+  }
   @override
   void dispose() {
     category = "انتخاب کنید";

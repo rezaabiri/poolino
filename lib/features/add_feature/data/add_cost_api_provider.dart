@@ -8,7 +8,7 @@ import '../../../common/utils/prefs_opreator.dart';
 import '../../../locator.dart';
 
 
-class AddApiProvider extends BaseApiProvider{
+class AddCostApiProvider extends BaseApiProvider{
 
   Future<dynamic> saveCost(String price, String date, String category, String priority, String description) async {
     var response = await dio.post(

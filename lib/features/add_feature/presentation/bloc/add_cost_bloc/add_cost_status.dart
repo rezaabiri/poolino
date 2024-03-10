@@ -1,14 +1,15 @@
 
 
 
-import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
+
+import '../../../domain/entities/add_cost_entity.dart';
 
 abstract class AddCostStatus{}
 class LoadingInitial extends AddCostStatus{}
 class AddCostLoading extends AddCostStatus{}
 class AddCostComplete extends AddCostStatus{
-  final UserEntity userEntity;
-  AddCostComplete(this.userEntity);
+  final AddCostEntity addCostEntity;
+  AddCostComplete(this.addCostEntity);
 }
 class AddCostError extends AddCostStatus{
   final String message;

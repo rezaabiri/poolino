@@ -54,7 +54,7 @@ class PoolinoTextField extends StatelessWidget {
             counterText: "",
             contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             suffixIcon: IconButton(
-              icon: SvgPicture.asset("assets/images/clear.svg", width: 30, height: 30,),
+              icon: SvgPicture.asset("assets/images/clear.svg", width: 24, height: 24,),
               highlightColor: Colors.blue.withOpacity(0.05),
               onPressed: () {
                 controller.clear();

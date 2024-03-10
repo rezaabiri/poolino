@@ -39,7 +39,8 @@ class _AddCostPageState extends State<AddCostPage> {
 
   @override
   void initState() {
-    priceController.text = widget.price;
+    priceController.text = widget.price
+    .replaceAll("-", "").replaceAll("+", "");
     BlocProvider.of<CategoryCubit>(context).changeCategory("انتخاب کنید");
     BlocProvider.of<PriorityCubit>(context).changePriority("انتخاب کنید");
     super.initState();

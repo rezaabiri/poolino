@@ -23,6 +23,13 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
+    if(widget.priceText.toString().contains("-")){
+      _tabController.animateTo(0, duration: const Duration(milliseconds: 2), curve: Curves.bounceIn);
+
+    }else {
+      _tabController.animateTo(1, duration: const Duration(milliseconds: 2), curve: Curves.bounceIn);
+
+    }
     super.initState();
   }
 
@@ -83,7 +90,7 @@ class _AddContainerPageState extends State<AddContainerPage> with TickerProvider
                     controller: _tabController,
                     children:[
                       AddCostPage(price: widget.priceText ?? "0",),
-                      const AddIncomePage(),
+                      AddIncomePage(price: widget.priceText ?? "0",),
                     ],
                   ),
                 ),

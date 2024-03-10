@@ -32,7 +32,7 @@ class PoolinoSnackBar {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SvgPicture.asset("assets/images/$icon", width: 40, height: 40,),
+                SvgPicture.asset("assets/images/$icon", width: 25, height: 25, color: Colors.white),
                 Expanded(child: Text(message, style: const TextStyle(fontSize: 14, fontFamily: "regular", color: Colors.white), textDirection: TextDirection.rtl,)),
               ],
             )

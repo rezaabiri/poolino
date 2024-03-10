@@ -3,21 +3,21 @@ import 'package:poolino/common/error_handler/app_exception.dart';
 import 'package:poolino/common/error_handler/check_exception.dart';
 import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/features/add_feature/data/cost_params.dart';
-import 'package:poolino/features/card_feature/domain/entities/user_entity.dart';
-import 'package:poolino/features/card_feature/domain/repository/user_repository.dart';
-import 'package:poolino/features/card_feature/models/user_model.dart';
+import 'package:poolino/features/add_feature/domain/models/add_cost_model.dart';
 
 import '../data/add_cost_api_provider.dart';
+import '../domain/entities/add_cost_entity.dart';
+import '../domain/repository/add_cost_repository.dart';
 
 
 
-class AddRepositoryImpl extends AddRepository {
-  AddApiProvider apiProvider;
+class AddCostRepositoryImpl extends AddCostRepository {
+  AddCostApiProvider apiProvider;
 
-  AddRepositoryImpl(this.apiProvider);
+  AddCostRepositoryImpl(this.apiProvider);
 
   @override
-  Future<DataState<UserEntity>> saveCostDetails(CostParams costParams) async {
+  Future<DataState<AddCostEntity>> saveCostDetails(CostParams costParams) async {
     try {
 
       Response response;
@@ -29,12 +29,12 @@ class AddRepositoryImpl extends AddRepository {
         costParams.description
       );
 
-      UserEntity userEntity = UserModel.fromJson(response.data);
-      return DataSuccess(userEntity);
+      AddCostEntity addCostEntity = AddCostModel.fromJson(response.data);
+      return DataSuccess(addCostEntity);
 
     }on AppException catch (e){
       final errorDataState = await CheckExceptions.getError(e);
-      return DataFailed<UserEntity>(errorDataState.error);
+      return DataFailed<AddCostEntity>(errorDataState.error);
     }
   }
 
