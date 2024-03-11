@@ -50,10 +50,8 @@ dev_dependencies:
   dotted_line: ^3.2.2
   flutter_svg: ^2.0.9
   permission_handler: ^10.1.0
-  flutter_sms_inbox: ^1.0.3
   delayed_widget: ^1.1.1
   animated_snack_bar: ^0.4.0
-  otp_text_field: ^1.1.3
   get_it: ^7.2.0
   dio: ^4.0.6
   flutter_bloc: ^8.1.3
@@ -62,10 +60,11 @@ dev_dependencies:
   pinput: ^3.0.1
   android_sms_retriever: ^1.3.0
   persian_number_utility: ^1.1.4
-  cached_network_image: ^3.3.1
   #device_info_plus: ^9.1.2
   mesh_gradient: ^1.2.0
   telephony: ^0.2.0
+  intl: ^0.19.0
+
 
 
 

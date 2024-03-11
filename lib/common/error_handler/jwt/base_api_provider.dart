@@ -22,8 +22,10 @@ class BaseApiProvider {
     dio.interceptors.add(InterceptorsWrapper(
       onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
         var token = await prefsOperator.getSharedData("accessToken");
+        var userId = await prefsOperator.getSharedData("userId");
         options.headers['Authorization'] = 'Bearer $token';
         options.headers['Accept'] = 'application/json';
+        options.headers['user-id'] = userId;
         return handler.next(options);
       },
       onError: (DioError e, handler) async {

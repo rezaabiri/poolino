@@ -11,7 +11,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'common/utils/prefs_opreator.dart';
 import 'features/add_feature/data/add_cost_api_provider.dart';
+import 'features/add_feature/data/add_income_api_provider.dart';
+import 'features/add_feature/domain/repository/add_income_repository.dart';
+import 'features/add_feature/domain/use_cases/add_income_usecase.dart';
+import 'features/add_feature/presentation/bloc/add_income_bloc/add_income_bloc.dart';
 import 'features/add_feature/repository/add_cost_repository_impl.dart';
+import 'features/add_feature/repository/add_income_repository_impl.dart';
 import 'features/login_feature/data/api_provider.dart';
 import 'features/login_feature/domain/repository/login_repository.dart';
 import 'features/login_feature/domain/use_cases/login_usecase.dart';
@@ -43,6 +48,11 @@ setup() async {
   locator.registerSingleton<AddCostRepository>(AddCostRepositoryImpl(locator()));
   locator.registerSingleton<AddCostUseCase>(AddCostUseCase(locator()));
   locator.registerSingleton<AddCostBloc>(AddCostBloc(locator()));
+
+  locator.registerSingleton<AddIncomeApiProvider>(AddIncomeApiProvider());
+  locator.registerSingleton<AddIncomeRepository>(AddIncomeRepositoryImpl(locator()));
+  locator.registerSingleton<AddIncomeUseCase>(AddIncomeUseCase(locator()));
+  locator.registerSingleton<AddIncomeBloc>(AddIncomeBloc(locator()));
 
 
   //locator.registerSingleton<HomeRepository>(HomeRepository(locator()));

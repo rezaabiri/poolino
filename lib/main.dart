@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poolino/features/add_feature/presentation/bloc/add_income_bloc/add_income_bloc.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/category_cubit/category_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/priority_cubit/priority_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
-import 'package:poolino/features/home_feature/presentation/screens/all_transactions_page.dart';
 import 'package:poolino/features/home_feature/presentation/screens/home_page.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_bloc.dart';
 import 'package:poolino/features/login_feature/presentation/bloc/login_button/login_button_cubit.dart';
@@ -33,11 +33,13 @@ void main() async {
     BlocProvider(create: (_) => ThemeCubit()),
     BlocProvider.value(value: themeCubit),
     BlocProvider(create: (_) => locator<LoginBloc>()),
+    BlocProvider(create: (_) => locator<VerifyBloc>()),
+    BlocProvider(create: (_) => locator<AddCostBloc>()),
+    BlocProvider(create: (_) => locator<AddIncomeBloc>()),
+
     BlocProvider(create: (_) => VerifyButtonCubit()),
     BlocProvider(create: (_) => LoginButtonCubit()),
-    BlocProvider(create: (_) => locator<VerifyBloc>()),
     BlocProvider(create: (_) => VerifyPinPut()),
-    BlocProvider(create: (_) => locator<AddCostBloc>()),
     BlocProvider(create: (_) => CategoryCubit()),
     BlocProvider(create: (_) => PriorityCubit()),
   ], child: const MyApp(),),
@@ -60,7 +62,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
+        statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.light
     ));
@@ -80,7 +82,6 @@ class _MyAppState extends State<MyApp> {
               '/splash': (context) => const SplashScreen(),
               '/phone': (context) => const PhonePage(),
               '/add_container':(context) => AddContainerPage(),
-              '/all_transaction':(context) => const AllTransactionsPage(),
             },
             home: Scaffold(
                 key: scaffoldKey,

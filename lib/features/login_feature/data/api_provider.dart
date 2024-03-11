@@ -11,7 +11,7 @@ import '../../../common/utils/constants.dart';
 
 
 
-class ApiProvider extends BaseApiProvider{
+class ApiProvider {
   final Dio _dio = Dio();
 
   Future<dynamic> login(phone, password) async {
@@ -27,6 +27,7 @@ class ApiProvider extends BaseApiProvider{
       ).onError((DioError error, stackTrace) {
         return CheckExceptions.response(error.response!);
       });
+      print(response);
       return response;
     }catch(e){
       return const DataFailed("وضعیت اینترنت خود را بررسی کنید");

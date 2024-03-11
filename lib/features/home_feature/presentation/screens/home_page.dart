@@ -8,6 +8,7 @@ import 'package:poolino/common/widgets/loading.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:telephony/telephony.dart';
+import  'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/prefs_opreator.dart';
@@ -313,23 +314,37 @@ Widget list(List<SmsMessage> messages) {
                                 },
                               );
                             }*/
-        return TransactionWidget(
-          price: Utils.extractAmount(messages[index].body.toString()),
-          title: "مشخص نشده",
-          date: Utils.formatDateStr(messages[index].date!),
-          state: 1,
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddContainerPage(
-                  priceText:
-                      Utils.extractAmount(messages[index].body.toString()),
+
+        int timestamp = 1710061182;
+
+        DateTime now = DateTime.now();
+
+        // تاریخ دیروز
+        DateTime yesterday = DateTime(now.year, now.month, now.day - 1);
+
+        // تبدیل تاریخ دیروز به تایم استمپ
+        int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
+
+        if(messages[index].date! > yesterdayTimestamp){
+          return TransactionWidget(
+            price: Utils.extractAmount(messages[index].body.toString()).beToman().seRagham(separator: ","),
+            title: "مشخص نشده",
+            date: Utils.formatDateStr(messages[index].date!),
+            state: 1,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddContainerPage(
+                    priceText:
+                    Utils.extractAmount(messages[index].body.toString()),
+                  ),
                 ),
-              ),
-            );
-          },
-        );
+              );
+            },
+          );
+
+        }
       },
     );
   }

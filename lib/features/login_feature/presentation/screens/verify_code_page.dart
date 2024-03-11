@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/otp_text_field.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:pinput/pinput.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
@@ -34,7 +32,7 @@ class VerifyCodePage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<VerifyCodePage> {
-  OtpFieldController otpController = OtpFieldController();
+ //OtpFieldController otpController = OtpFieldController();
   final pinController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isCorrect = false;

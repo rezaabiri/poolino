@@ -11,4 +11,5 @@ class Constants {
   static const refresh = "refreshToken";
   static const getUserDetails = "getUserDetails";
   static const addCost = "add-cost";
+  static const addIncome = "add-income";
 }

@@ -4,8 +4,6 @@ import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:otp_text_field/otp_field.dart';
-import 'package:otp_text_field/otp_text_field.dart';
 import 'package:poolino/common/widgets/buttons/button_primary.dart';
 import 'package:poolino/common/widgets/poolino_text_field.dart';
 import 'package:poolino/features/login_feature/domain/entities/login_entity.dart';
@@ -28,7 +26,7 @@ class PhonePage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<PhonePage> {
-  OtpFieldController otpController = OtpFieldController();
+  //OtpFieldController otpController = OtpFieldController();
   final phoneController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   List<String> nums = [];
@@ -103,6 +101,7 @@ class _LoginPageState extends State<PhonePage> {
                       LoginComplete loginComplete =
                           state.loginStatus as LoginComplete;
                       LoginEntity loginEntity = loginComplete.loginEntity;
+                      saveUserId(loginEntity, prefsOperator);
                     }
 
                     return BlocBuilder<LoginButtonCubit, LoginButtonState>(
@@ -135,5 +134,10 @@ class _LoginPageState extends State<PhonePage> {
             ),
           )),
     );
+  }
+
+  void saveUserId(LoginEntity loginEntity, PrefsOperator prefsOperator) async{
+    await prefsOperator.setSharedData("userId", loginEntity.result?.userId.toString());
+    print(await prefsOperator.getSharedData("userId"));
   }
 }

@@ -1,51 +1,72 @@
+import 'package:poolino/features/login_feature/domain/entities/login_entity.dart';
 
-import '../domain/entities/login_entity.dart';
-
-/// message : "token generated successfully"
-/// result : {"access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Bvb2xpbm9hcHAub2ZmZXJqYS5pci9wb29saW5vX2Z0cC9wdWJsaWMvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MDQ1NTc2NjksImV4cCI6MTcwNDU2MTI2OSwibmJmIjoxNzA0NTU3NjY5LCJqdGkiOiJkOFpaTEF0cHAxNUhoV3lrIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8eURNXNp9NjWnhVbjpvT5iY5Hs_TFYdE9UP0dmdPOGo","token_type":"bearer","expires_in":3600}
+/// message : "کاربر پیدا شد"
+/// result : {"id":55,"phone":"09150575854","user_id":792020,"created_at":"2024-03-10T09:41:25.000000Z","updated_at":"2024-03-10T09:41:25.000000Z"}
 
 class LoginModel extends LoginEntity {
-  const LoginModel({
-    String? message,
-    Result? result,
-  }) : super(
+  LoginModel({
+      String? message, 
+      Result? result,
+  }):super(
     message: message,
-    result: result,
+    result: result
   );
 
   factory LoginModel.fromJson(dynamic json) {
-
     return LoginModel(
       message: json['message'],
       result: json['result'] != null ? Result.fromJson(json['result']) : null
     );
   }
-}
-
-/// access_token : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Bvb2xpbm9hcHAub2ZmZXJqYS5pci9wb29saW5vX2Z0cC9wdWJsaWMvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE3MDQ1NTc2NjksImV4cCI6MTcwNDU2MTI2OSwibmJmIjoxNzA0NTU3NjY5LCJqdGkiOiJkOFpaTEF0cHAxNUhoV3lrIiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.8eURNXNp9NjWnhVbjpvT5iY5Hs_TFYdE9UP0dmdPOGo"
-/// token_type : "bearer"
-/// expires_in : 3600
-
-class Result {
-  Result({
-      this.accessToken, 
-      this.tokenType, 
-      this.expiresIn,});
-
-  Result.fromJson(dynamic json) {
-    accessToken = json['access_token'];
-    tokenType = json['token_type'];
-    expiresIn = json['expires_in'];
-  }
-  String? accessToken;
-  String? tokenType;
-  num? expiresIn;
+  String? _message;
+  Result? _result;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['access_token'] = accessToken;
-    map['token_type'] = tokenType;
-    map['expires_in'] = expiresIn;
+    map['message'] = _message;
+    if (_result != null) {
+      map['result'] = _result?.toJson();
+    }
+    return map;
+  }
+
+}
+
+/// id : 55
+/// phone : "09150575854"
+/// user_id : 792020
+/// created_at : "2024-03-10T09:41:25.000000Z"
+/// updated_at : "2024-03-10T09:41:25.000000Z"
+
+class Result {
+  Result({
+      this.id,
+      this.phone,
+      this.userId,
+      this.createdAt,
+      this.updatedAt,});
+
+  Result.fromJson(dynamic json) {
+    id = json['id'];
+    phone = json['phone'];
+    userId = json['user_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+  num? id;
+  String? phone;
+  num? userId;
+  String? createdAt;
+  String? updatedAt;
+
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['phone'] = phone;
+    map['user_id'] = userId;
+    map['created_at'] = createdAt;
+    map['updated_at'] = updatedAt;
     return map;
   }
 

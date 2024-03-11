@@ -40,7 +40,7 @@ class _AddCostPageState extends State<AddCostPage> {
   @override
   void initState() {
     priceController.text = widget.price
-    .replaceAll("-", "").replaceAll("+", "");
+    .replaceAll("-", "").replaceAll("+", "").beToman().seRagham(separator: ",");
     BlocProvider.of<CategoryCubit>(context).changeCategory("انتخاب کنید");
     BlocProvider.of<PriorityCubit>(context).changePriority("انتخاب کنید");
     super.initState();
