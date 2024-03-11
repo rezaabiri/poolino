@@ -61,151 +61,146 @@ class _LoginPageState extends State<VerifyCodePage> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          actions: const [ThemeSwitcher()],
-        ),
-        body: SingleChildScrollView(
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset("assets/images/login_vector.svg"),
-                const SizedBox(
-                  height: 24,
-                ),
-                Center(
-                  child: Text(
-                      ".کد تایید به شماره (${prefsOperator.getSharedDataNoSync("phone")}) ارسال شد",
-                      style: theme.textTheme.labelLarge),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                BlocConsumer<VerifyBloc, VerifyState>(
-                  listenWhen: (previous, current) {
-                    if (current.verifyStatus is VerifyComplete) {
-                      return true;
-                    }
-                    if (current.verifyStatus is VerifyError) {
-                      return true;
-                    }
-                    if (current.verifyStatus is VerifyLoading) {
-                      return true;
-                    }
-                    return false;
-                  },
-                  listener: (context, state) {
-                    if (state.verifyStatus is VerifyLoading) {
-                      LoadingScreen.show(context: context);
-                    }
-                    if (state.verifyStatus is VerifyComplete) {
-                      LoadingScreen.hide(context);
-                      Navigator.pushReplacementNamed(context, "/home");
-                      prefsOperator.setLoggedIn();
-                      BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
-                    }
+    return Scaffold(
+      body: SingleChildScrollView(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 26,),
+              SvgPicture.asset("assets/images/login_vector.svg", width: 200, height: 200,),
+              const SizedBox(
+                height: 24,
+              ),
+              Center(
+                child: Text(
+                    ".کد تایید به شماره (${prefsOperator.getSharedDataNoSync("phone")}) ارسال شد",
+                    style: theme.textTheme.labelLarge),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              BlocConsumer<VerifyBloc, VerifyState>(
+                listenWhen: (previous, current) {
+                  if (current.verifyStatus is VerifyComplete) {
+                    return true;
+                  }
+                  if (current.verifyStatus is VerifyError) {
+                    return true;
+                  }
+                  if (current.verifyStatus is VerifyLoading) {
+                    return true;
+                  }
+                  return false;
+                },
+                listener: (context, state) {
+                  if (state.verifyStatus is VerifyLoading) {
+                    LoadingScreen.show(context: context);
+                  }
+                  if (state.verifyStatus is VerifyComplete) {
+                    LoadingScreen.hide(context);
+                    Navigator.pushReplacementNamed(context, "/home");
+                    prefsOperator.setLoggedIn();
+                    BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
+                  }
 
-                    if (state.verifyStatus is VerifyError) {
-                      BlocProvider.of<VerifyButtonCubit>(context).changeState(false);
-                      BlocProvider.of<VerifyPinPut>(context).changeState(false);
+                  if (state.verifyStatus is VerifyError) {
+                    BlocProvider.of<VerifyButtonCubit>(context).changeState(false);
+                    BlocProvider.of<VerifyPinPut>(context).changeState(false);
 
-                      VerifyError u = state.verifyStatus as VerifyError;
-                      PoolinoSnackBar(
-                              icon: "close.svg", type: Constants.ERROR)
-                          .show(context, u.message);
-                      LoadingScreen.hide(context);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state.verifyStatus is VerifyComplete) {
-                      VerifyComplete verifyComplete =
-                          state.verifyStatus as VerifyComplete;
-                      prefsOperator.setSharedData(
-                          "accessToken",
-                          verifyComplete.verifyEntity.result!.accessToken
-                              .toString());
-                      prefsOperator.setSharedData(
-                          "refreshToken",
-                          verifyComplete.verifyEntity.result!.refreshToken
-                              .toString());
-                      BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
-                    }
+                    VerifyError u = state.verifyStatus as VerifyError;
+                    PoolinoSnackBar(
+                            icon: "close.svg", type: Constants.ERROR)
+                        .show(context, u.message);
+                    LoadingScreen.hide(context);
+                  }
+                },
+                builder: (context, state) {
+                  if (state.verifyStatus is VerifyComplete) {
+                    VerifyComplete verifyComplete =
+                        state.verifyStatus as VerifyComplete;
+                    prefsOperator.setSharedData(
+                        "accessToken",
+                        verifyComplete.verifyEntity.result!.accessToken
+                            .toString());
+                    prefsOperator.setSharedData(
+                        "refreshToken",
+                        verifyComplete.verifyEntity.result!.refreshToken
+                            .toString());
+                    BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
+                  }
 
-                    return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
-                      builder: (context, state) {
-                        return PoolinoTextField(
-                            formKey: formKey,
-                            text: "کد تایید",
-                            controller: pinController,
-                            onChange: (value){
-                              if(value.length == 4){
-                                final VerifyParams verifyParams = VerifyParams(
-                                  prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(),
-                                  value.toEnglishDigit(),
-                                );
-                                BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
-                                BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
-                              }
-                            });
-                        return PinPut(
+                  return BlocBuilder<VerifyPinPut, VerifyPinPutState>(
+                    builder: (context, state) {
+                      return PoolinoTextField(
                           formKey: formKey,
-                          pinController: pinController,
-                          onChange: (pin) {
-                            BlocProvider.of<VerifyButtonCubit>(context)
-                                .changeState(false);
-                          },
-                          onComplete: (pin) {
-                            final VerifyParams verifyParams = VerifyParams(
-                                prefsOperator
-                                    .getSharedDataNoSync("phone")
-                                    .toEnglishDigit(),
-                                pin.toEnglishDigit());
-                            BlocProvider.of<VerifyBloc>(context)
-                                .add(LoadVerifyEvent(verifyParams));
-                          },
-                        );
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "ویرایش شماره",
-                      style: TextStyle(
-                          fontFamily: 'medium',
-                          fontSize: 12,
-                          color: theme.primaryColor),
-                    ),
-                    Text(
-                      "ارسال مجدد کد تایید: 01:30",
-                      style: theme.textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                BlocBuilder<VerifyButtonCubit, VerifyButtonState>(
-                  builder: (context, state) {
-                    return ButtonPrimary(
-                      text: "تایید",
-                      isEnabled: state.isCorrect,
-                      onPressed: () {},
-                    );
-                  },
-                ),
-              ],
-            ),
+                          text: "کد تایید",
+                          controller: pinController,
+                          onChange: (value){
+                            if(value.length == 4){
+                              final VerifyParams verifyParams = VerifyParams(
+                                prefsOperator.getSharedDataNoSync("phone").toEnglishDigit(),
+                                value.toEnglishDigit(),
+                              );
+                              BlocProvider.of<VerifyBloc>(context).add(LoadVerifyEvent(verifyParams));
+                              BlocProvider.of<VerifyButtonCubit>(context).changeState(true);
+                            }
+                          });
+                      return PinPut(
+                        formKey: formKey,
+                        pinController: pinController,
+                        onChange: (pin) {
+                          BlocProvider.of<VerifyButtonCubit>(context)
+                              .changeState(false);
+                        },
+                        onComplete: (pin) {
+                          final VerifyParams verifyParams = VerifyParams(
+                              prefsOperator
+                                  .getSharedDataNoSync("phone")
+                                  .toEnglishDigit(),
+                              pin.toEnglishDigit());
+                          BlocProvider.of<VerifyBloc>(context)
+                              .add(LoadVerifyEvent(verifyParams));
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "ویرایش شماره",
+                    style: TextStyle(
+                        fontFamily: 'medium',
+                        fontSize: 12,
+                        color: theme.primaryColor),
+                  ),
+                  Text(
+                    "ارسال مجدد کد تایید: 01:30",
+                    style: theme.textTheme.labelMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              BlocBuilder<VerifyButtonCubit, VerifyButtonState>(
+                builder: (context, state) {
+                  return ButtonPrimary(
+                    text: "تایید",
+                    isEnabled: state.isCorrect,
+                    onPressed: () {},
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),

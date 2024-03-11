@@ -19,7 +19,6 @@ class LogoutBottomSheet {
           children: [
             Text("log out"),
             ButtonPrimary(text: "ورود مجدد", isEnabled: true, onPressed: (){
-              print("lllllllllllll");
               Navigator.pushNamed(context, "/phone");
               //Navigator.pop(context);
             })

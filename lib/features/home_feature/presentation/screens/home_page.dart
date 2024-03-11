@@ -8,7 +8,7 @@ import 'package:poolino/common/widgets/loading.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:telephony/telephony.dart';
-import  'package:persian_number_utility/persian_number_utility.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
 
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/prefs_opreator.dart';
@@ -21,7 +21,7 @@ import '../widgets/toolbar_widget.dart';
 import '../widgets/transaction_widget.dart';
 
 backgroundMessageHandler(SmsMessage message) async {
-  print("${message.body}hello");
+  //print("${message.body}hello");
 }
 
 class HomePage extends StatefulWidget {
@@ -45,9 +45,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     telephony.listenIncomingSms(
         onNewMessage: (SmsMessage message) {
-          print(message.address); //+977981******67, sender nubmer
-          print(message.body); //sms text
-          print(message.date); //1659690242000, timestamp
+          //print(message.address); //+977981******67, sender nubmer
+          //print(message.body); //sms text
+          //print(message.date); //1659690242000, timestamp
           setState(() {
             sms = message.body.toString();
           });
@@ -93,7 +93,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      endDrawer: Drawer(),
+      endDrawer: const Drawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     requestPermission(context);
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text("permissionsGranted.toString()"),
                       ),
                     );
@@ -211,16 +211,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     Navigator.pushNamed(context, "/all_transaction");
                   },
                   child: StreamBuilder<List<SmsMessage>>(
-                      stream: _messagesStreamController.stream,
-                      builder: (context, snapshot) {
-                        return Text(
-                          "مشاهده همه (${snapshot.data?.length})",
-                          style: const TextStyle(
-                              fontFamily: "regular",
-                              fontSize: 16,
-                              color: Colors.blue),
-                        );
-                      }),
+                    stream: _messagesStreamController.stream,
+                    builder: (context, snapshot) {
+                      return Text(
+                        "مشاهده همه (${snapshot.data?.length})",
+                        style: const TextStyle(
+                            fontFamily: "regular",
+                            fontSize: 16,
+                            color: Colors.blue),
+                      );
+                    },
+                  ),
                 ),
                 Row(
                   children: [
@@ -252,22 +253,23 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 height: MediaQuery.of(context).size.height * 0.40,
                 width: MediaQuery.of(context).size.width,
                 child: StreamBuilder<List<SmsMessage>>(
-                    stream: _messagesStreamController.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<SmsMessage> messages = snapshot.data!;
-                        return list(messages);
-                      } else if (snapshot.hasError) {
-                        return const Text('خطا در دریافت داده‌ها');
-                      } else {
-                        return const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Loading(),
-                          ],
-                        );
-                      }
-                    }),
+                  stream: _messagesStreamController.stream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<SmsMessage> messages = snapshot.data!;
+                      return list(messages);
+                    } else if (snapshot.hasError) {
+                      return const Text('خطا در دریافت داده‌ها');
+                    } else {
+                      return const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Loading(),
+                        ],
+                      );
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(
@@ -286,7 +288,7 @@ Future<void> requestPermission(context) async {
     Telephony telephony = Telephony.instance;
     bool? permissionsGranted = await telephony.requestPhoneAndSmsPermissions;
     await telephony.requestPhoneAndSmsPermissions;
-  }catch(e){
+  } catch (e) {
     print(e);
     PoolinoSnackBar(type: Constants.ERROR, icon: "close.svg")
         .show(context, "دسترسی پیامک الزامی است");
@@ -320,14 +322,16 @@ Widget list(List<SmsMessage> messages) {
         DateTime now = DateTime.now();
 
         // تاریخ دیروز
-        DateTime yesterday = DateTime(now.year, now.month, now.day - 1);
+        DateTime yesterday = DateTime(now.year, now.month, now.day);
 
         // تبدیل تاریخ دیروز به تایم استمپ
         int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
 
-        if(messages[index].date! > yesterdayTimestamp){
+        if (messages[index].date! > yesterdayTimestamp) {
           return TransactionWidget(
-            price: Utils.extractAmount(messages[index].body.toString()).beToman().seRagham(separator: ","),
+            price: Utils.extractAmount(messages[index].body.toString())
+                .beToman()
+                .seRagham(separator: ","),
             title: "مشخص نشده",
             date: Utils.formatDateStr(messages[index].date!),
             state: 1,
@@ -337,14 +341,14 @@ Widget list(List<SmsMessage> messages) {
                 MaterialPageRoute(
                   builder: (context) => AddContainerPage(
                     priceText:
-                    Utils.extractAmount(messages[index].body.toString()),
+                        Utils.extractAmount(messages[index].body.toString()),
                   ),
                 ),
               );
             },
           );
-
         }
+        return Container();
       },
     );
   }

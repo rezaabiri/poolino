@@ -8,7 +8,6 @@ class Utils {
   }
 
   static String getPrice(String smsBody) {
-    print(smsBody);
     List<String> amounts = [];
 
     RegExp regex = RegExp(r'(برداشت|واریز|مبلغ|خرید)[:\s]*([-+]?\d{1,15}(?:,\d{3})*(?:\.\d{2})?)');

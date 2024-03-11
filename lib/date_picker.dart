@@ -115,7 +115,6 @@ class _DatePickerState extends State<DatePicker> {
                       initialItem: _selectedFruit,
                     ),
                     onSelectedItemChanged: (int selectedItem) {
-                      print(selectedItem);
                       setState(() {
                         _selectedFruit = selectedItem;
                       });
