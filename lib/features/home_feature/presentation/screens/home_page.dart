@@ -2,14 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:persian_number_utility/persian_number_utility.dart';
+import 'package:poolino/common/database/helpers/sms_db_helper.dart';
 import 'package:poolino/common/utils/poolino_colors.dart';
 import 'package:poolino/common/widgets/loading.dart';
 import 'package:poolino/common/widgets/poolino_snackbar.dart';
 import 'package:poolino/features/add_feature/presentation/screens/add_container_page.dart';
 import 'package:telephony/telephony.dart';
-import 'package:persian_number_utility/persian_number_utility.dart';
 
+import '../../../../common/database/models/sms_db_model.dart';
 import '../../../../common/utils/constants.dart';
 import '../../../../common/utils/prefs_opreator.dart';
 import '../../../../common/utils/utils.dart';
@@ -21,7 +24,7 @@ import '../widgets/toolbar_widget.dart';
 import '../widgets/transaction_widget.dart';
 
 backgroundMessageHandler(SmsMessage message) async {
-  //print("${message.body}hello");
+  print("${message.body}hello");
 }
 
 class HomePage extends StatefulWidget {
@@ -36,10 +39,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController;
   final StreamController<List<SmsMessage>> _messagesStreamController =
       StreamController<List<SmsMessage>>.broadcast();
-
-  String extracted = "";
-  String sms = "";
   Telephony telephony = Telephony.instance;
+
+  late Box<SmsDbModel> smsBox;
 
   @override
   void initState() {
@@ -48,19 +50,22 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           //print(message.address); //+977981******67, sender nubmer
           //print(message.body); //sms text
           //print(message.date); //1659690242000, timestamp
-          setState(() {
-            sms = message.body.toString();
-          });
         },
         listenInBackground: true,
         onBackgroundMessage: backgroundMessageHandler);
+    smsBox = Hive.box<SmsDbModel>('sms_box');
+    //List<SmsDbModel> model = smsBox.values.first;//get all items in list
+    //print(model);
     _loadMessages();
-
+    requestPermission(context);
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
   }
 
   Future<void> _loadMessages() async {
+    //List<SmsDbModel>? models = await dbHelper.getSMS();
+    //print(models![0].smsBody);
+
     List<String> numbers = ['09810008528', '9830009417'];
     List<SmsMessage> allMessages = [];
     for (String number in numbers) {
@@ -75,10 +80,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     }
     _messagesStreamController.add(allMessages);
 
-    requestPermission(context);
-    /*setState(() {
-      _messages = allMessages;
-    });*/
   }
 
   @override
@@ -156,12 +157,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   icon: "card_receive_blue",
                   onTap: () async {
                     requestPermission(context);
-
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("permissionsGranted.toString()"),
-                      ),
-                    );
                   },
                 ),
                 ButtonWidget(
@@ -257,7 +252,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<SmsMessage> messages = snapshot.data!;
-                      return list(messages);
+                      insert2(messages, smsBox);
+                      return list(messages, smsBox);
                     } else if (snapshot.hasError) {
                       return const Text('خطا در دریافت داده‌ها');
                     } else {
@@ -295,45 +291,22 @@ Future<void> requestPermission(context) async {
   }
 }
 
-Widget list(List<SmsMessage> messages) {
-  if (messages.isNotEmpty) {
+
+Widget list(List<SmsMessage> smsList, Box<SmsDbModel> smsBox) {
+  if (smsList.isNotEmpty) {
     return ListView.builder(
       physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.only(top: 16, bottom: 16),
       shrinkWrap: true,
-      itemCount: 10,
+      itemCount: smsBox.length,
       itemBuilder: (context, index) {
-        /* if(index ==  _messages.length - 1){
-                              return TransactionWidget(
-                                price: Utils.extractAmount(_messages[index].body.toString()),
-                                title: "مشخص نشده",
-                                date: Utils.formatDateStr(_messages[index].date!),
-                                state: 0,
-                                onTap: (){
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) =>
-                                          AddContainerPage(priceText: Utils.extractAmount(_messages[index].body.toString()),)));
-                                },
-                              );
-                            }*/
-
-        int timestamp = 1710061182;
-
-        DateTime now = DateTime.now();
-
-        // تاریخ دیروز
-        DateTime yesterday = DateTime(now.year, now.month, now.day);
-
-        // تبدیل تاریخ دیروز به تایم استمپ
-        int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
-
-        if (messages[index].date! > yesterdayTimestamp) {
+        if(smsBox.getAt(index)!.status == 0){
           return TransactionWidget(
-            price: Utils.extractAmount(messages[index].body.toString())
+            price: Utils.extractAmount(smsBox.getAt(index)!.smsBody.toString())
                 .beToman()
                 .seRagham(separator: ","),
             title: "مشخص نشده",
-            date: Utils.formatDateStr(messages[index].date!),
+            date: Utils.formatDateStr(int.parse(smsBox.getAt(index)!.timestamp)),
             state: 1,
             onTap: () {
               Navigator.push(
@@ -341,14 +314,14 @@ Widget list(List<SmsMessage> messages) {
                 MaterialPageRoute(
                   builder: (context) => AddContainerPage(
                     priceText:
-                        Utils.extractAmount(messages[index].body.toString()),
+                    Utils.extractAmount(smsBox.getAt(index)!.smsBody.toString()),
                   ),
                 ),
               );
             },
           );
         }
-        return Container();
+        return Text("نداره################");
       },
     );
   }
@@ -359,4 +332,36 @@ Widget list(List<SmsMessage> messages) {
       textDirection: TextDirection.rtl,
     ),
   );
+}
+
+
+Future<void> insert2(
+    List<SmsMessage> messages,
+    Box<SmsDbModel> smsBox,
+    ) async {
+  DateTime now = DateTime.now();
+  DateTime yesterday = DateTime(now.year, now.month, now.day - 1);
+  int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
+  List<SmsDbModel> smsList = [];
+
+  //smsList.clear();
+  for (var sms in messages) {
+    if (sms.date! > yesterdayTimestamp) {
+      //print(sms.body);
+
+      SmsDbModel smsDbModel = SmsDbModel(
+          id: "id",
+          smsBody: sms.body.toString(),
+          sender: sms.address.toString(),
+          timestamp: sms.date.toString(),
+          status: 0);
+      smsBox.delete(smsDbModel);
+      smsBox.add(smsDbModel);
+      //smsList.add(smsDbModel);
+    }
+    List<SmsDbModel> slist = smsBox.values.toList();
+    print(slist);
+
+
+  }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:poolino/common/database/models/sms_db_model.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/add_income_bloc/add_income_bloc.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/category_cubit/category_cubit.dart';
 import 'package:poolino/features/add_feature/presentation/bloc/priority_cubit/priority_cubit.dart';
@@ -24,8 +27,12 @@ import 'package:telephony/telephony.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setup();
+  await Hive.initFlutter();
+  Hive.registerAdapter(SmsDbModelAdapter());
+  await Hive.openBox<SmsDbModel>('sms_box');
 
+
+  await setup();
   final ThemeCubit themeCubit = ThemeCubit();
   await themeCubit.loadTheme();
 

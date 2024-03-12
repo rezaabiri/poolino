@@ -1,6 +1,7 @@
 
 
-import '../models/add_income_model.dart';
+
+import '../../models/add_income_model.dart';
 
 class AddIncomeEntity {
 

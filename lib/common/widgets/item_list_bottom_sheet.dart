@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:poolino/features/add_feature/domain/models/category_model.dart';
 
+import '../../features/add_feature/models/category_model.dart';
 import '../utils/poolino_colors.dart';
 class ListItemBottomSheet extends StatelessWidget {
   Function(String) onTapChoose;

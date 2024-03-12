@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:poolino/common/widgets/item_list_bottom_sheet.dart';
 
-import '../../../domain/models/category_model.dart';
+import '../../../models/category_model.dart';
+
 
 class ChoosePriority {
 

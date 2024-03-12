@@ -1,5 +1,6 @@
-import 'package:poolino/features/add_feature/domain/models/add_cost_model.dart';
 
+
+import '../../models/add_cost_model.dart';
 
 class AddCostEntity {
 

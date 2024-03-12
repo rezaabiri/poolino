@@ -5,14 +5,13 @@ import 'package:poolino/common/resources/data_state.dart';
 import 'package:poolino/features/add_feature/data/cost_params.dart';
 import 'package:poolino/features/add_feature/data/income_params.dart';
 import 'package:poolino/features/add_feature/domain/entities/add_income_entity.dart';
-import 'package:poolino/features/add_feature/domain/models/add_cost_model.dart';
 
 import '../data/add_cost_api_provider.dart';
 import '../data/add_income_api_provider.dart';
 import '../domain/entities/add_cost_entity.dart';
-import '../domain/models/add_income_model.dart';
 import '../domain/repository/add_cost_repository.dart';
 import '../domain/repository/add_income_repository.dart';
+import '../models/add_income_model.dart';
 
 
 
