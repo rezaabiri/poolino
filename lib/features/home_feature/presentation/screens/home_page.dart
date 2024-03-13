@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -340,14 +341,13 @@ Future<void> insert2(
     Box<SmsDbModel> smsBox,
     ) async {
   DateTime now = DateTime.now();
-  DateTime yesterday = DateTime(now.year, now.month, now.day - 1);
+  DateTime yesterday = DateTime(now.year, now.month, now.day - 3);
   int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
-  List<SmsDbModel> smsList = [];
 
   //smsList.clear();
   for (var sms in messages) {
-    if (sms.date! > yesterdayTimestamp) {
-      //print(sms.body);
+    print(isExists(messages, smsBox) && sms.date! > yesterdayTimestamp);
+    if (isExists(messages, smsBox)==false && sms.date! > yesterdayTimestamp) {
 
       SmsDbModel smsDbModel = SmsDbModel(
           id: "id",
@@ -357,11 +357,37 @@ Future<void> insert2(
           status: 0);
       smsBox.delete(smsDbModel);
       smsBox.add(smsDbModel);
+      print("inserted");
       //smsList.add(smsDbModel);
     }
     List<SmsDbModel> slist = smsBox.values.toList();
-    print(slist);
-
-
   }
+}
+
+bool isExists(List<SmsMessage> messages, Box<SmsDbModel> smsBox){
+  bool exists = false;
+  DateTime now = DateTime.now();
+  DateTime yesterday = DateTime(now.year, now.month, now.day - 2);
+  int yesterdayTimestamp = yesterday.millisecondsSinceEpoch;
+
+  for(int i = 0; i < messages.length; ){
+    /*if(smsBox.length != 0){
+      *//*if(int.parse(smsBox.getAt(i)!.timestamp) != messages[i].date!){
+        exists = false;
+        return exists;
+      }*//*
+    }else{
+      exists = false;
+      return exists;
+    }*/
+    if(smsBox.getAt(i)!.isInBox == false){
+      exists = false;
+      return exists;
+    }
+
+    exists = true;
+    return exists;
+  }
+  exists = true;
+  return exists;
 }
