@@ -24,6 +24,8 @@ class LoginRepositoryImpl extends LoginRepository {
         loginParams.phone,
         loginParams.password,
       );
+      print(response);
+
       LoginEntity loginEntity = LoginModel.fromJson(response.data);
       return DataSuccess(loginEntity);
     }on AppException catch (e){

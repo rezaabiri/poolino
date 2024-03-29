@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:ffi';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,14 +46,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    telephony.listenIncomingSms(
-        onNewMessage: (SmsMessage message) {
-          //print(message.address); //+977981******67, sender nubmer
-          //print(message.body); //sms text
-          //print(message.date); //1659690242000, timestamp
-        },
-        listenInBackground: true,
-        onBackgroundMessage: backgroundMessageHandler);
+    if(Platform.isAndroid){
+      telephony.listenIncomingSms(
+          onNewMessage: (SmsMessage message) {
+            //print(message.address); //+977981******67, sender nubmer
+            //print(message.body); //sms text
+            //print(message.date); //1659690242000, timestamp
+          },
+          listenInBackground: true,
+          onBackgroundMessage: backgroundMessageHandler);
+    }
+
     smsBox = Hive.box<SmsDbModel>('sms_box');
     //List<SmsDbModel> model = smsBox.values.first;//get all items in list
     //print(model);
@@ -153,6 +156,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     // BlocProvider.of<AddBloc>(context).add(LoadUserEvent("09150575854"));
                   },
                 ),
+                const SizedBox(width: 16,),
                 ButtonWidget(
                   name: "ثبت درآمد",
                   icon: "card_receive_blue",
@@ -160,6 +164,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     requestPermission(context);
                   },
                 ),
+                const SizedBox(width: 16,),
                 ButtonWidget(
                   name: "ثبت هزینه",
                   icon: "card_send_blue",

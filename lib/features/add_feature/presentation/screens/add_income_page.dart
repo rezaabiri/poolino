@@ -53,106 +53,116 @@ class _AddIncomePageState extends State<AddIncomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 16,
-          ),
-          AddTextField(
-            formKey: formKey,
-            hint: "مبلغ",
-            prefixText: "تومان",
-            icon: "moneys.svg",
-            controller: priceController,
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Builder(
-            builder: (context) {
-              date = DateTime.now().toPersianDateStr(showDayStr: true);
-              return SelectableItem(
-                title: "تاریخ",
-                prefixText: DateTime.now().toPersianDateStr(showDayStr: true),
-                icon: "calendar_edit.svg",
-                colors: PoolinoColors.baseColor,
-                isDate: true,
-                onTap: () {
-                  ChooseDate().showModal(context, onTapChoose: () {});
-                },
-              );
-            },
-          ),
-          BlocBuilder<CategoryCubit, CategoryState>(
-            builder: (context, state) {
-              return SelectableItem(
-                title: "دسته بندی هزینه",
-                prefixText: state.category,
-                icon: "category.svg",
-                colors: PoolinoColors.baseColor,
-                isDate: false,
-                onTap: () {
-                  ChooseCategory().showModal(
-                    context,
-                    onTapChoose: (name) {
-                      category = name;
+      body: Expanded(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: height * 0.12),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 16,
+                ),
+                AddTextField(
+                  formKey: formKey,
+                  hint: "مبلغ",
+                  prefixText: "تومان",
+                  icon: "moneys.svg",
+                  controller: priceController,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Builder(
+                  builder: (context) {
+                    date = DateTime.now().toPersianDateStr(showDayStr: true);
+                    return SelectableItem(
+                      title: "تاریخ",
+                      prefixText: DateTime.now().toPersianDateStr(showDayStr: true),
+                      icon: "calendar_edit.svg",
+                      colors: PoolinoColors.baseColor,
+                      isDate: true,
+                      onTap: () {
+                        ChooseDate().showModal(context, onTapChoose: () {});
+                      },
+                    );
+                  },
+                ),
+                BlocBuilder<CategoryCubit, CategoryState>(
+                  builder: (context, state) {
+                    return SelectableItem(
+                      title: "دسته بندی هزینه",
+                      prefixText: state.category,
+                      icon: "category.svg",
+                      colors: PoolinoColors.baseColor,
+                      isDate: false,
+                      onTap: () {
+                        ChooseCategory().showModal(
+                          context,
+                          onTapChoose: (name) {
+                            category = name;
+                            Navigator.pop(context);
+                            BlocProvider.of<CategoryCubit>(context)
+                                .changeCategory(name);
+                          },
+                        );
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                NoteTextField(
+                    formKey: formKey,
+                    hint: "مبلغ",
+                    prefixText: "تومان",
+                    icon: "note.svg",
+                    controller: descController),
+                const SizedBox(
+                  height: 16,
+                ),
+                BlocConsumer<AddIncomeBloc, AddIncomeState>(
+                  listenWhen: (previous, current) {
+                    if (current.addStatus is AddIncomeLoading) {
+                      LoadingScreen.show(context: context);
+                    }
+                    if (current.addStatus is AddIncomeComplete) {
+                      LoadingScreen.hide(context);
+                      PoolinoSnackBar(icon: "tick.svg", type: Constants.SUCCESS)
+                          .show(context, "درآمد با موفقیت ثبت شد");
                       Navigator.pop(context);
-                      BlocProvider.of<CategoryCubit>(context)
-                          .changeCategory(name);
-                    },
-                  );
-                },
-              );
-            },
+                    }
+                    if (current.addStatus is AddIncomeError) {
+                      AddIncomeError u = current.addStatus as AddIncomeError;
+                      LoadingScreen.hide(context);
+                      if (u.message == "logout") {
+                        print("logout");
+                        Navigator.pushNamed(context, "/phone");
+                        // PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR)
+                        //     .show(context, u.message);
+                      }
+                      return true;
+                    }
+                    return false;
+                  },
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return ButtonPrimary(
+                      text: "ثبت درآمد",
+                      isEnabled: true,
+                      onPressed: () {
+                        validate();
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 8,
-          ),
-          NoteTextField(
-              formKey: formKey,
-              hint: "مبلغ",
-              prefixText: "تومان",
-              icon: "note.svg",
-              controller: descController),
-          const SizedBox(
-            height: 16,
-          ),
-          BlocConsumer<AddIncomeBloc, AddIncomeState>(
-            listenWhen: (previous, current) {
-              if (current.addStatus is AddIncomeLoading) {
-                LoadingScreen.show(context: context);
-              }
-              if (current.addStatus is AddIncomeComplete) {
-                LoadingScreen.hide(context);
-                PoolinoSnackBar(icon: "tick.svg", type: Constants.SUCCESS)
-                    .show(context, "درآمد با موفقیت ثبت شد");
-                Navigator.pop(context);
-              }
-              if (current.addStatus is AddIncomeError) {
-                AddIncomeError u = current.addStatus as AddIncomeError;
-                LoadingScreen.hide(context);
-                if (u.message != "logout") {
-                  PoolinoSnackBar(icon: "close.svg", type: Constants.ERROR)
-                      .show(context, u.message);
-                }
-                return true;
-              }
-              return false;
-            },
-            listener: (context, state) {},
-            builder: (context, state) {
-              return ButtonPrimary(
-                text: "ثبت درآمد",
-                isEnabled: true,
-                onPressed: () {
-                  validate();
-                },
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
